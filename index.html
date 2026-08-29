@@ -64,7 +64,6 @@
     .os-card i { font-size: 2.2rem; color: #00ffcc; margin-bottom: 10px; display: block; transition: transform 0.3s; }
     .os-card h3 { font-size: 1.1rem; color: #fff; transition: color 0.3s; }
     
-    /* تأثير الحجم واللون عند مرور الماوس على الاختيارات داخل Youssef OS */
     .os-card:hover {
       transform: scale(1.1);
       background: rgba(0, 255, 204, 0.15);
@@ -227,7 +226,7 @@
     deskGroup.add(deskTop);
     scene.add(deskGroup);
 
-    // --- iMac (الشاشة الرئيسية في المنتصف) ---
+    // --- iMac (الشاشة الرئيسية للنظام) ---
     const pcGroup = new THREE.Group();
     const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
 
@@ -239,7 +238,6 @@
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
-    // Canvas للشاشة الرئيسية (النظام)
     const canvasTex = document.createElement('canvas');
     canvasTex.width = 1024; canvasTex.height = 576;
     const ctx = canvasTex.getContext('2d');
@@ -247,16 +245,14 @@
     function drawMainScreen(hoverIndex, glowColor) {
       ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
       
-      // العنوان الرئيسي مع لون متغيّر حسب الـ Animation
       ctx.shadowColor = glowColor;
       ctx.shadowBlur = 15;
       ctx.fillStyle = glowColor; 
       ctx.font = 'bold 38px Cairo, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Welcome to Youssef\'s World', 512, 85);
+      ctx.fillText("Welcome to Youssef's World", 512, 85);
       ctx.shadowBlur = 0;
 
-      // الكروت الأربعة مع دعم تفاعل الحجم واللون عند مرور الماوس
       const cards = [
         { text: '📂 المشاريع', x: 60, w: 200, h: 160 },
         { text: '⚡ المهارات', x: 300, w: 200, h: 160 },
@@ -296,7 +292,7 @@
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // --- Apple MacBook Air (اللاب توب بالخلفية الجديدة المطلوبة) ---
+    // --- Apple MacBook Air (اللاب توب مع خلفية Parrot OS وشعار أبل على الظهر) ---
     const laptopGroup = new THREE.Group();
     const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
     laptopGroup.add(lapBase);
@@ -306,7 +302,17 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
-    // تحميل صورة خلفية Parrot OS المحددة للاب توب
+    // شعار أبل (Apple Logo) على ظهر الشاشة (الوجه الخلفي)
+    const appleShape = new THREE.Shape();
+    appleShape.absarc(0, 0, 0.06, 0, Math.PI * 2, false);
+    const appleGeo = new THREE.ShapeGeometry(appleShape);
+    const appleMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const appleLogo = new THREE.Mesh(appleGeo, appleMat);
+    appleLogo.position.set(0, 0.35, -0.012);
+    appleLogo.rotation.y = Math.PI; // ليكون ظاهراً من الخلف
+    lapLid.add(appleLogo);
+
+    // تحميل صورة Parrot OS الأصلية لشاشة اللابتوب
     const lapCanvas = document.createElement('canvas');
     lapCanvas.width = 1200; lapCanvas.height = 675;
     const lCtx = lapCanvas.getContext('2d');
@@ -335,7 +341,7 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- تأثير تفاعل الماوس والألوان ---
+    // --- تأثير الماوس والألوان ---
     let colorTimer = 0;
     let hoveredCardIndex = -1;
 
