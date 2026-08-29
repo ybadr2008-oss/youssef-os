@@ -226,12 +226,11 @@
     deskGroup.add(deskTop);
     scene.add(deskGroup);
 
-    // دالة إنشاء شعار أبل المضبوط الصحيح
+    // دالة إنشاء شعار أبل المضبوط الصحيح على ظهر الأجهزة
     function createAppleLogoMesh() {
       const appleGroup = new THREE.Group();
       const appleMat = new THREE.MeshStandardMaterial({ color: 0xf3f4f6, metalness: 0.9, roughness: 0.1 });
       
-      // الجسم الرئيسي للتفاحة
       const bodyShape = new THREE.Shape();
       bodyShape.absarc(0, 0, 0.045, 0, Math.PI * 2, false);
       const bodyGeo = new THREE.ShapeGeometry(bodyShape);
@@ -239,14 +238,12 @@
       bodyMesh.scale.set(1, 1.2, 1);
       appleGroup.add(bodyMesh);
 
-      // عضة التفاحة (إخفاء جزء منها باللون الأسود أو لون الخلفية)
       const biteGeo = new THREE.CircleGeometry(0.018, 16);
       const biteMat = new THREE.MeshBasicMaterial({ color: 0x0b0f19 });
       const biteMesh = new THREE.Mesh(biteGeo, biteMat);
       biteMesh.position.set(0.035, 0.01, 0.001);
       appleGroup.add(biteMesh);
 
-      // العِرق فوق التفاحة
       const stemCurve = new THREE.QuadraticBezierCurve3(
         new THREE.Vector3(0, 0.05, 0),
         new THREE.Vector3(0.01, 0.07, 0),
@@ -259,60 +256,77 @@
       return appleGroup;
     }
 
-    // --- الشاشة الكبيرة (مع خلفية Parrot OS وحجم كبير جداً لكلمة Welcome وموسّطة في النص بالصاغية) ---
-    const pcGroup = new THREE.Group();
-    const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
-
-    const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
-    stand.position.set(0, 0.175, 0);
-    pcGroup.add(stand);
-
-    const pcFrame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.25, 0.04), macMat);
-    pcFrame.position.set(0, 0.9, 0);
-    pcGroup.add(pcFrame);
-
-    // شعار أبل على ظهر الشاشة الكبيرة
-    const pcApple = createAppleLogoMesh();
-    pcApple.position.set(0, 0.9, -0.022);
-    pcApple.rotation.y = Math.PI;
-    pcGroup.add(pcApple);
-
-    // تحميل صورة الخلفية الأصلية للشاشة الكبيرة
+    // --- رسم خلفية Parrot OS وجرافيك الشاشة مباشرة (بدون روابط خارجية معطلة) ---
     const canvasTex = document.createElement('canvas');
     canvasTex.width = 1200; canvasTex.height = 675;
     const ctx = canvasTex.getContext('2d');
-    
-    const parrotBgImage = new Image();
-    parrotBgImage.crossOrigin = "anonymous";
-    parrotBgImage.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg';
-    
-    let imageLoaded = false;
-    parrotBgImage.onload = function() {
-      imageLoaded = true;
-    };
 
-    function drawMainScreen(hoverIndex) {
-      if (imageLoaded) {
-        ctx.drawImage(parrotBgImage, 0, 0, 1200, 675);
-        // طبقة شفافة خفيفة لتوضيح النص فوق الخلفية
-        ctx.fillStyle = 'rgba(3, 7, 18, 0.55)';
-        ctx.fillRect(0, 0, 1200, 675);
-      } else {
-        ctx.fillStyle = '#070b19'; 
-        ctx.fillRect(0, 0, 1200, 675);
-      }
+    function drawParrotOSScreen(hoverIndex) {
+      // خلفية سوداء متدرجة أنيقة
+      ctx.fillStyle = '#030712';
+      ctx.fillRect(0, 0, 1200, 675);
+
+      // رسم شعار الببغاء (Parrot OS Art) على الجانب الأيمن بالشكل الأصلي
+      ctx.save();
+      ctx.translate(950, 320);
+      const grad = ctx.createLinearGradient(-150, -150, 150, 150);
+      grad.addColorStop(0, '#00ffcc');
+      grad.addColorStop(0.5, '#22c55e');
+      grad.addColorStop(1, '#3b82f6');
       
-      // Welcome to Youssef's World بحجم كبير جداً وموسّطة في النص تماماً
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(0, -120);
+      ctx.lineTo(120, -60);
+      ctx.lineTo(80, 100);
+      ctx.lineTo(-40, 140);
+      ctx.lineTo(-100, 40);
+      ctx.closePath();
       ctx.shadowColor = '#00ffcc';
-      ctx.shadowBlur = 25;
-      ctx.fillStyle = '#ffffff'; 
-      ctx.font = '900 52px "Cairo", sans-serif';
+      ctx.shadowBlur = 35;
+      ctx.fill();
+      ctx.restore();
+
+      // نافذة Terminal افتراضية على اليسار شكلها تحفة
+      ctx.fillStyle = 'rgba(10, 15, 30, 0.9)';
+      ctx.strokeStyle = 'rgba(0, 255, 204, 0.4)';
+      ctx.lineWidth = 3;
+      ctx.fillRect(80, 180, 500, 360);
+      ctx.strokeRect(80, 180, 500, 360);
+
+      // شريط نافذة الـ Terminal
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(80, 180, 500, 35);
+      ctx.fillStyle = '#ff4757'; ctx.beginPath(); ctx.arc(105, 197, 6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#ffa502'; ctx.beginPath(); ctx.arc(125, 197, 6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#2ed573'; ctx.beginPath(); ctx.arc(145, 197, 6, 0, Math.PI*2); ctx.fill();
+
+      // نصوص الكود داخل التيرمينال
+      ctx.font = 'bold 16px monospace';
+      ctx.fillStyle = '#00ffcc';
+      ctx.fillText('youssef@parrot:~$ aircrack-ng --help', 105, 245);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('Usage: aircrack-ng [options] <file(s)>', 105, 280);
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '14px monospace';
+      ctx.fillText('-a <amode> : force attack mode', 105, 320);
+      ctx.fillText('-e <essid> : target network identifier', 105, 350);
+      ctx.fillText('-b <baddr> : target mac address', 105, 380);
+      ctx.fillText('-p <nbcpu> : # of CPU to use', 105, 410);
+      ctx.fillStyle = '#2ed573';
+      ctx.fillText('[+] Security Lab Environment Active...', 105, 470);
+
+      // عنوان الرئيسي Welcome to Youssef's World كبير وواضح وفي النص تماماً
+      ctx.shadowColor = '#00ffcc';
+      ctx.shadowBlur = 30;
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '900 56px "Cairo", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText("Welcome to Youssef's World", 600, 85);
       ctx.shadowBlur = 0;
 
-      // الكروت الأربعة في النص
+      // الكروت الأربعة وسط الشاشة
       const cards = [
         { text: '📂 المشاريع', x: 120, w: 200, h: 150 },
         { text: '⚡ المهارات', x: 360, w: 200, h: 150 },
@@ -327,7 +341,7 @@
         let boxW = isHovered ? 220 : card.w;
         let boxH = isHovered ? 170 : card.h;
 
-        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.3)' : 'rgba(15, 23, 42, 0.88)';
+        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.3)' : 'rgba(15, 23, 42, 0.9)';
         ctx.strokeStyle = isHovered ? '#00ffcc' : 'rgba(0, 255, 204, 0.3)';
         ctx.lineWidth = isHovered ? 5 : 3;
         
@@ -335,13 +349,32 @@
         ctx.strokeRect(boxX, boxY, boxW, boxH);
         
         ctx.fillStyle = isHovered ? '#00ffcc' : '#ffffff'; 
-        ctx.font = isHovered, 'bold 32px "Cairo", sans-serif';
+        ctx.font = 'bold 28px "Cairo", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2));
       });
     }
 
-    drawMainScreen(-1);
+    drawParrotOSScreen(-1);
     const screenTexture = new THREE.CanvasTexture(canvasTex);
+
+    // --- الشاشة الكبيرة ---
+    const pcGroup = new THREE.Group();
+    const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
+
+    const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
+    stand.position.set(0, 0.175, 0);
+    pcGroup.add(stand);
+
+    const pcFrame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.25, 0.04), macMat);
+    pcFrame.position.set(0, 0.9, 0);
+    pcGroup.add(pcFrame);
+
+    const pcApple = createAppleLogoMesh();
+    pcApple.position.set(0, 0.9, -0.022);
+    pcApple.rotation.y = Math.PI;
+    pcGroup.add(pcApple);
 
     const pcScreenMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(1.92, 1.17), 
@@ -352,7 +385,7 @@
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // --- Apple MacBook Air (اللابتوب بجانب الشاشة مع خلفية Parrot OS وشعار أبل الصحيح على الظهر) ---
+    // --- لابتوب ماك بوك (مع شاشة Parrot OS وشعار أبل الصحيح على الظهر) ---
     const laptopGroup = new THREE.Group();
     const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
     laptopGroup.add(lapBase);
@@ -362,33 +395,14 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
-    // شعار أبل الصحيح على ظهر اللابتوب
     const lapApple = createAppleLogoMesh();
     lapApple.position.set(0, 0.35, -0.012);
     lapApple.rotation.y = Math.PI;
     lapLid.add(lapApple);
 
-    // خلفية Parrot OS لشاشة اللابتوب
-    const lapCanvas = document.createElement('canvas');
-    lapCanvas.width = 1200; lapCanvas.height = 675;
-    const lCtx = lapCanvas.getContext('2d');
-    
-    let lapImageLoaded = false;
-    parrotBgImage.addEventListener('load', function() {
-      lCtx.drawImage(parrotBgImage, 0, 0, 1200, 675);
-      lapTexture.needsUpdate = true;
-      imageLoaded = true;
-    });
-    // لو الصورة متحملة مسبقاً
-    if(parrotBgImage.complete) {
-      lCtx.drawImage(parrotBgImage, 0, 0, 1200, 675);
-      imageLoaded = true;
-    }
-
-    const lapTexture = new THREE.CanvasTexture(lapCanvas);
     const parrotDisplay = new THREE.Mesh(
       new THREE.PlaneGeometry(1.04, 0.64), 
-      new THREE.MeshBasicMaterial({ map: lapTexture })
+      new THREE.MeshBasicMaterial({ map: screenTexture })
     );
     parrotDisplay.position.set(0, 0.35, 0.012);
     lapLid.add(parrotDisplay);
@@ -401,7 +415,7 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- التفاعل والتحكم بالماوس ---
+    // --- التفاعل مع الكروت والماوس ---
     let hoveredCardIndex = -1;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -457,7 +471,7 @@
     function animate() {
       requestAnimationFrame(animate);
       
-      drawMainScreen(hoveredCardIndex);
+      drawParrotOSScreen(hoveredCardIndex);
       screenTexture.needsUpdate = true;
 
       controls.update();
