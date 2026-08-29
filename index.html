@@ -21,20 +21,21 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 55px;
       background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(0, 255, 204, 0.3); z-index: 100;
-      display: flex; justify-content: space-between; align-items: center; padding: 0 10px;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 12px;
     }
     
-    .nav-left { display: flex; gap: 5px; }
+    .nav-left { display: flex; gap: 6px; }
     
     .hover-btn {
       background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; padding: 5px 8px; border-radius: 6px; font-size: 0.75rem;
-      cursor: pointer; display: flex; align-items: center; gap: 4px;
+      color: #00ffcc; padding: 5px 9px; border-radius: 6px; font-size: 0.75rem;
+      cursor: pointer; display: flex; align-items: center; gap: 5px;
     }
     
     .nav-center {
-      font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 800;
-      color: #00ffcc; text-transform: uppercase; display: none;
+      font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 800;
+      color: #00ffcc; text-transform: uppercase; letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(0, 255, 204, 0.5); display: none;
     }
     
     .nav-right {
@@ -62,7 +63,7 @@
 
     #exit-os-btn {
       margin-top: 20px; background: #ff4757; color: #fff; border: none;
-      padding: 8px 20px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;
+      padding: 8px 20px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer;
     }
 
     .modal {
@@ -74,7 +75,7 @@
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 6px; margin-bottom: 10px; }
     .modal-title { font-size: 1rem; color: #00ffcc; font-weight: 800; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; }
     .modal-body { color: #e2e8f0; font-size: 0.85rem; line-height: 1.5; }
     .modal-body li { margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 4px; border-right: 3px solid #00ffcc; list-style: none; }
     #audio-player-modal iframe { width: 100%; height: 200px; border: none; border-radius: 6px; }
@@ -91,12 +92,12 @@
 
   <div id="top-bar">
     <div class="nav-left">
-      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> OS</button>
-      <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Term</button>
+      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> Youssef OS</button>
+      <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</button>
       <button class="hover-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
     </div>
     <div class="nav-center">Youssef's World</div>
-    <div class="nav-right">YOUSSEF.3D</div>
+    <div class="nav-right">YOUSSEF.3D <i class="fas fa-cube"></i></div>
   </div>
 
   <div id="canvas-container"></div>
@@ -108,39 +109,40 @@
       <div class="os-card" onclick="openModal('modal-about')"><i class="fas fa-user-shield"></i><h3>عنّي</h3></div>
       <div class="os-card" onclick="openModal('modal-contact')"><i class="fas fa-envelope"></i><h3>التواصل</h3></div>
     </div>
-    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-power-off"></i> العودة للغرفة</button>
+    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-power-off"></i> الخروج للغرفة الـ 3D</button>
   </div>
 
   <!-- Modals -->
   <div id="modal-audio" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📖 تلاوة المنشاوي</h3><button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button></div>
+    <div class="modal-header"><h3 class="modal-title">📖 تلاوة الشيخ محمد صديق المنشاوي</h3><button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button></div>
     <div class="modal-body" id="audio-player-modal"><iframe src="https://www.youtube.com/embed/yRXXtvZYHn4" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
   </div>
 
   <div id="modal-projects" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📂 المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
+    <div class="modal-header"><h3 class="modal-title">📂 قسم المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>Youssef OS:</strong> معرض أعمال تفاعلي 3D.</li>
-        <li><strong>Python Tools:</strong> أدوات أتمتة وأمن سيبراني.</li>
-        <li><strong>Cybersecurity Labs:</strong> بيئات شبكات على Kali Linux.</li>
+        <li><strong>Youssef OS 3D Portfolio:</strong> معرض أعمال تفاعلي ثلاثي الأبعاد مصمم بـ Three.js.</li>
+        <li><strong>Python Security Tools:</strong> سكريبتات وأدوات أتمتة للأمن السيبراني.</li>
+        <li><strong>Cybersecurity Virtual Labs:</strong> بيئات شبكات واختبار اختراق على VirtualBox و Kali.</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-skills" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">⚡ المهارات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
+    <div class="modal-header"><h3 class="modal-title">⚡ المهارات والتقنيات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>البرمجة:</strong> C++, Python, JavaScript, HTML/CSS, Three.js</li>
-        <li><strong>الأمن:</strong> Ethical Hacking, Metasploit, Nmap</li>
+        <li><strong>البرمجة والتطوير:</strong> C++, Python, JavaScript, HTML5, CSS3, Node.js, Three.js</li>
+        <li><strong>الأمن السيبراني:</strong> Ethical Hacking, Nmap, Metasploit, Linux Terminal</li>
+        <li><strong>أنظمة التشغيل:</strong> Parrot OS, Kali Linux, Windows</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-about" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">🛡️ عنّي</h3><button class="close-modal" onclick="closeModal(event, 'modal-about')">✖ إغلاق</button></div>
-    <div class="modal-body"><p>أنا يوسف بدر، طالب علوم حاسب، مهتم بتطوير البرمجيات والأمن السيبراني.</p></div>
+    <div class="modal-body"><p>أهلاً بك! أنا يوسف بدر، طالب علوم حاسب، مهتم ومبتكر في مجالات تطوير البرمجيات واختبار الاختراق والأمن السيبراني.</p></div>
   </div>
 
   <div id="modal-contact" class="modal" onclick="stopPropagation(event)">
@@ -148,6 +150,7 @@
     <div class="modal-body">
       <ul>
         <li><strong>GitHub:</strong> ybadr2008-oss</li>
+        <li><strong>التخصص:</strong> Computer Science / Cybersecurity</li>
         <li><strong>الموقع:</strong> الشرقية، مصر</li>
       </ul>
     </div>
@@ -156,7 +159,7 @@
   <div id="modal-terminal" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">💻 Terminal</h3><button class="close-modal" onclick="closeModal(event, 'modal-terminal')">✖ إغلاق</button></div>
     <div class="modal-body" style="font-family: monospace; background: #000; padding: 10px; border-radius: 6px; color: #00ffcc;">
-      <p>youssef@os:~$ whoami</p><p style="color: #fff;">youssef_badr</p>
+      <p>youssef@os:~$ whoami</p><p style="color: #fff;">youssef_badr_developer</p>
     </div>
   </div>
 
@@ -167,6 +170,7 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(e, id) { if (e) e.stopPropagation(); document.getElementById(id).classList.remove('active'); }
 
+    // --- Scene Setup ---
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x04060c);
@@ -174,7 +178,7 @@
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     const isMobile = window.innerWidth < 768;
-    camera.position.set(0, isMobile ? 3.4 : 2.8, isMobile ? 6.5 : 5.5);
+    camera.position.set(0, isMobile ? 3.4 : 2.8, isMobile ? 6.8 : 5.5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -186,56 +190,151 @@
     controls.maxPolarAngle = Math.PI / 2 - 0.05;
     controls.target.set(0, 1.1, 0);
 
+    // --- Lighting ---
     scene.add(new THREE.AmbientLight(0x0f172a, 1.5));
     const blueSpot = new THREE.SpotLight(0x00ffcc, 4);
     blueSpot.position.set(-3, 5, 2);
     scene.add(blueSpot);
 
-    // Floor & Grid
+    const purpleSpot = new THREE.SpotLight(0x8b5cf6, 3);
+    purpleSpot.position.set(3, 4, -1);
+    scene.add(purpleSpot);
+
+    // --- Floor & Grid & Particles ---
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x0b0f19, roughness: 0.1, metalness: 0.8 }));
     floor.rotation.x = -Math.PI / 2;
     scene.add(floor);
+    
     const grid = new THREE.GridHelper(30, 40, 0x00ffcc, 0x1e293b);
     grid.position.y = 0.01;
     scene.add(grid);
 
-    // Desk
+    const particleGeo = new THREE.BufferGeometry();
+    const particleCount = 300;
+    const posArray = new Float32Array(particleCount * 3);
+    for(let i=0; i<particleCount*3; i++) { posArray[i] = (Math.random() - 0.5) * 15; }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.03, color: 0x00ffcc, transparent: true, opacity: 0.6 }));
+    scene.add(particles);
+
+    // --- Desk ---
     const deskGroup = new THREE.Group();
     const darkMetalMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 });
     const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), darkMetalMat);
     deskTop.position.set(0, 1.1, 0);
     deskGroup.add(deskTop);
+    
+    const neonStrip = new THREE.Mesh(new THREE.BoxGeometry(4.22, 0.02, 1.82), new THREE.MeshBasicMaterial({ color: 0x00ffcc }));
+    neonStrip.position.set(0, 1.05, 0);
+    deskGroup.add(neonStrip);
     scene.add(deskGroup);
 
-    // iMac
+    // --- Apple iMac (الشاشة الرئيسية في النص) ---
     const pcGroup = new THREE.Group();
     const macMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.8, roughness: 0.2 });
+
     const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
     stand.position.set(0, 0.175, 0);
     pcGroup.add(stand);
+
     const pcFrame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.25, 0.04), macMat);
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
+    // Canvas لعنوان الشاشة الرئيسي مع ألوان متطورة ومتغيرة الحجم
     const canvasTex = document.createElement('canvas');
     canvasTex.width = 1024; canvasTex.height = 576;
     const ctx = canvasTex.getContext('2d');
-    ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
-    ctx.fillStyle = '#00ffcc'; ctx.font = 'bold 42px Cairo, sans-serif';
-    ctx.fillText('Youssef OS (اضغط هنا للفتح)', 230, 90);
-    ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 4;
-    ctx.strokeRect(60, 160, 200, 160); ctx.fillText('📂 المشاريع', 80, 250);
-    ctx.strokeRect(300, 160, 200, 160); ctx.fillText('⚡ المهارات', 320, 250);
-    ctx.strokeRect(540, 160, 200, 160); ctx.fillText('🛡️ عنّي', 580, 250);
-    ctx.strokeRect(780, 160, 200, 160); ctx.fillText('📬 التواصل', 790, 250);
+    
+    function drawScreen(glowColor) {
+      ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
+      
+      // العنوان الرئيسي في النص مع تأثير الإضاءة
+      ctx.shadowColor = glowColor;
+      ctx.shadowBlur = 15;
+      ctx.fillStyle = glowColor; 
+      ctx.font = 'bold 44px Cairo, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Youssef OS (اضغط هنا للفتح)', 512, 90);
+      ctx.shadowBlur = 0; // إيقاف الـ shadow للرسم العادي
 
-    const pcScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.92, 1.17), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvasTex) }));
+      // كروت القائمة الداخلية
+      ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 4;
+      
+      const cards = [
+        { text: '📂 المشاريع', x: 60 },
+        { text: '⚡ المهارات', x: 300 },
+        { text: '🛡️ عنّي', x: 540 },
+        { text: '📬 التواصل', x: 780 }
+      ];
+
+      cards.forEach(card => {
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+        ctx.fillRect(card.x, 160, 200, 160);
+        ctx.strokeRect(card.x, 160, 200, 160);
+        
+        ctx.fillStyle = '#ffffff'; 
+        ctx.font = 'bold 30px Cairo, sans-serif';
+        ctx.fillText(card.text, card.x + 100, 255);
+      });
+    }
+
+    drawScreen('#00ffcc');
+    const screenTexture = new THREE.CanvasTexture(canvasTex);
+
+    const pcScreenMesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.92, 1.17), 
+      new THREE.MeshBasicMaterial({ map: screenTexture })
+    );
     pcScreenMesh.position.set(0, 0.9, 0.022);
     pcGroup.add(pcScreenMesh);
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // Interaction
+    // --- Apple MacBook Air (اللاب توب ع الجنب) ---
+    const laptopGroup = new THREE.Group();
+    const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
+    laptopGroup.add(lapBase);
+
+    const lapLid = new THREE.Group();
+    const lapFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.7, 0.02), macMat);
+    lapFrame.position.set(0, 0.35, 0);
+    lapLid.add(lapFrame);
+
+    const lapCanvas = document.createElement('canvas');
+    lapCanvas.width = 800; lapCanvas.height = 500;
+    const lCtx = lapCanvas.getContext('2d');
+    lCtx.fillStyle = '#05070a'; lCtx.fillRect(0, 0, 800, 500);
+    lCtx.fillStyle = '#111827'; lCtx.fillRect(0, 0, 800, 30);
+    lCtx.fillStyle = '#00ffcc'; lCtx.font = '14px monospace'; lCtx.fillText('Parrot OS Security | Terminal', 20, 20);
+    lCtx.fillStyle = '#000000'; lCtx.fillRect(40, 60, 420, 380);
+    lCtx.fillStyle = '#00ffcc'; lCtx.font = 'bold 16px monospace'; lCtx.fillText('ParrotSec - Terminal Active', 55, 90);
+
+    const parrotDisplay = new THREE.Mesh(new THREE.PlaneGeometry(1.04, 0.64), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(lapCanvas) }));
+    parrotDisplay.position.set(0, 0.35, 0.012);
+    lapLid.add(parrotDisplay);
+
+    lapLid.position.set(0, 0, -0.36);
+    lapLid.rotation.x = -0.25;
+    laptopGroup.add(lapLid);
+
+    laptopGroup.position.set(1.3, 1.15, 0.2);
+    laptopGroup.rotation.y = -0.35;
+    scene.add(laptopGroup);
+
+    // --- تأثير تغير الألوان والحجم (Pulse Animation) ---
+    let colorTimer = 0;
+    function updateScreenColor() {
+      colorTimer += 0.04;
+      // تبديل الألوان بمرونة بين التركواز والأزرق النيون
+      const colors = ['#00ffcc', '#38bdf8', '#a855f7'];
+      const currentColor = colors[Math.floor(colorTimer) % colors.length];
+      
+      drawScreen(currentColor);
+      screenTexture.needsUpdate = true;
+    }
+
+    // --- Touch / Click Handler ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -263,6 +362,8 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      particles.rotation.y += 0.0008;
+      updateScreenColor();
       controls.update();
       renderer.render(scene, camera);
     }
