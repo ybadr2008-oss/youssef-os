@@ -173,8 +173,8 @@
     // --- Scene Setup ---
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x04060c);
-    scene.fog = new THREE.FogExp2(0x04060c, 0.08);
+    scene.background = new THREE.Color(0x030712);
+    scene.fog = new THREE.FogExp2(0x030712, 0.08);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     const isMobile = window.innerWidth < 768;
@@ -190,18 +190,13 @@
     controls.maxPolarAngle = Math.PI / 2 - 0.05;
     controls.target.set(0, 1.1, 0);
 
-    // --- Lighting ---
-    scene.add(new THREE.AmbientLight(0x0f172a, 1.5));
-    const blueSpot = new THREE.SpotLight(0x00ffcc, 4);
-    blueSpot.position.set(-3, 5, 2);
-    scene.add(blueSpot);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+    const spot = new THREE.SpotLight(0x00ffcc, 3);
+    spot.position.set(0, 5, 2);
+    scene.add(spot);
 
-    const purpleSpot = new THREE.SpotLight(0x8b5cf6, 3);
-    purpleSpot.position.set(3, 4, -1);
-    scene.add(purpleSpot);
-
-    // --- Floor & Grid & Particles ---
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x0b0f19, roughness: 0.1, metalness: 0.8 }));
+    // Floor & Grid
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x050811, roughness: 0.2 }));
     floor.rotation.x = -Math.PI / 2;
     scene.add(floor);
     
@@ -209,29 +204,17 @@
     grid.position.y = 0.01;
     scene.add(grid);
 
-    const particleGeo = new THREE.BufferGeometry();
-    const particleCount = 300;
-    const posArray = new Float32Array(particleCount * 3);
-    for(let i=0; i<particleCount*3; i++) { posArray[i] = (Math.random() - 0.5) * 15; }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ size: 0.03, color: 0x00ffcc, transparent: true, opacity: 0.6 }));
-    scene.add(particles);
-
     // --- Desk ---
     const deskGroup = new THREE.Group();
-    const darkMetalMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 });
-    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), darkMetalMat);
+    const deskMat = new THREE.MeshStandardMaterial({ color: 0x0b0f19, metalness: 0.8, roughness: 0.3 });
+    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), deskMat);
     deskTop.position.set(0, 1.1, 0);
     deskGroup.add(deskTop);
-    
-    const neonStrip = new THREE.Mesh(new THREE.BoxGeometry(4.22, 0.02, 1.82), new THREE.MeshBasicMaterial({ color: 0x00ffcc }));
-    neonStrip.position.set(0, 1.05, 0);
-    deskGroup.add(neonStrip);
     scene.add(deskGroup);
 
-    // --- Apple iMac (الشاشة الرئيسية في النص) ---
+    // --- iMac (الشاشة الرئيسية في المنتصف) ---
     const pcGroup = new THREE.Group();
-    const macMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.8, roughness: 0.2 });
+    const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
 
     const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
     stand.position.set(0, 0.175, 0);
@@ -241,45 +224,52 @@
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
-    // Canvas لعنوان الشاشة الرئيسي مع ألوان متطورة ومتغيرة الحجم
+    // Canvas للشاشة الرئيسية (النظام)
     const canvasTex = document.createElement('canvas');
     canvasTex.width = 1024; canvasTex.height = 576;
     const ctx = canvasTex.getContext('2d');
     
-    function drawScreen(glowColor) {
+    function drawMainScreen(hoverIndex, glowColor) {
       ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
       
-      // العنوان الرئيسي في النص مع تأثير الإضاءة
+      // العنوان الرئيسي مع لون متغيّر حسب الـ Animation
       ctx.shadowColor = glowColor;
       ctx.shadowBlur = 15;
       ctx.fillStyle = glowColor; 
-      ctx.font = 'bold 44px Cairo, sans-serif';
+      ctx.font = 'bold 42px Cairo, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Youssef OS (اضغط هنا للفتح)', 512, 90);
-      ctx.shadowBlur = 0; // إيقاف الـ shadow للرسم العادي
+      ctx.fillText('Youssef OS (اضغط هنا للفتح)', 512, 85);
+      ctx.shadowBlur = 0;
 
-      // كروت القائمة الداخلية
-      ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 4;
-      
+      // الكروت الأربعة مع دعم تفاعل الحجم واللون عند مرور الماوس
       const cards = [
-        { text: '📂 المشاريع', x: 60 },
-        { text: '⚡ المهارات', x: 300 },
-        { text: '🛡️ عنّي', x: 540 },
-        { text: '📬 التواصل', x: 780 }
+        { text: '📂 المشاريع', x: 60, w: 200, h: 160 },
+        { text: '⚡ المهارات', x: 300, w: 200, h: 160 },
+        { text: '🛡️ عنّي', x: 540, w: 200, h: 160 },
+        { text: '📬 التواصل', x: 780, w: 200, h: 160 }
       ];
 
-      cards.forEach(card => {
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-        ctx.fillRect(card.x, 160, 200, 160);
-        ctx.strokeRect(card.x, 160, 200, 160);
+      cards.forEach((card, index) => {
+        let isHovered = (hoverIndex === index);
+        let boxX = isHovered ? card.x - 10 : card.x;
+        let boxY = isHovered ? 150 : 160;
+        let boxW = isHovered ? 220 : card.w;
+        let boxH = isHovered ? 180 : card.h;
+
+        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.25)' : 'rgba(15, 23, 42, 0.85)';
+        ctx.strokeStyle = isHovered ? '#00ffcc' : '#1e293b';
+        ctx.lineWidth = isHovered ? 6 : 4;
         
-        ctx.fillStyle = '#ffffff'; 
-        ctx.font = 'bold 30px Cairo, sans-serif';
-        ctx.fillText(card.text, card.x + 100, 255);
+        ctx.fillRect(boxX, boxY, boxW, boxH);
+        ctx.strokeRect(boxX, boxY, boxW, boxH);
+        
+        ctx.fillStyle = isHovered ? '#00ffcc' : '#ffffff'; 
+        ctx.font = isHovered ? 'bold 34px Cairo, sans-serif' : 'bold 30px Cairo, sans-serif';
+        ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2) + 12);
       });
     }
 
-    drawScreen('#00ffcc');
+    drawMainScreen(-1, '#00ffcc');
     const screenTexture = new THREE.CanvasTexture(canvasTex);
 
     const pcScreenMesh = new THREE.Mesh(
@@ -291,7 +281,7 @@
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // --- Apple MacBook Air (اللاب توب ع الجنب) ---
+    // --- Apple MacBook Air (اللاب توب بالخلفية الجديدة المطلوبة) ---
     const laptopGroup = new THREE.Group();
     const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
     laptopGroup.add(lapBase);
@@ -301,16 +291,24 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
+    // تحميل صورة خلفية Parrot OS للاب توب
     const lapCanvas = document.createElement('canvas');
-    lapCanvas.width = 800; lapCanvas.height = 500;
+    lapCanvas.width = 1200; lapCanvas.height = 675;
     const lCtx = lapCanvas.getContext('2d');
-    lCtx.fillStyle = '#05070a'; lCtx.fillRect(0, 0, 800, 500);
-    lCtx.fillStyle = '#111827'; lCtx.fillRect(0, 0, 800, 30);
-    lCtx.fillStyle = '#00ffcc'; lCtx.font = '14px monospace'; lCtx.fillText('Parrot OS Security | Terminal', 20, 20);
-    lCtx.fillStyle = '#000000'; lCtx.fillRect(40, 60, 420, 380);
-    lCtx.fillStyle = '#00ffcc'; lCtx.font = 'bold 16px monospace'; lCtx.fillText('ParrotSec - Terminal Active', 55, 90);
+    
+    const bgImg = new Image();
+    bgImg.crossOrigin = "anonymous";
+    bgImg.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg'; // رابط الخلفية اللي بعتها
+    bgImg.onload = function() {
+      lCtx.drawImage(bgImg, 0, 0, lapCanvas.width, lapCanvas.height);
+      lapTexture.needsUpdate = true;
+    };
 
-    const parrotDisplay = new THREE.Mesh(new THREE.PlaneGeometry(1.04, 0.64), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(lapCanvas) }));
+    const lapTexture = new THREE.CanvasTexture(lapCanvas);
+    const parrotDisplay = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.04, 0.64), 
+      new THREE.MeshBasicMaterial({ map: lapTexture })
+    );
     parrotDisplay.position.set(0, 0.35, 0.012);
     lapLid.add(parrotDisplay);
 
@@ -322,21 +320,39 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- تأثير تغير الألوان والحجم (Pulse Animation) ---
+    // --- تأثير تلوين العنوان وتفاعل الماوس على الشاشة ---
     let colorTimer = 0;
-    function updateScreenColor() {
-      colorTimer += 0.04;
-      // تبديل الألوان بمرونة بين التركواز والأزرق النيون
-      const colors = ['#00ffcc', '#38bdf8', '#a855f7'];
-      const currentColor = colors[Math.floor(colorTimer) % colors.length];
-      
-      drawScreen(currentColor);
-      screenTexture.needsUpdate = true;
-    }
+    let hoveredCardIndex = -1;
 
-    // --- Touch / Click Handler ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObject(pcScreenMesh);
+      
+      if (intersects.length > 0) {
+        const uv = intersects[0].uv;
+        // إحداثيات الـ UV الخاصة بالكانفاس لتححديد الكارت الذي يقف عليه الماوس
+        const px = uv.x * 1024;
+        const py = (1 - uv.y) * 576;
+        
+        if (py >= 160 && py <= 320) {
+          if (px >= 60 && px <= 260) hoveredCardIndex = 0;
+          else if (px >= 300 && px <= 500) hoveredCardIndex = 1;
+          else if (px >= 540 && px <= 740) hoveredCardIndex = 2;
+          else if (px >= 780 && px <= 980) hoveredCardIndex = 3;
+          else hoveredCardIndex = -1;
+        } else {
+          hoveredCardIndex = -1;
+        }
+      } else {
+        hoveredCardIndex = -1;
+      }
+    });
 
     function handleInteraction(e) {
       if (document.getElementById('desktop-ui').style.display === 'flex') return;
@@ -362,8 +378,14 @@
 
     function animate() {
       requestAnimationFrame(animate);
-      particles.rotation.y += 0.0008;
-      updateScreenColor();
+      
+      colorTimer += 0.04;
+      const colors = ['#00ffcc', '#38bdf8', '#a855f7'];
+      const activeColor = colors[Math.floor(colorTimer) % colors.length];
+
+      drawMainScreen(hoveredCardIndex, activeColor);
+      screenTexture.needsUpdate = true;
+
       controls.update();
       renderer.render(scene, camera);
     }
