@@ -6,7 +6,7 @@
   <title>Welcome to Youssef's World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -226,7 +226,40 @@
     deskGroup.add(deskTop);
     scene.add(deskGroup);
 
-    // --- iMac (الشاشة الرئيسية للنظام) ---
+    // دالة إنشاء شعار أبل المضبوط الصحيح
+    function createAppleLogoMesh() {
+      const appleGroup = new THREE.Group();
+      const appleMat = new THREE.MeshStandardMaterial({ color: 0xf3f4f6, metalness: 0.9, roughness: 0.1 });
+      
+      // الجسم الرئيسي للتفاحة
+      const bodyShape = new THREE.Shape();
+      bodyShape.absarc(0, 0, 0.045, 0, Math.PI * 2, false);
+      const bodyGeo = new THREE.ShapeGeometry(bodyShape);
+      const bodyMesh = new THREE.Mesh(bodyGeo, appleMat);
+      bodyMesh.scale.set(1, 1.2, 1);
+      appleGroup.add(bodyMesh);
+
+      // عضة التفاحة (إخفاء جزء منها باللون الأسود أو لون الخلفية)
+      const biteGeo = new THREE.CircleGeometry(0.018, 16);
+      const biteMat = new THREE.MeshBasicMaterial({ color: 0x0b0f19 });
+      const biteMesh = new THREE.Mesh(biteGeo, biteMat);
+      biteMesh.position.set(0.035, 0.01, 0.001);
+      appleGroup.add(biteMesh);
+
+      // العِرق فوق التفاحة
+      const stemCurve = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(0, 0.05, 0),
+        new THREE.Vector3(0.01, 0.07, 0),
+        new THREE.Vector3(0.015, 0.075, 0)
+      );
+      const stemGeo = new THREE.TubeGeometry(stemCurve, 8, 0.003, 6, false);
+      const stemMesh = new THREE.Mesh(stemGeo, appleMat);
+      appleGroup.add(stemMesh);
+
+      return appleGroup;
+    }
+
+    // --- الشاشة الكبيرة (مع خلفية Parrot OS وحجم كبير جداً لكلمة Welcome وموسّطة في النص بالصاغية) ---
     const pcGroup = new THREE.Group();
     const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
 
@@ -238,49 +271,76 @@
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
+    // شعار أبل على ظهر الشاشة الكبيرة
+    const pcApple = createAppleLogoMesh();
+    pcApple.position.set(0, 0.9, -0.022);
+    pcApple.rotation.y = Math.PI;
+    pcGroup.add(pcApple);
+
+    // تحميل صورة الخلفية الأصلية للشاشة الكبيرة
     const canvasTex = document.createElement('canvas');
-    canvasTex.width = 1024; canvasTex.height = 576;
+    canvasTex.width = 1200; canvasTex.height = 675;
     const ctx = canvasTex.getContext('2d');
     
-    function drawMainScreen(hoverIndex, glowColor) {
-      ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
+    const parrotBgImage = new Image();
+    parrotBgImage.crossOrigin = "anonymous";
+    parrotBgImage.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg';
+    
+    let imageLoaded = false;
+    parrotBgImage.onload = function() {
+      imageLoaded = true;
+    };
+
+    function drawMainScreen(hoverIndex) {
+      if (imageLoaded) {
+        ctx.drawImage(parrotBgImage, 0, 0, 1200, 675);
+        // طبقة شفافة خفيفة لتوضيح النص فوق الخلفية
+        ctx.fillStyle = 'rgba(3, 7, 18, 0.55)';
+        ctx.fillRect(0, 0, 1200, 675);
+      } else {
+        ctx.fillStyle = '#070b19'; 
+        ctx.fillRect(0, 0, 1200, 675);
+      }
       
-      ctx.shadowColor = glowColor;
-      ctx.shadowBlur = 15;
-      ctx.fillStyle = glowColor; 
-      ctx.font = 'bold 38px Cairo, sans-serif';
+      // Welcome to Youssef's World بحجم كبير جداً وموسّطة في النص تماماً
+      ctx.shadowColor = '#00ffcc';
+      ctx.shadowBlur = 25;
+      ctx.fillStyle = '#ffffff'; 
+      ctx.font = '900 52px "Cairo", sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText("Welcome to Youssef's World", 512, 85);
+      ctx.textBaseline = 'middle';
+      ctx.fillText("Welcome to Youssef's World", 600, 85);
       ctx.shadowBlur = 0;
 
+      // الكروت الأربعة في النص
       const cards = [
-        { text: '📂 المشاريع', x: 60, w: 200, h: 160 },
-        { text: '⚡ المهارات', x: 300, w: 200, h: 160 },
-        { text: '🛡️ عنّي', x: 540, w: 200, h: 160 },
-        { text: '📬 التواصل', x: 780, w: 200, h: 160 }
+        { text: '📂 المشاريع', x: 120, w: 200, h: 150 },
+        { text: '⚡ المهارات', x: 360, w: 200, h: 150 },
+        { text: '🛡️ عنّي', x: 600, w: 200, h: 150 },
+        { text: '📬 التواصل', x: 840, w: 200, h: 150 }
       ];
 
       cards.forEach((card, index) => {
         let isHovered = (hoverIndex === index);
         let boxX = isHovered ? card.x - 10 : card.x;
-        let boxY = isHovered ? 150 : 160;
+        let boxY = isHovered ? 230 : 240;
         let boxW = isHovered ? 220 : card.w;
-        let boxH = isHovered ? 180 : card.h;
+        let boxH = isHovered ? 170 : card.h;
 
-        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.25)' : 'rgba(15, 23, 42, 0.85)';
-        ctx.strokeStyle = isHovered ? '#00ffcc' : '#1e293b';
-        ctx.lineWidth = isHovered ? 6 : 4;
+        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.3)' : 'rgba(15, 23, 42, 0.88)';
+        ctx.strokeStyle = isHovered ? '#00ffcc' : 'rgba(0, 255, 204, 0.3)';
+        ctx.lineWidth = isHovered ? 5 : 3;
         
         ctx.fillRect(boxX, boxY, boxW, boxH);
         ctx.strokeRect(boxX, boxY, boxW, boxH);
         
         ctx.fillStyle = isHovered ? '#00ffcc' : '#ffffff'; 
-        ctx.font = isHovered ? 'bold 34px Cairo, sans-serif' : 'bold 30px Cairo, sans-serif';
-        ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2) + 12);
+        ctx.font = isHovered, 'bold 32px "Cairo", sans-serif';
+        ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2));
       });
     }
 
-    drawMainScreen(-1, '#00ffcc');
+    drawMainScreen(-1);
     const screenTexture = new THREE.CanvasTexture(canvasTex);
 
     const pcScreenMesh = new THREE.Mesh(
@@ -292,7 +352,7 @@
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // --- Apple MacBook Air (اللاب توب مع خلفية Parrot OS وشعار أبل على الظهر) ---
+    // --- Apple MacBook Air (اللابتوب بجانب الشاشة مع خلفية Parrot OS وشعار أبل الصحيح على الظهر) ---
     const laptopGroup = new THREE.Group();
     const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
     laptopGroup.add(lapBase);
@@ -302,28 +362,28 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
-    // شعار أبل (Apple Logo) على ظهر الشاشة (الوجه الخلفي)
-    const appleShape = new THREE.Shape();
-    appleShape.absarc(0, 0, 0.06, 0, Math.PI * 2, false);
-    const appleGeo = new THREE.ShapeGeometry(appleShape);
-    const appleMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const appleLogo = new THREE.Mesh(appleGeo, appleMat);
-    appleLogo.position.set(0, 0.35, -0.012);
-    appleLogo.rotation.y = Math.PI; // ليكون ظاهراً من الخلف
-    lapLid.add(appleLogo);
+    // شعار أبل الصحيح على ظهر اللابتوب
+    const lapApple = createAppleLogoMesh();
+    lapApple.position.set(0, 0.35, -0.012);
+    lapApple.rotation.y = Math.PI;
+    lapLid.add(lapApple);
 
-    // تحميل صورة Parrot OS الأصلية لشاشة اللابتوب
+    // خلفية Parrot OS لشاشة اللابتوب
     const lapCanvas = document.createElement('canvas');
     lapCanvas.width = 1200; lapCanvas.height = 675;
     const lCtx = lapCanvas.getContext('2d');
     
-    const bgImg = new Image();
-    bgImg.crossOrigin = "anonymous";
-    bgImg.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg';
-    bgImg.onload = function() {
-      lCtx.drawImage(bgImg, 0, 0, lapCanvas.width, lapCanvas.height);
+    let lapImageLoaded = false;
+    parrotBgImage.addEventListener('load', function() {
+      lCtx.drawImage(parrotBgImage, 0, 0, 1200, 675);
       lapTexture.needsUpdate = true;
-    };
+      imageLoaded = true;
+    });
+    // لو الصورة متحملة مسبقاً
+    if(parrotBgImage.complete) {
+      lCtx.drawImage(parrotBgImage, 0, 0, 1200, 675);
+      imageLoaded = true;
+    }
 
     const lapTexture = new THREE.CanvasTexture(lapCanvas);
     const parrotDisplay = new THREE.Mesh(
@@ -341,10 +401,8 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- تأثير الماوس والألوان ---
-    let colorTimer = 0;
+    // --- التفاعل والتحكم بالماوس ---
     let hoveredCardIndex = -1;
-
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -357,14 +415,14 @@
       
       if (intersects.length > 0) {
         const uv = intersects[0].uv;
-        const px = uv.x * 1024;
-        const py = (1 - uv.y) * 576;
+        const px = uv.x * 1200;
+        const py = (1 - uv.y) * 675;
         
-        if (py >= 160 && py <= 320) {
-          if (px >= 60 && px <= 260) hoveredCardIndex = 0;
-          else if (px >= 300 && px <= 500) hoveredCardIndex = 1;
-          else if (px >= 540 && px <= 740) hoveredCardIndex = 2;
-          else if (px >= 780 && px <= 980) hoveredCardIndex = 3;
+        if (py >= 240 && py <= 390) {
+          if (px >= 120 && px <= 320) hoveredCardIndex = 0;
+          else if (px >= 360 && px <= 560) hoveredCardIndex = 1;
+          else if (px >= 600 && px <= 800) hoveredCardIndex = 2;
+          else if (px >= 840 && px <= 1040) hoveredCardIndex = 3;
           else hoveredCardIndex = -1;
         } else {
           hoveredCardIndex = -1;
@@ -399,11 +457,7 @@
     function animate() {
       requestAnimationFrame(animate);
       
-      colorTimer += 0.04;
-      const colors = ['#00ffcc', '#38bdf8', '#a855f7'];
-      const activeColor = colors[Math.floor(colorTimer) % colors.length];
-
-      drawMainScreen(hoveredCardIndex, activeColor);
+      drawMainScreen(hoveredCardIndex);
       screenTexture.needsUpdate = true;
 
       controls.update();
