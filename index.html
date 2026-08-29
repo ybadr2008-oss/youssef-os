@@ -13,90 +13,77 @@
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background-color: #030712; color: #fff; }
-    #canvas-container { width: 100%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; touch-action: none; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background-color: #030712; color: #fff; position: fixed; }
+    
+    #canvas-container { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1; touch-action: none; }
     
     #top-bar {
-      position: absolute; top: 0; left: 0; width: 100%; min-height: 60px;
-      background: rgba(10, 15, 30, 0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0, 255, 204, 0.3); z-index: 50;
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 15px; gap: 10px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 55px;
+      background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 255, 204, 0.3); z-index: 100;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 10px;
     }
     
-    .nav-left { display: flex; gap: 8px; z-index: 52; flex-wrap: wrap; }
+    .nav-left { display: flex; gap: 5px; }
     
     .hover-btn {
-      background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
-      transition: all 0.25s ease;
-    }
-    .hover-btn:hover, .hover-btn:active {
-      background: #00ffcc; color: #000;
-      box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+      background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 255, 204, 0.4);
+      color: #00ffcc; padding: 5px 8px; border-radius: 6px; font-size: 0.75rem;
+      cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
     
     .nav-center {
-      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800;
-      color: #00ffcc; text-transform: uppercase; letter-spacing: 1px;
-      text-shadow: 0 0 8px rgba(0, 255, 204, 0.5); pointer-events: none;
+      font-family: 'Orbitron', sans-serif; font-size: 0.75rem; font-weight: 800;
+      color: #00ffcc; text-transform: uppercase; display: none;
     }
     
     .nav-right {
-      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 0.9rem;
-      color: #38bdf8; display: flex; align-items: center; gap: 6px; z-index: 52;
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 0.75rem;
+      color: #38bdf8; display: flex; align-items: center; gap: 4px;
     }
 
     #desktop-ui {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-      background: rgba(7, 11, 25, 0.97); backdrop-filter: blur(16px); z-index: 80; display: none;
-      padding: 70px 20px 30px 20px; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(7, 11, 25, 0.98); z-index: 200; display: none;
+      padding: 60px 15px 20px 15px; flex-direction: column; justify-content: center; align-items: center;
     }
     
     .desktop-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px; max-width: 800px; width: 100%; justify-content: center; align-items: center;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; max-width: 400px; width: 100%;
     }
     
     .os-card {
       background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(0, 255, 204, 0.3);
-      border-radius: 12px; padding: 20px 15px; text-align: center; cursor: pointer;
-      transition: all 0.3s ease;
+      border-radius: 10px; padding: 15px 10px; text-align: center; cursor: pointer;
     }
-    .os-card i { font-size: 2.2rem; color: #00ffcc; margin-bottom: 10px; display: block; }
-    .os-card h3 { font-size: 1rem; color: #fff; }
-    
-    .os-card:active, .os-card:hover {
-      transform: scale(1.03);
-      border-color: #00ffcc; background: rgba(0, 255, 204, 0.15);
-      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
-    }
+    .os-card i { font-size: 1.8rem; color: #00ffcc; margin-bottom: 8px; display: block; }
+    .os-card h3 { font-size: 0.9rem; color: #fff; }
 
     #exit-os-btn {
-      margin-top: 25px; background: #ff4757; color: #fff; border: none;
-      padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;
-      transition: 0.3s; font-size: 0.9rem; flex-shrink: 0;
+      margin-top: 20px; background: #ff4757; color: #fff; border: none;
+      padding: 8px 20px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;
     }
 
     .modal {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
-      width: 90vw; max-width: 550px; background: rgba(10, 15, 30, 0.98);
-      border: 2px solid #00ffcc; border-radius: 14px; padding: 20px; z-index: 100;
-      display: none; opacity: 0; transition: all 0.3s ease; box-shadow: 0 0 25px rgba(0,255,204,0.4);
-      max-height: 80vh; overflow-y: auto;
+      width: 90vw; max-width: 450px; background: rgba(10, 15, 30, 0.99);
+      border: 2px solid #00ffcc; border-radius: 12px; padding: 15px; z-index: 300;
+      display: none; opacity: 0; transition: all 0.3s ease; max-height: 75vh; overflow-y: auto;
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 8px; margin-bottom: 12px; }
-    .modal-title { font-size: 1.1rem; color: #00ffcc; font-weight: 800; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
-    .modal-body { color: #e2e8f0; font-size: 0.9rem; line-height: 1.6; }
-    .modal-body li { margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; border-right: 3px solid #00ffcc; list-style: none; }
-    #audio-player-modal iframe { width: 100%; height: 220px; border: none; border-radius: 8px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 6px; margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; color: #00ffcc; font-weight: 800; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; }
+    .modal-body { color: #e2e8f0; font-size: 0.85rem; line-height: 1.5; }
+    .modal-body li { margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 4px; border-right: 3px solid #00ffcc; list-style: none; }
+    #audio-player-modal iframe { width: 100%; height: 200px; border: none; border-radius: 6px; }
 
-    @media (max-width: 600px) {
-      #top-bar { justify-content: center; }
-      .nav-center { display: none; }
-      .desktop-grid { grid-template-columns: 1fr 1fr; }
+    @media (min-width: 768px) {
+      .nav-center { display: block; }
+      .desktop-grid { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
+      .hover-btn { padding: 6px 12px; font-size: 0.85rem; }
+      #top-bar { height: 60px; padding: 0 20px; }
     }
   </style>
 </head>
@@ -104,76 +91,56 @@
 
   <div id="top-bar">
     <div class="nav-left">
-      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> Youssef OS</button>
-      <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</button>
-      <button class="hover-btn" id="audio-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
+      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> OS</button>
+      <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Term</button>
+      <button class="hover-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
     </div>
     <div class="nav-center">Youssef's World</div>
-    <div class="nav-right">YOUSSEF.3D <i class="fas fa-cube"></i></div>
+    <div class="nav-right">YOUSSEF.3D</div>
   </div>
 
   <div id="canvas-container"></div>
 
   <div id="desktop-ui">
     <div class="desktop-grid">
-      <div class="os-card" onclick="openModal('modal-projects')">
-        <i class="fas fa-code"></i>
-        <h3>المشاريع</h3>
-      </div>
-      <div class="os-card" onclick="openModal('modal-skills')">
-        <i class="fas fa-bolt"></i>
-        <h3>المهارات</h3>
-      </div>
-      <div class="os-card" onclick="openModal('modal-about')">
-        <i class="fas fa-user-shield"></i>
-        <h3>عنّي</h3>
-      </div>
-      <div class="os-card" onclick="openModal('modal-contact')">
-        <i class="fas fa-envelope"></i>
-        <h3>التواصل</h3>
-      </div>
+      <div class="os-card" onclick="openModal('modal-projects')"><i class="fas fa-code"></i><h3>المشاريع</h3></div>
+      <div class="os-card" onclick="openModal('modal-skills')"><i class="fas fa-bolt"></i><h3>المهارات</h3></div>
+      <div class="os-card" onclick="openModal('modal-about')"><i class="fas fa-user-shield"></i><h3>عنّي</h3></div>
+      <div class="os-card" onclick="openModal('modal-contact')"><i class="fas fa-envelope"></i><h3>التواصل</h3></div>
     </div>
-    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-power-off"></i> الخروج للغرفة الـ 3D</button>
+    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-power-off"></i> العودة للغرفة</button>
   </div>
 
   <!-- Modals -->
   <div id="modal-audio" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header">
-      <h3 class="modal-title">📖 تلاوة الشيخ محمد صديق المنشاوي</h3>
-      <button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button>
-    </div>
-    <div class="modal-body" id="audio-player-modal">
-      <iframe src="https://www.youtube.com/embed/yRXXtvZYHn4" title="سورة النجم - المنشاوي" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
+    <div class="modal-header"><h3 class="modal-title">📖 تلاوة المنشاوي</h3><button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button></div>
+    <div class="modal-body" id="audio-player-modal"><iframe src="https://www.youtube.com/embed/yRXXtvZYHn4" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
   </div>
 
   <div id="modal-projects" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📂 قسم المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
+    <div class="modal-header"><h3 class="modal-title">📂 المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>Youssef OS 3D Portfolio:</strong> معرض أعمال تفاعلي ثلاثي الأبعاد مصمم بـ Three.js.</li>
-        <li><strong>Python Security Tools:</strong> سكريبتات وأدوات أتمتة موجهة للأمن السيبراني.</li>
-        <li><strong>Cybersecurity Virtual Labs:</strong> بيئات شبكات واختبار اختراق على VirtualBox و Kali.</li>
+        <li><strong>Youssef OS:</strong> معرض أعمال تفاعلي 3D.</li>
+        <li><strong>Python Tools:</strong> أدوات أتمتة وأمن سيبراني.</li>
+        <li><strong>Cybersecurity Labs:</strong> بيئات شبكات على Kali Linux.</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-skills" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">⚡ المهارات والتقنيات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
+    <div class="modal-header"><h3 class="modal-title">⚡ المهارات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>البرمجة والتطوير:</strong> C++, Python, JavaScript, HTML5, CSS3, Node.js, Three.js</li>
-        <li><strong>الأمن السيبراني:</strong> Ethical Hacking, Nmap, Metasploit, Linux Terminal</li>
-        <li><strong>أنظمة التشغيل:</strong> Parrot OS, Kali Linux, Windows</li>
+        <li><strong>البرمجة:</strong> C++, Python, JavaScript, HTML/CSS, Three.js</li>
+        <li><strong>الأمن:</strong> Ethical Hacking, Metasploit, Nmap</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-about" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">🛡️ عنّي</h3><button class="close-modal" onclick="closeModal(event, 'modal-about')">✖ إغلاق</button></div>
-    <div class="modal-body">
-      <p>أهلاً بك! أنا يوسف بدر، طالب علوم حاسب، مهتم ومبتكر في مجالات تطوير البرمجيات واختبار الاختراق والأمن السيبراني.</p>
-    </div>
+    <div class="modal-body"><p>أنا يوسف بدر، طالب علوم حاسب، مهتم بتطوير البرمجيات والأمن السيبراني.</p></div>
   </div>
 
   <div id="modal-contact" class="modal" onclick="stopPropagation(event)">
@@ -181,7 +148,6 @@
     <div class="modal-body">
       <ul>
         <li><strong>GitHub:</strong> ybadr2008-oss</li>
-        <li><strong>التخصص:</strong> Computer Science / Cybersecurity</li>
         <li><strong>الموقع:</strong> الشرقية، مصر</li>
       </ul>
     </div>
@@ -189,11 +155,8 @@
 
   <div id="modal-terminal" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">💻 Terminal</h3><button class="close-modal" onclick="closeModal(event, 'modal-terminal')">✖ إغلاق</button></div>
-    <div class="modal-body" style="font-family: monospace; background: #000; padding: 12px; border-radius: 8px; color: #00ffcc;">
-      <p>youssef@os:~$ whoami</p>
-      <p style="color: #fff;">youssef_badr_developer</p>
-      <p>youssef@os:~$ status</p>
-      <p style="color: #fff;">Parrot OS Environment Active [OK]</p>
+    <div class="modal-body" style="font-family: monospace; background: #000; padding: 10px; border-radius: 6px; color: #00ffcc;">
+      <p>youssef@os:~$ whoami</p><p style="color: #fff;">youssef_badr</p>
     </div>
   </div>
 
@@ -204,21 +167,18 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(e, id) { if (e) e.stopPropagation(); document.getElementById(id).classList.remove('active'); }
 
-    // --- Scene Setup ---
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x04060c);
     scene.fog = new THREE.FogExp2(0x04060c, 0.08);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const isMobile = window.innerWidth < 600;
-    camera.position.set(0, isMobile ? 3.2 : 2.8, isMobile ? 7.0 : 5.5);
+    const isMobile = window.innerWidth < 768;
+    camera.position.set(0, isMobile ? 3.4 : 2.8, isMobile ? 6.5 : 5.5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -226,183 +186,83 @@
     controls.maxPolarAngle = Math.PI / 2 - 0.05;
     controls.target.set(0, 1.1, 0);
 
-    // --- Lighting ---
-    const ambientLight = new THREE.AmbientLight(0x0f172a, 1.5);
-    scene.add(ambientLight);
-
+    scene.add(new THREE.AmbientLight(0x0f172a, 1.5));
     const blueSpot = new THREE.SpotLight(0x00ffcc, 4);
     blueSpot.position.set(-3, 5, 2);
-    blueSpot.angle = Math.PI / 4;
     scene.add(blueSpot);
 
-    const purpleSpot = new THREE.SpotLight(0x8b5cf6, 3);
-    purpleSpot.position.set(3, 4, -1);
-    purpleSpot.angle = Math.PI / 3;
-    scene.add(purpleSpot);
-
-    // --- Floor & Grid ---
-    const floorGeo = new THREE.PlaneGeometry(30, 30);
-    const floorMat = new THREE.MeshStandardMaterial({ color: 0x0b0f19, roughness: 0.1, metalness: 0.8 });
-    const floor = new THREE.Mesh(floorGeo, floorMat);
+    // Floor & Grid
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x0b0f19, roughness: 0.1, metalness: 0.8 }));
     floor.rotation.x = -Math.PI / 2;
     scene.add(floor);
-
     const grid = new THREE.GridHelper(30, 40, 0x00ffcc, 0x1e293b);
     grid.position.y = 0.01;
     scene.add(grid);
 
-    // Particles
-    const particleGeo = new THREE.BufferGeometry();
-    const particleCount = 300;
-    const posArray = new Float32Array(particleCount * 3);
-    for(let i=0; i<particleCount*3; i++) { posArray[i] = (Math.random() - 0.5) * 15; }
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particleMat = new THREE.PointsMaterial({ size: 0.03, color: 0x00ffcc, transparent: true, opacity: 0.6 });
-    const particles = new THREE.Points(particleGeo, particleMat);
-    scene.add(particles);
-
-    // --- Desk ---
+    // Desk
     const deskGroup = new THREE.Group();
     const darkMetalMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 });
-    const neonEdgeMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
-
     const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), darkMetalMat);
     deskTop.position.set(0, 1.1, 0);
     deskGroup.add(deskTop);
-
-    const neonStrip = new THREE.Mesh(new THREE.BoxGeometry(4.22, 0.02, 1.82), neonEdgeMat);
-    neonStrip.position.set(0, 1.05, 0);
-    deskGroup.add(neonStrip);
-
-    const leg1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.1, 1.6), darkMetalMat);
-    leg1.position.set(-1.9, 0.55, 0);
-    const leg2 = leg1.clone();
-    leg2.position.set(1.9, 0.55, 0);
-    deskGroup.add(leg1); deskGroup.add(leg2);
-
     scene.add(deskGroup);
 
-    // --- 1. Apple iMac (الكمبيوتر الرئيسي) ---
+    // iMac
     const pcGroup = new THREE.Group();
     const macMat = new THREE.MeshStandardMaterial({ color: 0xe2e8f0, metalness: 0.8, roughness: 0.2 });
-
     const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
     stand.position.set(0, 0.175, 0);
     pcGroup.add(stand);
-
     const pcFrame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.25, 0.04), macMat);
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
-    // Apple Logo
-    const appleCanvas = document.createElement('canvas');
-    appleCanvas.width = 128; appleCanvas.height = 128;
-    const aCtx = appleCanvas.getContext('2d');
-    aCtx.fillStyle = '#00ffcc'; aCtx.font = '80px Arial'; aCtx.textAlign = 'center';
-    aCtx.fillText('', 64, 90);
-    const appleMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.3), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(appleCanvas), transparent: true }));
-    appleMesh.position.set(0, 0.9, -0.025);
-    appleMesh.rotation.y = Math.PI;
-    pcGroup.add(appleMesh);
-
-    // Screen Texture
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024; canvas.height = 576;
-    const ctx = canvas.getContext('2d');
+    const canvasTex = document.createElement('canvas');
+    canvasTex.width = 1024; canvasTex.height = 576;
+    const ctx = canvasTex.getContext('2d');
     ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
     ctx.fillStyle = '#00ffcc'; ctx.font = 'bold 42px Cairo, sans-serif';
-    ctx.fillText('Youssef OS (إضغط هنا للفتح)', 260, 90);
-
+    ctx.fillText('Youssef OS (اضغط هنا للفتح)', 230, 90);
     ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 4;
     ctx.strokeRect(60, 160, 200, 160); ctx.fillText('📂 المشاريع', 80, 250);
     ctx.strokeRect(300, 160, 200, 160); ctx.fillText('⚡ المهارات', 320, 250);
     ctx.strokeRect(540, 160, 200, 160); ctx.fillText('🛡️ عنّي', 580, 250);
     ctx.strokeRect(780, 160, 200, 160); ctx.fillText('📬 التواصل', 790, 250);
 
-    const pcScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.92, 1.17), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas) }));
+    const pcScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.92, 1.17), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvasTex) }));
     pcScreenMesh.position.set(0, 0.9, 0.022);
-    pcScreenMesh.name = "pc_screen";
     pcGroup.add(pcScreenMesh);
-
     pcGroup.position.set(-0.2, 1.14, -0.2);
     scene.add(pcGroup);
 
-    // --- 2. Apple MacBook Air (اللاب توب) ---
-    const laptopGroup = new THREE.Group();
-    const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
-    laptopGroup.add(lapBase);
-
-    const lapLid = new THREE.Group();
-    const lapFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.7, 0.02), macMat);
-    lapFrame.position.set(0, 0.35, 0);
-    lapLid.add(lapFrame);
-
-    const lapApple = appleMesh.clone();
-    lapApple.scale.set(0.7, 0.7, 0.7);
-    lapApple.position.set(0, 0.35, -0.015);
-    lapLid.add(lapApple);
-
-    const lapCanvas = document.createElement('canvas');
-    lapCanvas.width = 800; lapCanvas.height = 500;
-    const lCtx = lapCanvas.getContext('2d');
-    lCtx.fillStyle = '#05070a'; lCtx.fillRect(0, 0, 800, 500);
-    lCtx.fillStyle = '#111827'; lCtx.fillRect(0, 0, 800, 30);
-    lCtx.fillStyle = '#00ffcc'; lCtx.font = '14px monospace'; lCtx.fillText('Parrot OS Security | Terminal', 20, 20);
-    lCtx.fillStyle = '#000000'; lCtx.fillRect(40, 60, 420, 380);
-    lCtx.fillStyle = '#00ffcc'; lCtx.font = 'bold 16px monospace'; lCtx.fillText('ParrotSec - Aircrack-ng', 55, 90);
-    lCtx.fillStyle = '#22c55e'; lCtx.font = '13px monospace'; lCtx.fillText('Executing aircrack-ng --help', 55, 120);
-
-    const parrotDisplay = new THREE.Mesh(new THREE.PlaneGeometry(1.04, 0.64), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(lapCanvas) }));
-    parrotDisplay.position.set(0, 0.35, 0.012);
-    lapLid.add(parrotDisplay);
-
-    lapLid.position.set(0, 0, -0.36);
-    lapLid.rotation.x = -0.25;
-    laptopGroup.add(lapLid);
-
-    laptopGroup.position.set(1.3, 1.15, 0.2);
-    laptopGroup.rotation.y = -0.35;
-    scene.add(laptopGroup);
-
-    // --- Touch / Click Handler for Mobile & Desktop ---
+    // Interaction
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    function handleInteraction(event) {
+    function handleInteraction(e) {
       if (document.getElementById('desktop-ui').style.display === 'flex') return;
-      
-      let clientX = event.clientX;
-      let clientY = event.clientY;
-
-      if (event.changedTouches && event.changedTouches.length > 0) {
-        clientX = event.changedTouches[0].clientX;
-        clientY = event.changedTouches[0].clientY;
+      let clientX = e.clientX, clientY = e.clientY;
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        clientX = e.changedTouches[0].clientX;
+        clientY = e.changedTouches[0].clientY;
       }
-
-      if (!clientX || !clientY) return;
-
       mouse.x = (clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(clientY / window.innerHeight) * 2 + 1;
-      
       raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObject(pcScreenMesh);
-      if (intersects.length > 0) openDesktopUI();
+      if (raycaster.intersectObject(pcScreenMesh).length > 0) openDesktopUI();
     }
 
-    window.addEventListener('touchend', handleInteraction, false);
-    window.addEventListener('click', handleInteraction, false);
+    window.addEventListener('touchend', handleInteraction);
+    window.addEventListener('click', handleInteraction);
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
-      const isMob = window.innerWidth < 600;
-      camera.position.set(0, isMob ? 3.2 : 2.8, isMob ? 7.0 : 5.5);
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
     function animate() {
       requestAnimationFrame(animate);
-      particles.rotation.y += 0.0008;
       controls.update();
       renderer.render(scene, camera);
     }
