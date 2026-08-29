@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Youssef's World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,103 +12,100 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
     body, html { width: 100%; height: 100%; overflow: hidden; background-color: #030712; color: #fff; }
-    #canvas-container { width: 100%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; touch-action: none; }
+    #canvas-container { width: 100%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; }
     
     #top-bar {
-      position: absolute; top: 0; left: 0; width: 100%; min-height: 60px;
-      background: rgba(10, 15, 30, 0.92); backdrop-filter: blur(12px);
+      position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+      background: rgba(10, 15, 30, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0, 255, 204, 0.3); z-index: 50;
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 8px 15px; gap: 10px;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 25px;
     }
     
-    .nav-left { display: flex; gap: 8px; z-index: 52; flex-wrap: wrap; }
+    .nav-left { display: flex; gap: 12px; z-index: 52; }
     
     .hover-btn {
       background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      color: #00ffcc; padding: 8px 18px; border-radius: 8px; font-size: 0.9rem;
+      cursor: pointer; display: flex; align-items: center; gap: 8px;
       transition: all 0.25s ease;
     }
-    .hover-btn:hover, .hover-btn:active {
+    .hover-btn:hover {
       background: #00ffcc; color: #000;
-      box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
     }
     
     .nav-center {
-      font-family: 'Orbitron', sans-serif; font-size: 0.9rem; font-weight: 800;
-      color: #00ffcc; text-transform: uppercase; letter-spacing: 1px;
-      text-shadow: 0 0 8px rgba(0, 255, 204, 0.5); pointer-events: none;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 800;
+      color: #00ffcc; text-transform: uppercase; letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); pointer-events: none;
     }
     
     .nav-right {
-      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 0.9rem;
-      color: #38bdf8; display: flex; align-items: center; gap: 6px; z-index: 52;
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.1rem;
+      color: #38bdf8; display: flex; align-items: center; gap: 8px; z-index: 52;
     }
 
     #desktop-ui {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100vh;
-      background: rgba(7, 11, 25, 0.97); backdrop-filter: blur(16px); z-index: 80; display: none;
-      padding: 70px 20px 30px 20px; flex-direction: column; justify-content: center; align-items: center; overflow-y: auto;
+      position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 60px);
+      background: rgba(7, 11, 25, 0.95); backdrop-filter: blur(12px); z-index: 40; display: none; padding: 40px;
+      flex-direction: column; justify-content: center; align-items: center;
     }
     
     .desktop-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px; max-width: 800px; width: 100%; justify-content: center; align-items: center;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px; max-width: 900px; width: 100%; justify-content: center; align-items: center;
     }
     
     .os-card {
-      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(0, 255, 204, 0.3);
-      border-radius: 12px; padding: 20px 15px; text-align: center; cursor: pointer;
+      background: rgba(15, 23, 42, 0.9); border: 2px solid rgba(0, 255, 204, 0.3);
+      border-radius: 16px; padding: 35px 20px; text-align: center; cursor: pointer;
       transition: all 0.3s ease;
     }
-    .os-card i { font-size: 2.2rem; color: #00ffcc; margin-bottom: 10px; display: block; }
-    .os-card h3 { font-size: 1rem; color: #fff; }
+    .os-card i { font-size: 3rem; color: #00ffcc; margin-bottom: 15px; display: block; }
+    .os-card h3 { font-size: 1.3rem; color: #fff; }
     
-    .os-card:active, .os-card:hover {
-      transform: scale(1.03);
+    .os-card:hover {
+      transform: scale(1.05) translateY(-5px);
       border-color: #00ffcc; background: rgba(0, 255, 204, 0.15);
-      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 255, 204, 0.3);
     }
 
     #exit-os-btn {
-      margin-top: 25px; background: #ff4757; color: #fff; border: none;
-      padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;
-      transition: 0.3s; font-size: 0.9rem; flex-shrink: 0;
+      margin-top: 40px; background: #ff4757; color: #fff; border: none;
+      padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer;
+      transition: 0.3s; font-size: 1rem;
     }
+    #exit-os-btn:hover { background: #ff2338; transform: scale(1.05); }
 
     .modal {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
-      width: 90vw; max-width: 550px; background: rgba(10, 15, 30, 0.98);
-      border: 2px solid #00ffcc; border-radius: 14px; padding: 20px; z-index: 100;
-      display: none; opacity: 0; transition: all 0.3s ease; box-shadow: 0 0 25px rgba(0,255,204,0.4);
-      max-height: 80vh; overflow-y: auto;
+      width: 85vw; max-width: 650px; background: rgba(10, 15, 30, 0.96);
+      border: 2px solid #00ffcc; border-radius: 16px; padding: 25px; z-index: 100;
+      display: none; opacity: 0; transition: all 0.3s ease; box-shadow: 0 0 30px rgba(0,255,204,0.4);
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 8px; margin-bottom: 12px; }
-    .modal-title { font-size: 1.1rem; color: #00ffcc; font-weight: 800; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.8rem; }
-    .modal-body { color: #e2e8f0; font-size: 0.9rem; line-height: 1.6; }
-    .modal-body li { margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; border-right: 3px solid #00ffcc; list-style: none; }
-    #audio-player-modal iframe { width: 100%; height: 220px; border: none; border-radius: 8px; }
-
-    @media (max-width: 600px) {
-      #top-bar { justify-content: center; }
-      .nav-center { display: none; }
-      .desktop-grid { grid-template-columns: 1fr 1fr; }
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 10px; margin-bottom: 15px; }
+    .modal-title { font-size: 1.4rem; color: #00ffcc; font-weight: 800; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .close-modal:hover { background: #ff2338; }
+    .modal-body { color: #e2e8f0; font-size: 1rem; line-height: 1.8; }
+    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 6px; border-right: 3px solid #00ffcc; list-style: none; }
+    #audio-player-modal iframe { width: 100%; height: 300px; border: none; border-radius: 10px; }
   </style>
 </head>
 <body>
 
   <div id="top-bar">
     <div class="nav-left">
-      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> Youssef OS</button>
+      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> فتح Youssef OS</button>
       <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</button>
-      <button class="hover-btn" id="audio-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
+      <button class="hover-btn" id="audio-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> تلاوة المنشاوي</button>
     </div>
-    <div class="nav-center">Youssef's World</div>
+    <div class="nav-center">Welcome to Youssef's World</div>
     <div class="nav-right">YOUSSEF.3D <i class="fas fa-cube"></i></div>
   </div>
 
@@ -143,7 +140,7 @@
       <button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button>
     </div>
     <div class="modal-body" id="audio-player-modal">
-      <iframe src="https://www.youtube.com/embed/yRXXtvZYHn4" title="سورة النجم - المنشاوي" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/yRXXtvZYHn4?autoplay=1" title="سورة النجم - المنشاوي" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -189,7 +186,7 @@
 
   <div id="modal-terminal" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">💻 Terminal</h3><button class="close-modal" onclick="closeModal(event, 'modal-terminal')">✖ إغلاق</button></div>
-    <div class="modal-body" style="font-family: monospace; background: #000; padding: 12px; border-radius: 8px; color: #00ffcc;">
+    <div class="modal-body" style="font-family: monospace; background: #000; padding: 15px; border-radius: 8px; color: #00ffcc;">
       <p>youssef@os:~$ whoami</p>
       <p style="color: #fff;">youssef_badr_developer</p>
       <p>youssef@os:~$ status</p>
@@ -211,12 +208,11 @@
     scene.fog = new THREE.FogExp2(0x04060c, 0.08);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const isMobile = window.innerWidth < 600;
-    camera.position.set(0, isMobile ? 3.2 : 2.8, isMobile ? 7.0 : 5.5);
+    camera.position.set(0, 2.8, 5.5);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     container.appendChild(renderer.domElement);
@@ -240,7 +236,7 @@
     purpleSpot.angle = Math.PI / 3;
     scene.add(purpleSpot);
 
-    // --- Floor & Grid ---
+    // --- Reflective Dark Cyber Floor ---
     const floorGeo = new THREE.PlaneGeometry(30, 30);
     const floorMat = new THREE.MeshStandardMaterial({ color: 0x0b0f19, roughness: 0.1, metalness: 0.8 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
@@ -251,9 +247,9 @@
     grid.position.y = 0.01;
     scene.add(grid);
 
-    // Particles
+    // Dust Particles Effect
     const particleGeo = new THREE.BufferGeometry();
-    const particleCount = 300;
+    const particleCount = 400;
     const posArray = new Float32Array(particleCount * 3);
     for(let i=0; i<particleCount*3; i++) { posArray[i] = (Math.random() - 0.5) * 15; }
     particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
@@ -261,19 +257,22 @@
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // --- Desk ---
+    // --- Futuristic Sleek Desk ---
     const deskGroup = new THREE.Group();
     const darkMetalMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, metalness: 0.9, roughness: 0.2 });
     const neonEdgeMat = new THREE.MeshBasicMaterial({ color: 0x00ffcc });
 
+    // Table Top
     const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), darkMetalMat);
     deskTop.position.set(0, 1.1, 0);
     deskGroup.add(deskTop);
 
+    // Neon Strip under Desk
     const neonStrip = new THREE.Mesh(new THREE.BoxGeometry(4.22, 0.02, 1.82), neonEdgeMat);
     neonStrip.position.set(0, 1.05, 0);
     deskGroup.add(neonStrip);
 
+    // Desk Legs
     const leg1 = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.1, 1.6), darkMetalMat);
     leg1.position.set(-1.9, 0.55, 0);
     const leg2 = leg1.clone();
@@ -294,30 +293,31 @@
     pcFrame.position.set(0, 0.9, 0);
     pcGroup.add(pcFrame);
 
-    // Apple Logo
+    // Apple Logo Back
     const appleCanvas = document.createElement('canvas');
     appleCanvas.width = 128; appleCanvas.height = 128;
     const aCtx = appleCanvas.getContext('2d');
     aCtx.fillStyle = '#00ffcc'; aCtx.font = '80px Arial'; aCtx.textAlign = 'center';
     aCtx.fillText('', 64, 90);
-    const appleMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.3), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(appleCanvas), transparent: true }));
+    const appleTex = new THREE.CanvasTexture(appleCanvas);
+    const appleMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.3), new THREE.MeshBasicMaterial({ map: appleTex, transparent: true }));
     appleMesh.position.set(0, 0.9, -0.025);
     appleMesh.rotation.y = Math.PI;
     pcGroup.add(appleMesh);
 
-    // Screen Texture
+    // Youssef OS Screen
     const canvas = document.createElement('canvas');
     canvas.width = 1024; canvas.height = 576;
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#070b19'; ctx.fillRect(0, 0, 1024, 576);
-    ctx.fillStyle = '#00ffcc'; ctx.font = 'bold 42px Cairo, sans-serif';
-    ctx.fillText('Youssef OS (إضغط هنا للفتح)', 260, 90);
+    ctx.fillStyle = '#00ffcc'; ctx.font = 'bold 38px Cairo, sans-serif';
+    ctx.fillText('Youssef OS (إضغط هنا للفتح)', 310, 80);
 
     ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 4;
-    ctx.strokeRect(60, 160, 200, 160); ctx.fillText('📂 المشاريع', 80, 250);
-    ctx.strokeRect(300, 160, 200, 160); ctx.fillText('⚡ المهارات', 320, 250);
-    ctx.strokeRect(540, 160, 200, 160); ctx.fillText('🛡️ عنّي', 580, 250);
-    ctx.strokeRect(780, 160, 200, 160); ctx.fillText('📬 التواصل', 790, 250);
+    ctx.strokeRect(60, 150, 200, 160); ctx.fillText('📂 المشاريع', 80, 240);
+    ctx.strokeRect(300, 150, 200, 160); ctx.fillText('⚡ المهارات', 320, 240);
+    ctx.strokeRect(540, 150, 200, 160); ctx.fillText('🛡️ عنّي', 580, 240);
+    ctx.strokeRect(780, 150, 200, 160); ctx.fillText('📬 التواصل', 790, 240);
 
     const pcScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.92, 1.17), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas) }));
     pcScreenMesh.position.set(0, 0.9, 0.022);
@@ -337,11 +337,13 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
+    // Apple Logo on Lid
     const lapApple = appleMesh.clone();
     lapApple.scale.set(0.7, 0.7, 0.7);
     lapApple.position.set(0, 0.35, -0.015);
     lapLid.add(lapApple);
 
+    // Parrot OS Screen
     const lapCanvas = document.createElement('canvas');
     lapCanvas.width = 800; lapCanvas.height = 500;
     const lCtx = lapCanvas.getContext('2d');
@@ -364,38 +366,22 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- Touch / Click Handler for Mobile & Desktop ---
+    // --- Raycasting for 3D PC Screen ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    function handleInteraction(event) {
+    window.addEventListener('click', (event) => {
       if (document.getElementById('desktop-ui').style.display === 'flex') return;
-      
-      let clientX = event.clientX;
-      let clientY = event.clientY;
-
-      if (event.changedTouches && event.changedTouches.length > 0) {
-        clientX = event.changedTouches[0].clientX;
-        clientY = event.changedTouches[0].clientY;
-      }
-
-      if (!clientX || !clientY) return;
-
-      mouse.x = (clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(clientY / window.innerHeight) * 2 + 1;
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
       
       raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObject(pcScreenMesh);
+      const intersects = raycaster.intersectObjects([pcScreenMesh]);
       if (intersects.length > 0) openDesktopUI();
-    }
-
-    window.addEventListener('touchend', handleInteraction, false);
-    window.addEventListener('click', handleInteraction, false);
+    });
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
-      const isMob = window.innerWidth < 600;
-      camera.position.set(0, isMob ? 3.2 : 2.8, isMob ? 7.0 : 5.5);
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
