@@ -30,7 +30,9 @@
       background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 255, 204, 0.4);
       color: #00ffcc; padding: 5px 9px; border-radius: 6px; font-size: 0.75rem;
       cursor: pointer; display: flex; align-items: center; gap: 5px;
+      transition: all 0.2s ease;
     }
+    .hover-btn:hover { background: rgba(0, 255, 204, 0.2); transform: scale(1.05); color: #fff; }
     
     .nav-center {
       font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 800;
@@ -51,20 +53,33 @@
     
     .desktop-grid {
       display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 12px; max-width: 400px; width: 100%;
+      gap: 15px; max-width: 500px; width: 100%;
     }
     
     .os-card {
-      background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(0, 255, 204, 0.3);
-      border-radius: 10px; padding: 15px 10px; text-align: center; cursor: pointer;
+      background: rgba(15, 23, 42, 0.9); border: 2px solid rgba(0, 255, 204, 0.3);
+      border-radius: 12px; padding: 20px 15px; text-align: center; cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .os-card i { font-size: 1.8rem; color: #00ffcc; margin-bottom: 8px; display: block; }
-    .os-card h3 { font-size: 0.9rem; color: #fff; }
+    .os-card i { font-size: 2.2rem; color: #00ffcc; margin-bottom: 10px; display: block; transition: transform 0.3s; }
+    .os-card h3 { font-size: 1.1rem; color: #fff; transition: color 0.3s; }
+    
+    /* تأثير الحجم واللون عند مرور الماوس على الاختيارات داخل Youssef OS */
+    .os-card:hover {
+      transform: scale(1.1);
+      background: rgba(0, 255, 204, 0.15);
+      border-color: #00ffcc;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+    }
+    .os-card:hover i { transform: scale(1.2); color: #38bdf8; }
+    .os-card:hover h3 { color: #00ffcc; }
 
     #exit-os-btn {
-      margin-top: 20px; background: #ff4757; color: #fff; border: none;
-      padding: 8px 20px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer;
+      margin-top: 25px; background: #ff4757; color: #fff; border: none;
+      padding: 10px 25px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
+      transition: transform 0.2s;
     }
+    #exit-os-btn:hover { transform: scale(1.05); background: #ff6b81; }
 
     .modal {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
@@ -82,7 +97,7 @@
 
     @media (min-width: 768px) {
       .nav-center { display: block; }
-      .desktop-grid { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
+      .desktop-grid { grid-template-columns: repeat(4, 1fr); max-width: 850px; }
       .hover-btn { padding: 6px 12px; font-size: 0.85rem; }
       #top-bar { height: 60px; padding: 0 20px; }
     }
@@ -96,7 +111,7 @@
       <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</button>
       <button class="hover-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
     </div>
-    <div class="nav-center">Youssef's World</div>
+    <div class="nav-center">Welcome to Youssef's World</div>
     <div class="nav-right">YOUSSEF.3D <i class="fas fa-cube"></i></div>
   </div>
 
@@ -236,9 +251,9 @@
       ctx.shadowColor = glowColor;
       ctx.shadowBlur = 15;
       ctx.fillStyle = glowColor; 
-      ctx.font = 'bold 42px Cairo, sans-serif';
+      ctx.font = 'bold 38px Cairo, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('Youssef OS (اضغط هنا للفتح)', 512, 85);
+      ctx.fillText('Welcome to Youssef\'s World', 512, 85);
       ctx.shadowBlur = 0;
 
       // الكروت الأربعة مع دعم تفاعل الحجم واللون عند مرور الماوس
@@ -291,14 +306,14 @@
     lapFrame.position.set(0, 0.35, 0);
     lapLid.add(lapFrame);
 
-    // تحميل صورة خلفية Parrot OS للاب توب
+    // تحميل صورة خلفية Parrot OS المحددة للاب توب
     const lapCanvas = document.createElement('canvas');
     lapCanvas.width = 1200; lapCanvas.height = 675;
     const lCtx = lapCanvas.getContext('2d');
     
     const bgImg = new Image();
     bgImg.crossOrigin = "anonymous";
-    bgImg.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg'; // رابط الخلفية اللي بعتها
+    bgImg.src = 'https://i.ibb.co/3ykV2N7x/Screenshot-2026-08-29-132602-2.jpg';
     bgImg.onload = function() {
       lCtx.drawImage(bgImg, 0, 0, lapCanvas.width, lapCanvas.height);
       lapTexture.needsUpdate = true;
@@ -320,7 +335,7 @@
     laptopGroup.rotation.y = -0.35;
     scene.add(laptopGroup);
 
-    // --- تأثير تلوين العنوان وتفاعل الماوس على الشاشة ---
+    // --- تأثير تفاعل الماوس والألوان ---
     let colorTimer = 0;
     let hoveredCardIndex = -1;
 
@@ -336,7 +351,6 @@
       
       if (intersects.length > 0) {
         const uv = intersects[0].uv;
-        // إحداثيات الـ UV الخاصة بالكانفاس لتححديد الكارت الذي يقف عليه الماوس
         const px = uv.x * 1024;
         const py = (1 - uv.y) * 576;
         
