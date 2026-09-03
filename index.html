@@ -45,32 +45,31 @@
       pointer-events: none;
     }
 
-    /* قص الجزء العلوي أوتوماتيك بالبرمجة وتظبيطه في الخلفية */
+    /* عرض الصورة بنفس الكادر اللي ظبطته بالظبط ورا الكروت */
     .bg-avatar-container {
       position: absolute;
-      top: 48%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 100%;
-      max-width: 450px;
-      height: 480px;
+      max-width: 500px;
+      height: 520px;
       z-index: 3;
       pointer-events: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0.28;
+      opacity: 0.3;
       mix-blend-mode: luminosity;
-      filter: drop-shadow(0 0 40px rgba(255, 119, 0, 0.5));
+      filter: drop-shadow(0 0 45px rgba(255, 119, 0, 0.45));
     }
 
     .bg-avatar-container img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      object-position: center 15%; /* بيجيب النصف العلوي (الراس والكتفين) بس */
-      mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
-      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+      object-fit: contain; /* عشان يجيب الكادر كاملاً زي ما انت مظبطه */
+      mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 90%);
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 90%);
     }
 
     .top-bar {
@@ -283,7 +282,7 @@
       .top-bar .side-text-left { font-size: 0.75rem; }
       .hero-name { font-size: 2rem; }
       .cyber-card { min-height: 200px; padding: 30px 20px; }
-      .bg-avatar-container { max-width: 320px; height: 380px; opacity: 0.25; }
+      .bg-avatar-container { max-width: 340px; height: 360px; opacity: 0.28; }
     }
   </style>
 </head>
@@ -292,7 +291,7 @@
   <canvas id="space-canvas"></canvas>
   <div class="cosmic-glow"></div>
 
-  <!-- صورة يوسف بتتقص وتعرض النصف العلوي أوتوماتيك خلف الكروت -->
+  <!-- عرض الصورة بالكادر المطلوب بالظبط ورا الكروت -->
   <div class="bg-avatar-container">
     <img src="youssef-avatar.jpg" alt="Youssef Badr">
   </div>
