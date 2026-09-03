@@ -165,6 +165,9 @@
 
       try {
         const response = await fetch(SHEET_API_URL);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
         const data = await response.json();
 
         // تنظيف الرقم المدخل وحذف أي رموز لتجنب الأخطاء
@@ -193,6 +196,7 @@
           resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
         }
       } catch (error) {
+        console.error("Error:", error);
         resultText.innerHTML = `<span style="color:#c53030;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
       }
     }
