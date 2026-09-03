@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Youssef | AI & Cybersecurity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
     body {
       background-color: #030712;
       color: #fff;
@@ -22,15 +21,16 @@
       justify-content: center;
       overflow-x: hidden;
       position: relative;
+      -webkit-font-smoothing: antialiased; /* تظبيط حِدة الخطوط على الموبايل */
     }
 
-    /* خلفية نيون خفيفة جمالية */
+    /* خلفية نيون عملاقة وفاجرة */
     body::before {
       content: '';
       position: absolute;
-      width: 500px; height: 500px;
-      background: rgba(0, 255, 204, 0.05);
-      filter: blur(150px);
+      width: 600px; height: 600px;
+      background: rgba(0, 255, 204, 0.08);
+      filter: blur(120px);
       border-radius: 50%;
       z-index: 0;
     }
@@ -49,38 +49,37 @@
     /* العنوان الرئيسي الفاجر */
     .main-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 900;
       color: #00ffcc;
       text-align: center;
-      margin-bottom: 40px;
-      text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-      letter-spacing: 1px;
+      margin-bottom: 35px;
+      text-shadow: 0 0 25px rgba(0, 255, 204, 0.6), 0 0 10px rgba(0, 255, 204, 0.4);
+      letter-spacing: 1.5px;
     }
 
     /* شبكة الكروت (2x2) */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
+      gap: 25px;
       width: 100%;
-      max-width: 800px;
-      perspective: 1000px;
+      max-width: 750px;
     }
 
-    /* تصميم الكارت الفاجر مع الانعكاس والأنيميشن */
+    /* تصميم الكارت الفاجر بجرافيك عالي وناعم */
     .cyber-card {
-      background: rgba(15, 23, 42, 0.85);
-      border: 2px solid rgba(0, 255, 204, 0.3);
-      border-radius: 20px;
-      padding: 35px 20px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(7, 11, 25, 0.98));
+      border: 2px solid rgba(0, 255, 204, 0.4);
+      border-radius: 22px;
+      padding: 30px 15px;
       text-align: center;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 255, 204, 0.05);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      backdrop-filter: blur(12px);
     }
 
     /* خط إضاءة نيون متحرك فوق الكارت */
@@ -89,74 +88,71 @@
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
-      transition: 0.5s;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.2), transparent);
+      transition: 0.6s;
     }
 
-    .cyber-card:hover::before {
+    .cyber-card:active::before, .cyber-card:hover::before {
       left: 100%;
     }
 
     .cyber-card i {
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: #00ffcc;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       display: block;
-      transition: transform 0.3s ease, color 0.3s ease;
-      text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+      text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
     }
 
     .cyber-card h3 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       color: #fff;
       font-weight: 800;
-      transition: color 0.3s ease;
+      letter-spacing: 0.5px;
     }
 
-    /* تأثير الهفر الفاجر: تكبير وانعكاس مائل للجنب وإضاءة نيون قوية */
-    .cyber-card:hover {
+    /* تأثير اللمس والهفر العنيف والفاجر */
+    .cyber-card:hover, .cyber-card:active {
       border-color: #00ffcc;
-      box-shadow: -15px 15px 35px rgba(0, 255, 204, 2), 0 0 25px rgba(0, 255, 204, 0.4);
-      transform: translateY(-8px) scale(1.05) rotateY(5deg);
-    }
-
-    .cyber-card:nth-child(even):hover {
-      transform: translateY(-8px) scale(1.05) rotateY(-5deg);
+      box-shadow: 0 0 35px rgba(0, 255, 204, 0.6), inset 0 0 20px rgba(0, 255, 204, 0.2);
+      transform: translateY(-5px) scale(1.03);
     }
 
     .cyber-card:hover i {
-      transform: scale(1.2) translateY(-5px);
       color: #38bdf8;
+      text-shadow: 0 0 25px rgba(56, 189, 248, 0.9);
     }
 
     .cyber-card:hover h3 {
       color: #00ffcc;
     }
 
-    /* نافذة المودال (Popup) لما تدوس على أي كارت */
+    /* نافذة المودال الفاجرة */
     .modal {
       position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      width: 90vw; max-width: 450px;
-      background: rgba(10, 15, 30, 0.98);
+      transform: translate(-50%, -50%) scale(0.85);
+      width: 90vw; max-width: 420px;
+      background: rgba(8, 12, 24, 0.98);
       border: 2px solid #00ffcc;
-      border-radius: 16px; padding: 25px;
+      border-radius: 18px; padding: 22px;
       z-index: 100; display: none; opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 40px rgba(0, 255, 204, 0.4);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 50px rgba(0, 255, 204, 0.5);
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 10px; margin-bottom: 15px; }
-    .modal-title { font-size: 1.2rem; color: #00ffcc; font-weight: 900; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-    .close-modal:hover { background: #ff6b81; transform: scale(1.05); }
-    .modal-body { color: #e2e8f0; font-size: 0.95rem; line-height: 1.7; }
-    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-right: 4px solid #00ffcc; list-style: none; }
+    .modal-title { font-size: 1.15rem; color: #00ffcc; font-weight: 900; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; }
+    .modal-body { color: #e2e8f0; font-size: 0.92rem; line-height: 1.7; }
+    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.04); padding: 10px 12px; border-radius: 8px; border-right: 4px solid #00ffcc; list-style: none; }
 
-    /* تجاوب الشاشات الصغيرة */
-    @media (max-width: 600px) {
-      .cards-grid { grid-template-columns: 1fr; gap: 20px; }
-      .main-title { font-size: 1.6rem; }
+    /* تجاوب الشاشات الصغيرة جداً */
+    @media (max-width: 480px) {
+      .cards-grid { gap: 15px; }
+      .cyber-card { padding: 25px 10px; border-radius: 18px; }
+      .cyber-card i { font-size: 2.4rem; }
+      .cyber-card h3 { font-size: 1.1rem; }
+      .main-title { font-size: 1.6rem; margin-bottom: 25px; }
     }
   </style>
 </head>
