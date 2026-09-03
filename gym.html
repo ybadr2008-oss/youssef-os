@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAZAHA Gym | جيم نزاهة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    
+    /* شاشة البداية الترحيبية (Splash Screen) */
+    #splash-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      color: #111;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .splash-title {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #111;
+      margin-bottom: 10px;
+      border-left: 3px solid #ff7700;
+      padding-left: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 2.5s steps(30, end);
+    }
+
+    .splash-sub {
+      font-size: 1.2rem;
+      color: #555;
+      font-weight: 600;
+      opacity: 0;
+      animation: fadeInSub 0.8s ease 2.2s forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes fadeInSub {
+      to { opacity: 1; }
+    }
+
+    /* الواجهة الأساسية للموقع (خلفية بيضاء نزيهة) */
+    body {
+      background-color: #f8f9fa;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+      padding-top: 20px;
+    }
+
+    header h1 {
+      color: #111;
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    header h1 span {
+      color: #ff7700;
+    }
+
+    header p {
+      color: #666;
+      font-size: 1.1rem;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      border: 1px solid #eaeaea;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    .card h2 {
+      color: #111;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid #f1f1f1;
+      padding-bottom: 10px;
+    }
+
+    .card h2 i {
+      color: #ff7700;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .info-box {
+      background: #fdfdfd;
+      border: 1px solid #eee;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .info-box h3 {
+      color: #ff7700;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .info-box p {
+      color: #444;
+      line-height: 1.7;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .price-tag {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #111;
+      margin-top: 8px;
+    }
+
+    .price-tag span {
+      font-size: 1rem;
+      color: #771;
+    }
+
+    /* فودافون كاش مع زرار الدفع المباشر */
+    .vodafone-section {
+      background: linear-gradient(135deg, #fff5f0, #fff);
+      border: 2px dashed #ff7700;
+      text-align: center;
+      padding: 25px;
+      border-radius: 16px;
+    }
+
+    .vodafone-number {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #d32f2f;
+      letter-spacing: 2px;
+      margin: 10px 0;
+      display: inline-block;
+    }
+
+    .pay-btn {
+      display: inline-block;
+      background: #e65100;
+      color: #ffffff;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      margin-top: 15px;
+      box-shadow: 0 5px 15px rgba(230, 81, 0, 0.3);
+      transition: 0.3s;
+    }
+
+    .pay-btn:hover {
+      background: #bf360c;
+      transform: scale(1.03);
+    }
+
+    /* نظام تتبع الاشتراك */
+    .tracker-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .tracker-box input {
+      flex: 1;
+      padding: 12px 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .tracker-box button {
+      padding: 12px 25px;
+      background: #111;
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tracker-box button:hover {
+      background: #ff7700;
+    }
+
+    .result-area {
+      margin-top: 15px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      border: 1px solid #e1e1e1;
+      font-weight: 600;
+    }
+
+    /* التعليمات */
+    ul.rules-list {
+      padding-right: 20px;
+      line-height: 2;
+      color: #333;
+      font-weight: 600;
+    }
+
+    ul.rules-list li {
+      margin-bottom: 8px;
+    }
+
+    /* قسم المتجر القادم */
+    .store-teaser {
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+    .store-teaser span {
+      color: #ff7700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شاشة الترحيب المتحركة -->
+  <div id="splash-screen">
+    <div class="splash-title" id="typing-text">مرحباً بك في جيم نزاهة</div>
+    <div class="splash-sub">Welcome to NAZAHA Gym</div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>NAZAHA <span>GYM</span></h1>
+      <p>قوتك والتزامك يبدؤون من هنا</p>
+    </header>
+
+    <!-- مواعيد العمل -->
+    <div class="card">
+      <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية (صالة تعمل 24 ساعة)</h2>
+      <div class="grid-2">
+        <div class="info-box">
+          <h3>مواعيد الرجال</h3>
+          <p>يومياً من الساعة <strong>2:00 ظهراً</strong> وحتى الساعة <strong>6:00 صباحاً</strong></p>
+        </div>
+        <div class="info-box">
+          <h3>مواعيد السيدات</h3>
+          <p>يومياً من الساعة <strong>7:00 صباحاً</strong> وحتى الساعة <strong>12:00 ظهراً</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- سعر الاشتراك -->
+    <div class="card">
+      <h2><i class="fas fa-ticket-alt"></i> تكلفة الاشتراك الشهري</h2>
+      <div style="text-align: center; padding: 10px;">
+        <p style="color: #666; font-weight: 600;">باقة شهرية شاملة كامل الأجهزة والتجهيزات</p>
+        <div class="price-tag">550 <span>جنيه / شهرياً</span></div>
+      </div>
+    </div>
+
+    <!-- فودافون كاش والدفع المباشر -->
+    <div class="card">
+      <h2><i class="fas fa-wallet"></i> الاشتراك السريع (فودافون كاش)</h2>
+      <div class="vodafone-section">
+        <p style="color: #444; font-weight: 600;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
+        <div class="vodafone-number">01017995678</div>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 10px;">يمكنك الضغط على زر الدفع المباشر لتحويل المبلغ فوراً عبر محفظتك:</p>
+        <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع الآن مباشر (*9*7...)</a>
+      </div>
+    </div>
+
+    <!-- متابعة الاشتراك -->
+    <div class="card">
+      <h2><i class="fas fa-search"></i> استعلام عن اشتراكك</h2>
+      <p style="color: #666; font-size: 0.9rem; font-weight: 600;">اكتب رقم هاتفك لمعرفة الأيام المتبقية وموعد التجديد:</p>
+      <div class="tracker-box">
+        <input type="text" id="phoneInput" placeholder="ادخل رقم الموبايل المسجل...">
+        <button onclick="checkSubscription()">استعلام</button>
+      </div>
+      <div id="resultBox" class="result-area">
+        <p id="subResultText"></p>
+      </div>
+    </div>
+
+    <!-- تعليمات المشتركين -->
+    <div class="card">
+      <h2><i class="fas fa-shield-alt"></i> تعليمات هامة للمشتركين</h2>
+      <ul class="rules-list">
+        <li>🎒 ضرورة إحضار حقيبة خاصة تحتوي على الملابس الرياضية والفوطة الشخصية.</li>
+        <li>👟 ممنوع الدخول نهائياً إلا بارتداء حذاء رياضي (Sneakers) نظيف ومخصص للجيم فقط.</li>
+        <li>🧼 المحافظة على النظافة العامة وإعادة الأوزان لمكانها بعد الانتهاء.</li>
+      </ul>
+    </div>
+
+    <!-- متجر الجيم القادم -->
+    <div class="store-teaser">
+      <p>🛒 قريباً جداً افتح <span>متجر جيم نزاهة</span> لشراء المكملات والأدوات الرياضية الخاصة!</p>
+    </div>
+  </div>
+
+  <script>
+    // إخفاء شاشة الترحيب بعد ثانيتين ونصف ودخول الموقع الحقيقي
+    setTimeout(() => {
+      const splash = document.getElementById('splash-screen');
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 800);
+    }, 2500);
+
+    // قاعدة بيانات تجريبية للاستعلام عن الاشتراكات
+    const membersData = {
+      "01099999999": { name: "يوسف بدر", expiryDate: "2026-09-20", daysLeft: 17 },
+      "01111111111": { name: "أحمد محمد", expiryDate: "2026-09-06", daysLeft: 3 }
+    };
+
+    function checkSubscription() {
+      const phone = document.getElementById('phoneInput').value.trim();
+      const resultBox = document.getElementById('resultBox');
+      const resultText = document.getElementById('subResultText');
+
+      resultBox.style.display = "block";
+
+      if (membersData[phone]) {
+        const data = membersData[phone];
+        resultText.innerHTML = `أهلاً بك يا <b>${data.name}</b><br>
+          📅 موعد التجديد القادم: <span style="color:#d32f2f;">${data.expiryDate}</span><br>
+          ⏳ الأيام الباقية: <span style="color:${data.daysLeft > 3 ? '#2e7d32' : '#d32f2f'};">${data.daysLeft} أيام</span>`;
+      } else {
+        resultText.innerHTML = `<span style="color:#d32f2f;">الرقم غير مسجل أو أن الاشتراك منتهي. برجاء التواصل مع الإدارة للتجديد.</span>`;
+      }
+    }
+  </script>
+
+</body>
+</html>
