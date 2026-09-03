@@ -45,31 +45,31 @@
       pointer-events: none;
     }
 
-    /* عرض الصورة بنفس الكادر اللي ظبطته بالظبط ورا الكروت */
+    /* حاوية صورتك بالكادر والزوم والشفافية المضبوطة ورا الكروت */
     .bg-avatar-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100%;
-      max-width: 500px;
-      height: 520px;
+      width: 400px;
+      height: 500px;
       z-index: 3;
       pointer-events: none;
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0.3;
-      mix-blend-mode: luminosity;
-      filter: drop-shadow(0 0 45px rgba(255, 119, 0, 0.45));
+      opacity: 0.35; /* شفافة وشياكة ورا الكروت */
+      mix-blend-mode: luminosity; /* دمج سينمائي مع فضاء النجوم */
+      filter: drop-shadow(0 0 50px rgba(255, 119, 0, 0.5));
     }
 
     .bg-avatar-container img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* عشان يجيب الكادر كاملاً زي ما انت مظبطه */
-      mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 90%);
-      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 90%);
+      object-fit: cover;
+      object-position: center 12%; /* التركيز على الوش والكتاف زي ما انت ظبطتها */
+      mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
     }
 
     .top-bar {
@@ -97,9 +97,9 @@
       font-family: 'Orbitron', sans-serif;
       font-size: 1.3rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #ffffff 20%, #ff7700 100%);
-      background-clip: text;
       -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(135deg, #ffffff 20%, #ff7700 100%);
       text-transform: uppercase;
       letter-spacing: 2px;
       text-align: center;
@@ -282,7 +282,7 @@
       .top-bar .side-text-left { font-size: 0.75rem; }
       .hero-name { font-size: 2rem; }
       .cyber-card { min-height: 200px; padding: 30px 20px; }
-      .bg-avatar-container { max-width: 340px; height: 360px; opacity: 0.28; }
+      .bg-avatar-container { max-width: 320px; height: 400px; opacity: 0.3; }
     }
   </style>
 </head>
@@ -291,9 +291,8 @@
   <canvas id="space-canvas"></canvas>
   <div class="cosmic-glow"></div>
 
-  <!-- عرض الصورة بالكادر المطلوب بالظبط ورا الكروت -->
   <div class="bg-avatar-container">
-    <img src="youssef-avatar.jpg" alt="Youssef Badr">
+    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Youssef Badr" id="user-avatar-img">
   </div>
 
   <div class="top-bar">
@@ -344,6 +343,9 @@
   </div>
 
   <script>
+    // ربط صورتك الأصلية الحقيقية بالسكربت مباشرة لتظهر فوراً
+    document.getElementById('user-avatar-img').src = "IMG-20260903-WA0003.jpg";
+
     const canvas = document.getElementById('space-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -420,94 +422,4 @@
           textBody.innerText += textContent.charAt(i);
           i++;
         } else {
-          clearInterval(typingInterval);
-        }
-      }, 18);
-    }
-
-    function closeModal() {
-      clearInterval(typingInterval);
-      document.getElementById('dynamicModal').classList.remove('active');
-    }
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Youssef World</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-    
-    body {
-      background-color: #030305;
-      color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    /* حاوية الصورة المظبوطة بالكادر اللي طلبته */
-    .bg-avatar-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 350px;
-      height: 450px;
-      z-index: 1;
-      opacity: 0.4; /* واضحة ورا الكروت بس مش مخفية */
-      pointer-events: none;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .bg-avatar-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* بتملى الكادر بالزوم اللي انت عملته */
-      object-position: center top; /* بيضبط التركيز على الوش والوسط زي الصورة اللي رفعتها */
-    }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      padding: 20px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      color: #ff7700;
-      text-shadow: 0 0 20px rgba(255, 119, 0, 0.5);
-    }
-
-    p {
-      color: #b0b0ba;
-      font-size: 1.1rem;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- الصورة بالكادر المضبوط -->
-  <div class="bg-avatar-container">
-    <img src="youssef-avatar.jpg" alt="Youssef Badr">
-  </div>
-
-  <div class="container">
-    <h1>Youssef Badr</h1>
-    <p>مرحباً بك في عالمي البرمجي 🚀</p>
-  </div>
-
-</body>
-</html>
+          clearInterval(typingInterval
