@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Youssef World | AI & Cybersecurity</title>
+  <title>Youssef World | Cosmic Cinematic UI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
@@ -11,65 +11,77 @@
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+    
     body {
-      background-color: #020617;
-      color: #fff;
+      background-color: #030305;
+      color: #ffffff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: space-between;
       overflow-x: hidden;
       position: relative;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* خلفية نيون مدمجة (أزرق نيون + بنفسجي سايبر) */
-    body::before {
-      content: '';
-      position: absolute;
-      width: 750px; height: 750px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, rgba(0, 242, 254, 0.06) 60%, transparent 100%);
-      filter: blur(150px);
+    /* خلفية الكانفاس للنجوم والمجرات اللي بتلف */
+    #space-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* توهج برتقالي سينمائي في الخلفية */
+    .cosmic-glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 122, 0, 0.15) 0%, rgba(255, 68, 0, 0.05) 50%, transparent 80%);
+      filter: blur(100px);
       border-radius: 50%;
-      z-index: 0;
-      top: 5%;
+      z-index: 2;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
     }
 
     /* البار العلوي الفاجر */
     .top-bar {
       width: 100%;
-      padding: 20px;
-      background: rgba(15, 23, 42, 0.9);
-      border-bottom: 2px solid rgba(139, 92, 246, 0.4);
+      padding: 22px 20px;
+      background: rgba(5, 5, 8, 0.85);
+      border-bottom: 2px solid rgba(255, 122, 0, 0.4);
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       z-index: 50;
-      box-shadow: 0 5px 30px rgba(139, 92, 246, 0.25);
+      box-shadow: 0 10px 40px rgba(255, 122, 0, 0.2);
       backdrop-filter: blur(15px);
     }
 
     .top-bar h2 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #00f2fe, #8b5cf6);
+      background: linear-gradient(135deg, #ffffff 20%, #ff7700 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-align: center;
-      filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.5));
+      filter: drop-shadow(0 0 15px rgba(255, 119, 0, 0.6));
     }
 
+    /* الحاوية الرئيسية مكبرة عشان تقفل الفراغات */
     .container {
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 1100px;
-      padding: 40px 20px;
+      max-width: 1200px;
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -77,41 +89,42 @@
       justify-content: center;
     }
 
-    /* شبكة الكروت */
+    /* شبكة الكروت مكبرة وضخمة */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
+      gap: 35px;
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
     }
 
-    /* تصميم الكارت بلون مميز وانعكاس فاجر */
+    /* تصميم الكارت البرتقالي والأسود الفخم */
     .cyber-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(9, 14, 28, 0.98));
-      border: 2px solid rgba(0, 242, 254, 0.3);
-      border-radius: 24px;
-      padding: 40px 20px;
+      background: linear-gradient(145deg, rgba(12, 12, 18, 0.92), rgba(20, 10, 5, 0.95));
+      border: 2px solid rgba(255, 119, 0, 0.35);
+      border-radius: 28px;
+      padding: 45px 30px;
       text-align: center;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 242, 254, 0.04);
-      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-      backdrop-filter: blur(12px);
-      min-height: 230px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(255, 119, 0, 0.05);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+      backdrop-filter: blur(15px);
+      min-height: 260px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
     }
 
+    /* خط إضاءة نيون برتقالي متحرك فوق الكارت */
     .cyber-card::before {
       content: '';
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       transition: 0.6s;
     }
 
@@ -120,93 +133,102 @@
     }
 
     .cyber-card i {
-      font-size: 3.2rem;
-      color: #00f2fe;
-      margin-bottom: 15px;
+      font-size: 3.8rem;
+      color: #ff7700;
+      margin-bottom: 18px;
       display: block;
-      text-shadow: 0 0 20px rgba(0, 242, 254, 0.7);
-      transition: transform 0.3s ease;
+      text-shadow: 0 0 25px rgba(255, 119, 0, 0.8);
+      transition: transform 0.3s ease, color 0.3s ease;
     }
 
     .cyber-card h3 {
-      font-size: 1.5rem;
-      color: #fff;
+      font-size: 1.7rem;
+      color: #ffffff;
       font-weight: 900;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
     }
 
     .cyber-card p {
-      font-size: 0.88rem;
-      color: #94a3b8;
+      font-size: 0.95rem;
+      color: #b0b0ba;
       font-weight: 600;
     }
 
+    /* تأثير الهفر واللمس العنيف */
     .cyber-card:hover, .cyber-card:active {
-      border-color: #8b5cf6;
-      box-shadow: -10px 10px 40px rgba(139, 92, 246, 0.4), inset 0 0 25px rgba(0, 242, 254, 0.15);
-      transform: translateY(-8px) scale(1.04);
+      border-color: #ff7700;
+      box-shadow: -12px 12px 45px rgba(255, 119, 0, 0.45), inset 0 0 30px rgba(255, 119, 0, 0.2);
+      transform: translateY(-8px) scale(1.03);
     }
 
     .cyber-card:hover i {
-      transform: scale(1.15) translateY(-3px);
-      color: #8b5cf6;
-      text-shadow: 0 0 25px rgba(139, 92, 246, 0.9);
+      transform: scale(1.15) translateY(-4px);
+      color: #ffffff;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.9);
     }
 
-    /* نافذة المودال المكبرة بالطول مع ستايل خلفية سينمائي فاجر */
+    .cyber-card:hover h3 {
+      color: #ff7700;
+    }
+
+    /* نافذة المودال السينمائية الكبيرة */
     .modal {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.85);
-      width: 92vw; max-width: 520px;
-      min-height: 380px; /* مكبرة بالطول كطلبك */
-      background: linear-gradient(160deg, rgba(6, 11, 24, 0.98), rgba(15, 23, 42, 0.99));
-      border: 2px solid #00f2fe;
-      border-radius: 24px; padding: 30px;
+      width: 92vw; max-width: 580px;
+      min-height: 420px;
+      background: linear-gradient(160deg, rgba(8, 8, 12, 0.98), rgba(22, 11, 4, 0.99));
+      border: 2px solid #ff7700;
+      border-radius: 28px; padding: 35px;
       z-index: 100; display: none; opacity: 0;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 70px rgba(0, 242, 254, 0.4), inset 0 0 30px rgba(139, 92, 246, 0.1);
+      box-shadow: 0 0 80px rgba(255, 119, 0, 0.5), inset 0 0 35px rgba(255, 255, 255, 0.05);
     }
     .modal.active { display: flex; flex-direction: column; opacity: 1; transform: translate(-50%, -50%) scale(1); }
     
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,242,254,0.3); padding-bottom: 15px; margin-bottom: 20px; }
-    .modal-title { font-size: 1.35rem; color: #00f2fe; font-weight: 900; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px rgba(0,242,254,0.5); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 119, 0, 0.35); padding-bottom: 15px; margin-bottom: 20px; }
+    .modal-title { font-size: 1.4rem; color: #ff7700; font-weight: 900; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px rgba(255, 119, 0, 0.6); }
     
-    .close-modal { background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
-    .close-modal:hover { background: #f87171; transform: scale(1.05); }
+    .close-modal { background: #ff3333; color: white; border: none; padding: 7px 16px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
+    .close-modal:hover { background: #ff5555; transform: scale(1.05); }
 
-    /* خلفية الكلام اللي بيتكتب وتأثير الكتابة السينمائية */
+    /* خلفية النص السينمائية المظلمة */
     .modal-body { 
-      color: #f1f5f9; 
-      font-size: 1.05rem; 
+      color: #f3f3f7; 
+      font-size: 1.1rem; 
       line-height: 1.9; 
       flex-grow: 1;
-      background: rgba(2, 6, 23, 0.6);
-      border: 1px solid rgba(139, 92, 246, 0.25);
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+      background: rgba(3, 3, 5, 0.75);
+      border: 1px solid rgba(255, 119, 0, 0.3);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
       white-space: pre-line;
-      position: relative;
     }
 
-    /* مؤشر الكتابة (Cursor) النيون */
+    /* مؤشر الكتابة النيون */
     .typing-cursor::after {
       content: '|';
-      color: #00f2fe;
+      color: #ff7700;
       animation: blink 0.8s infinite;
       font-weight: bold;
     }
     @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-    @media (max-width: 600px) {
-      .cards-grid { grid-template-columns: 1fr; gap: 20px; max-width: 400px; }
-      .top-bar h2 { font-size: 1.1rem; }
-      .cyber-card { min-height: 180px; padding: 30px 15px; }
-      .modal { min-height: 340px; padding: 20px; }
+    /* شاشات الموبايل والتجاوب */
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; gap: 22px; max-width: 450px; }
+      .top-bar h2 { font-size: 1.2rem; }
+      .cyber-card { min-height: 200px; padding: 35px 20px; }
+      .modal { min-height: 380px; padding: 22px; }
     }
   </style>
 </head>
 <body>
+
+  <canvas id="space-canvas"></canvas>
+  <div class="cosmic-glow"></div>
 
   <div class="top-bar">
     <h2>Welcome To Youssef World</h2>
@@ -249,6 +271,70 @@
   </div>
 
   <script>
+    // برمجة سماء النجوم والمجرات الدوارة (Cosmic Starfield & Galaxy Effect)
+    const canvas = document.getElementById('space-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let stars = [];
+    const numStars = 250;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // إنشاء النجوم بإحداثيات الفضاء
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: (Math.random() - 0.5) * canvas.width * 2,
+        y: (Math.random() - 0.5) * canvas.height * 2,
+        z: Math.random() * canvas.width,
+        size: Math.random() * 1.8,
+        color: Math.random() > 0.3 ? '#ffffff' : '#ff7700'
+      });
+    }
+
+    function animateSpace() {
+      ctx.fillStyle = '#030305';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      // حركة دوران المجرة والنجوم للأمام
+      for (let i = 0; i < stars.length; i++) {
+        let star = stars[i];
+        star.z -= 0.6; // سرعة الحركة للأمام
+
+        if (star.z <= 0) {
+          star.z = canvas.width;
+          star.x = (Math.random() - 0.5) * canvas.width * 2;
+          star.y = (Math.random() - 0.5) * canvas.height * 2;
+        }
+
+        let k = 250 / star.z;
+        let px = star.x * k + centerX;
+        let py = star.y * k + centerY;
+
+        if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+          let pSize = Math.max(0, (1 - star.z / canvas.width) * star.size * 2);
+          ctx.fillStyle = star.color;
+          ctx.shadowBlur = star.color === '#ff7700' ? 10 : 0;
+          ctx.shadowColor = '#ff7700';
+          ctx.beginPath();
+          ctx.arc(px, py, pSize, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0; // إعادة تعيين التوهج
+        }
+      }
+
+      requestAnimationFrame(animateSpace);
+    }
+    animateSpace();
+
+    // نظام الكتابة الحرفية (Typewriter)
     let typingInterval;
 
     function openModal(type, textContent) {
@@ -256,19 +342,17 @@
       const textBody = document.getElementById('modalTextBody');
       const titleElement = document.getElementById('modalTitle');
       
-      // تعيين العنوان حسب الكارت
       if(type === 'projects') titleElement.innerText = "📂 المشاريع";
       if(type === 'skills') titleElement.innerText = "⚡ المهارات";
       if(type === 'about') titleElement.innerText = "🛡️ عنّي";
       if(type === 'contact') titleElement.innerText = "📬 التواصل";
 
       modal.classList.add('active');
-      textBody.innerText = ""; // تفريغ النص القديم
+      textBody.innerText = "";
       
       let i = 0;
       clearInterval(typingInterval);
       
-      // تأثير الكتابة الحرفية السينمائية
       typingInterval = setInterval(() => {
         if (i < textContent.length) {
           textBody.innerText += textContent.charAt(i);
@@ -276,7 +360,7 @@
         } else {
           clearInterval(typingInterval);
         }
-      }, 20); // سرعة الكتابة بالحرف الواحد
+      }, 18);
     }
 
     function closeModal() {
