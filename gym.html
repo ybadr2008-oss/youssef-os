@@ -13,272 +13,60 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
     
     #splash-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-      color: #000000;
-      text-align: center;
-      padding: 20px;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #ffffff; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease; color: #000000; text-align: center; padding: 20px;
     }
     
     .splash-title {
-      font-size: 2.3rem;
-      font-weight: 900;
-      color: #000000;
-      margin-bottom: 12px;
-      border-left: 4px solid #ff7700;
-      padding-left: 8px;
-      white-space: nowrap;
-      overflow: hidden;
+      font-size: 2.3rem; font-weight: 900; color: #000000; margin-bottom: 12px;
+      border-left: 4px solid #ff7700; padding-left: 8px; white-space: nowrap; overflow: hidden;
       animation: typing 2.5s steps(30, end);
     }
 
-    .splash-sub {
-      font-size: 1.3rem;
-      color: #333333;
-      font-weight: 700;
-      opacity: 0;
-      animation: fadeInSub 0.8s ease 2.2s forwards;
-    }
+    .splash-sub { font-size: 1.3rem; color: #333333; font-weight: 700; opacity: 0; animation: fadeInSub 0.8s ease 2.2s forwards; }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes fadeInSub { to { opacity: 1; } }
 
-    @keyframes fadeInSub {
-      to { opacity: 1; }
-    }
+    body { background-color: #f4f5f7; color: #111111; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    .container { max-width: 900px; width: 100%; margin: auto; }
+    header { text-align: center; margin-bottom: 35px; padding-top: 20px; }
+    header h1 { color: #000000; font-size: 3rem; font-weight: 900; letter-spacing: 1px; }
+    header h1 span { color: #ff7700; }
+    header p { color: #333333; font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
 
-    body {
-      background-color: #f4f5f7;
-      color: #111111;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+    .card { background: #ffffff; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
+    .card h2 { color: #000000; margin-bottom: 20px; font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+    .card h2 i { color: #ff7700; }
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      margin: auto;
-    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    header {
-      text-align: center;
-      margin-bottom: 35px;
-      padding-top: 20px;
-    }
+    .info-box { background: #fafbfc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 14px; text-align: center; }
+    .info-box h3 { color: #ff7700; margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
+    .info-box p { color: #1a202c; line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
-    header h1 {
-      color: #000000;
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
+    .price-tag { font-size: 2.2rem; font-weight: 900; color: #000000; margin-top: 8px; }
+    .price-tag span { font-size: 1.1rem; color: #4a5568; font-weight: 700; }
 
-    header h1 span {
-      color: #ff7700;
-    }
+    .vodafone-section { background: linear-gradient(135deg, #fff5f0, #ffffff); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
+    .vodafone-number { font-size: 2rem; font-weight: 900; color: #c53030; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
+    .pay-btn { display: inline-block; background: #dd6b20; color: #ffffff; padding: 14px 32px; border-radius: 50px; font-weight: 900; font-size: 1.15rem; text-decoration: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35); transition: 0.3s; }
+    .pay-btn:hover { background: #c05621; transform: scale(1.03); }
 
-    header p {
-      color: #333333;
-      font-size: 1.15rem;
-      margin-top: 5px;
-      font-weight: 700;
-    }
+    .tracker-box { display: flex; gap: 10px; margin-top: 15px; }
+    .tracker-box input { flex: 1; padding: 14px 18px; border-radius: 12px; border: 2px solid #cbd5e0; background: #ffffff; color: #000000; font-size: 1.05rem; font-weight: 700; outline: none; }
+    .tracker-box input:focus { border-color: #ff7700; }
+    .tracker-box button { padding: 14px 28px; background: #000000; border: none; border-radius: 12px; color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+    .tracker-box button:hover { background: #ff7700; }
 
-    .card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 25px;
-      margin-bottom: 25px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    }
-
-    .card h2 {
-      color: #000000;
-      margin-bottom: 20px;
-      font-size: 1.5rem;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 2px solid #edf2f7;
-      padding-bottom: 10px;
-    }
-
-    .card h2 i {
-      color: #ff7700;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .grid-2 { grid-template-columns: 1fr; }
-    }
-
-    .info-box {
-      background: #fafbfc;
-      border: 1px solid #e2e8f0;
-      padding: 20px;
-      border-radius: 14px;
-      text-align: center;
-    }
-
-    .info-box h3 {
-      color: #ff7700;
-      margin-bottom: 10px;
-      font-size: 1.3rem;
-      font-weight: 900;
-    }
-
-    .info-box p {
-      color: #1a202c;
-      line-height: 1.7;
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-
-    .price-tag {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: #000000;
-      margin-top: 8px;
-    }
-
-    .price-tag span {
-      font-size: 1.1rem;
-      color: #4a5568;
-      font-weight: 700;
-    }
-
-    .vodafone-section {
-      background: linear-gradient(135deg, #fff5f0, #ffffff);
-      border: 2px dashed #ff7700;
-      text-align: center;
-      padding: 25px;
-      border-radius: 16px;
-    }
-
-    .vodafone-number {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #c53030;
-      letter-spacing: 2px;
-      margin: 10px 0;
-      display: inline-block;
-    }
-
-    .pay-btn {
-      display: inline-block;
-      background: #dd6b20;
-      color: #ffffff;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-weight: 900;
-      font-size: 1.15rem;
-      text-decoration: none;
-      margin-top: 15px;
-      box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35);
-      transition: 0.3s;
-    }
-
-    .pay-btn:hover {
-      background: #c05621;
-      transform: scale(1.03);
-    }
-
-    .tracker-box {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .tracker-box input {
-      flex: 1;
-      padding: 14px 18px;
-      border-radius: 12px;
-      border: 2px solid #cbd5e0;
-      background: #ffffff;
-      color: #000000;
-      font-size: 1.05rem;
-      font-weight: 700;
-      outline: none;
-    }
-
-    .tracker-box input:focus {
-      border-color: #ff7700;
-    }
-
-    .tracker-box button {
-      padding: 14px 28px;
-      background: #000000;
-      border: none;
-      border-radius: 12px;
-      color: #fff;
-      font-weight: 900;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .tracker-box button:hover {
-      background: #ff7700;
-    }
-
-    .result-area {
-      margin-top: 15px;
-      background: #edf2f7;
-      padding: 18px;
-      border-radius: 12px;
-      display: none;
-      border: 1px solid #cbd5e0;
-      font-weight: 700;
-      color: #1a202c;
-      font-size: 1.1rem;
-    }
-
-    ul.rules-list {
-      padding-right: 20px;
-      line-height: 2.2;
-      color: #1a202c;
-      font-weight: 700;
-      font-size: 1.05rem;
-    }
-
-    ul.rules-list li {
-      margin-bottom: 10px;
-    }
-
-    .store-teaser {
-      background: #000000;
-      color: #fff;
-      text-align: center;
-      padding: 22px;
-      border-radius: 16px;
-      margin-top: 20px;
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    .store-teaser span {
-      color: #ff7700;
-      font-weight: 900;
-    }
+    .result-area { margin-top: 15px; background: #edf2f7; padding: 18px; border-radius: 12px; display: none; border: 1px solid #cbd5e0; font-weight: 700; color: #1a202c; font-size: 1.1rem; }
+    ul.rules-list { padding-right: 20px; line-height: 2.2; color: #1a202c; font-weight: 700; font-size: 1.05rem; }
+    ul.rules-list li { margin-bottom: 10px; }
+    .store-teaser { background: #000000; color: #fff; text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; }
+    .store-teaser span { color: #ff7700; font-weight: 900; }
   </style>
 </head>
 <body>
@@ -295,15 +83,15 @@
     </header>
 
     <div class="card">
-      <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية (صالة تعمل 24 ساعة)</h2>
+      <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية</h2>
       <div class="grid-2">
         <div class="info-box">
           <h3>مواعيد الرجال</h3>
-          <p>يومياً من الساعة <strong>2:00 ظهراً</strong> وحتى الساعة <strong>6:00 صباحاً</strong></p>
+          <p>يومياً من الساعة <strong>2:00 ظهراً</strong> وحتى <strong>6:00 صباحاً</strong></p>
         </div>
         <div class="info-box">
           <h3>مواعيد السيدات</h3>
-          <p>يومياً من الساعة <strong>7:00 صباحاً</strong> وحتى الساعة <strong>12:00 ظهراً</strong></p>
+          <p>يومياً من الساعة <strong>7:00 صباحاً</strong> وحتى <strong>12:00 ظهراً</strong></p>
         </div>
       </div>
     </div>
@@ -311,7 +99,7 @@
     <div class="card">
       <h2><i class="fas fa-ticket-alt"></i> تكلفة الاشتراك الشهري</h2>
       <div style="text-align: center; padding: 10px;">
-        <p style="color: #2d3748; font-weight: 700;">باقة شهرية شاملة كامل الأجهزة والتجهيزات</p>
+        <p style="color: #2d3748; font-weight: 700;">باقة شهرية شاملة كامل الأجهزة</p>
         <div class="price-tag">550 <span>جنيه / شهرياً</span></div>
       </div>
     </div>
@@ -321,7 +109,7 @@
       <div class="vodafone-section">
         <p style="color: #2d3748; font-weight: 700;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
         <div class="vodafone-number">01017995678</div>
-        <p style="font-size: 0.95rem; color: #4a5568; font-weight: 700; margin-bottom: 10px;">يمكنك الضغط على زر الدفع المباشر لتحويل المبلغ فوراً عبر محفظتك:</p>
+        <p style="font-size: 0.95rem; color: #4a5568; font-weight: 700; margin-bottom: 10px;">للتحويل السريع (يعمل مباشرة من الموبايل):</p>
         <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع الآن مباشر (*9*7...)</a>
       </div>
     </div>
@@ -330,7 +118,7 @@
       <h2><i class="fas fa-search"></i> استعلام عن اشتراكك</h2>
       <p style="color: #2d3748; font-size: 0.95rem; font-weight: 700;">اكتب رقم هاتفك لمعرفة الأيام المتبقية وموعد التجديد:</p>
       <div class="tracker-box">
-        <input type="text" id="phoneInput" placeholder="ادخل رقم الموبايل المسجل...">
+        <input type="tel" id="phoneInput" placeholder="ادخل رقم الموبايل المسجل..." maxlength="11">
         <button onclick="checkSubscription()">استعلام</button>
       </div>
       <div id="resultBox" class="result-area">
@@ -356,36 +144,39 @@
     setTimeout(() => {
       const splash = document.getElementById('splash-screen');
       splash.style.opacity = '0';
-      setTimeout(() => {
-        splash.style.display = 'none';
-      }, 800);
+      setTimeout(() => { splash.style.display = 'none'; }, 800);
     }, 2500);
 
-    // ربط الموقع بجدول جوجل عبر SheetDB (مكان رابطك بيكتب هنا)
-    const SHEET_API_URL = "https://sheetdb.io/api/v1/8mdd58x2eulpy";
+    // رابط الـ API الخاص بـ SheetDB (تأكد إنه مربوط بجدول الـ Google Sheets الصح)
+    const SHEET_API_URL = "https://sheetdb.io/api/v1/1o1xw1h81myna";
 
     async function checkSubscription() {
-      const phone = document.getElementById('phoneInput').value.trim();
+      const phoneInput = document.getElementById('phoneInput').value.trim();
       const resultBox = document.getElementById('resultBox');
       const resultText = document.getElementById('subResultText');
 
-      if (!phone) {
+      if (!phoneInput) {
         alert("برجاء إدخال رقم الهاتف أولاً");
         return;
       }
 
       resultBox.style.display = "block";
-      resultText.innerHTML = "جاري التحقق من قاعدة بيانات المشتركين...";
+      resultText.innerHTML = "جاري التحقق من قاعدة البيانات...";
 
       try {
-        // سحب البيانات مباشرة من جدول جوجل الخاص بك
-        const response = await fetch(`${SHEET_API_URL}/search?phone=${phone}`);
+        const response = await fetch(SHEET_API_URL);
         const data = await response.json();
 
-        if (data && data.length > 0) {
-          const member = data[0];
-          
-          // حساب الأيام المتبقية بناء على تاريخ انتهاء الاشتراك في الإكسل
+        // تنظيف الرقم المدخل وحذف أي رموز لتجنب الأخطاء
+        const cleanInput = phoneInput.replace(/[^0-9]/g, '');
+
+        // البحث عن الرقم بغض النظر عن مشاكل الأصفار أو مسافات الإكسل
+        const member = data.find(m => {
+          const sheetPhone = String(m.phone || '').replace(/[^0-9]/g, '');
+          return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
+        });
+
+        if (member) {
           const expiryDate = new Date(member.expiry);
           const today = new Date();
           const timeDiff = expiryDate - today;
