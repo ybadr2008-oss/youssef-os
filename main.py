@@ -1,10 +1,12 @@
-import random
-secret_number = random.randint(1, 10)
-print("--- Number Guessing Game ---")
-while True:
-    guess = int(input("Guess a number between 1 and 10: "))
-    if guess == secret_number:
-        print("عاش جدا يا ايقونة! تخمينك صح")
-        break
-    else:
-       print("غلط ي عرص! الرقم الصح كان:", secret_number)
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>موقع يوسف الاول</title>
+</head>
+<body>
+    <h1>اهلا بكم في موقع يوسف</h1>
+    انا بتعلم <p> Front-End دلوقتي عشان هخربها وهتفوق باذن الله<p>
+    <button>اضغط هنا</button>
+</body>
+</html>

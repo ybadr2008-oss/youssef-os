@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Welcome to Youssef's World</title>
+  <title>Youssef | AI & Cybersecurity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
@@ -18,31 +18,36 @@
     #canvas-container { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1; touch-action: none; }
     
     #top-bar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 55px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
       background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 255, 204, 0.3); z-index: 100;
-      display: flex; justify-content: space-between; align-items: center; padding: 0 12px;
+      border-bottom: 1px solid rgba(255, 71, 87, 0.3); z-index: 100;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
     }
     
-    .nav-left { display: flex; gap: 6px; }
+    .nav-left { display: flex; gap: 8px; }
     
     .hover-btn {
       background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; padding: 5px 9px; border-radius: 6px; font-size: 0.75rem;
-      cursor: pointer; display: flex; align-items: center; gap: 5px;
+      color: #00ffcc; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
       transition: all 0.2s ease;
     }
     .hover-btn:hover { background: rgba(0, 255, 204, 0.2); transform: scale(1.05); color: #fff; }
+
+    .dad-btn {
+      background: linear-gradient(135deg, #ef4444, #e11d48);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+      transition: all 0.2s ease;
+    }
+    .dad-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
     
     .nav-center {
-      font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 800;
+      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 800;
       color: #00ffcc; text-transform: uppercase; letter-spacing: 1px;
-      text-shadow: 0 0 8px rgba(0, 255, 204, 0.5); display: none;
-    }
-    
-    .nav-right {
-      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 0.75rem;
-      color: #38bdf8; display: flex; align-items: center; gap: 4px;
+      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); display: none;
     }
 
     #desktop-ui {
@@ -65,17 +70,17 @@
     .os-card h3 { font-size: 1.1rem; color: #fff; transition: color 0.3s; }
     
     .os-card:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       background: rgba(0, 255, 204, 0.15);
       border-color: #00ffcc;
-      box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
+      box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
     }
-    .os-card:hover i { transform: scale(1.2); color: #38bdf8; }
+    .os-card:hover i { transform: scale(1.15); color: #38bdf8; }
     .os-card:hover h3 { color: #00ffcc; }
 
     #exit-os-btn {
       margin-top: 25px; background: #ff4757; color: #fff; border: none;
-      padding: 10px 25px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
+      padding: 10px 25px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
       transition: transform 0.2s;
     }
     #exit-os-btn:hover { transform: scale(1.05); background: #ff6b81; }
@@ -83,22 +88,19 @@
     .modal {
       position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
       width: 90vw; max-width: 450px; background: rgba(10, 15, 30, 0.99);
-      border: 2px solid #00ffcc; border-radius: 12px; padding: 15px; z-index: 300;
+      border: 2px solid #00ffcc; border-radius: 12px; padding: 20px; z-index: 300;
       display: none; opacity: 0; transition: all 0.3s ease; max-height: 75vh; overflow-y: auto;
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 6px; margin-bottom: 10px; }
-    .modal-title { font-size: 1rem; color: #00ffcc; font-weight: 800; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; }
-    .modal-body { color: #e2e8f0; font-size: 0.85rem; line-height: 1.5; }
-    .modal-body li { margin-bottom: 6px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 4px; border-right: 3px solid #00ffcc; list-style: none; }
-    #audio-player-modal iframe { width: 100%; height: 200px; border: none; border-radius: 6px; }
-
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 8px; margin-bottom: 12px; }
+    .modal-title { font-size: 1.05rem; color: #00ffcc; font-weight: 800; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
+    .modal-body { color: #e2e8f0; font-size: 0.9rem; line-height: 1.6; }
+    .modal-body li { margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; border-right: 3px solid #00ffcc; list-style: none; }
+    
     @media (min-width: 768px) {
       .nav-center { display: block; }
       .desktop-grid { grid-template-columns: repeat(4, 1fr); max-width: 850px; }
-      .hover-btn { padding: 6px 12px; font-size: 0.85rem; }
-      #top-bar { height: 60px; padding: 0 20px; }
     }
   </style>
 </head>
@@ -106,12 +108,11 @@
 
   <div id="top-bar">
     <div class="nav-left">
-      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-desktop"></i> Youssef OS</button>
-      <button class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</button>
-      <button class="hover-btn" onclick="openModal('modal-audio')"><i class="fas fa-music"></i> المنشاوي</button>
+      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-th-large"></i> الأقسام الرئيسية</button>
+      <button class="dad-btn" onclick="openModal('modal-dad')"><i class="fas fa-heart"></i> إلى والدي الغالي ❤️</button>
     </div>
-    <div class="nav-center">Welcome to Youssef's World</div>
-    <div class="nav-right">YOUSSEF.3D <i class="fas fa-cube"></i></div>
+    <div class="nav-center">Youssef | AI & Cybersecurity</div>
+    <div class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</div>
   </div>
 
   <div id="canvas-container"></div>
@@ -123,22 +124,26 @@
       <div class="os-card" onclick="openModal('modal-about')"><i class="fas fa-user-shield"></i><h3>عنّي</h3></div>
       <div class="os-card" onclick="openModal('modal-contact')"><i class="fas fa-envelope"></i><h3>التواصل</h3></div>
     </div>
-    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-power-off"></i> الخروج للغرفة الـ 3D</button>
+    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-undo"></i> العودة للخلفية الرئيسية</button>
   </div>
 
-  <!-- Modals -->
-  <div id="modal-audio" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📖 تلاوة الشيخ محمد صديق المنشاوي</h3><button class="close-modal" onclick="closeModal(event, 'modal-audio')">✖ إغلاق</button></div>
-    <div class="modal-body" id="audio-player-modal"><iframe src="https://www.youtube.com/embed/yRXXtvZYHn4" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+  <div id="modal-dad" class="modal" onclick="stopPropagation(event)">
+    <div class="modal-header"><h3 class="modal-title">إلى والدي الغالي ❤️</h3><button class="close-modal" onclick="closeModal(event, 'modal-dad')">✖ إغلاق</button></div>
+    <div class="modal-body">
+      <p style="font-weight: bold; color: #38bdf8; margin-bottom: 10px;">والدي الحبيب،</p>
+      <p style="margin-bottom: 10px;">حبيت تكون أول حد يشوف ثمرة شغفي وتجاربي في عالم البرمجة والتكنولوجيا. كل خطوة بتعلمها وكل نجاح بكون عايز أحققه، بيكون بعد فضل ربنا بفضل دعمك وتعابك معايا.</p>
+      <p style="color: #00ffcc;">ربنا يرجعك بالسلامة من السفر، ويحفظك لينا دائماً سند وظهر يا أغلى الناس!</p>
+      <div style="margin-top: 15px; text-align: left; font-size: 0.8rem; color: #94a3b8;">ابنك: يوسف ⚡</div>
+    </div>
   </div>
 
   <div id="modal-projects" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">📂 قسم المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>Youssef OS 3D Portfolio:</strong> معرض أعمال تفاعلي ثلاثي الأبعاد مصمم بـ Three.js.</li>
-        <li><strong>Python Security Tools:</strong> سكريبتات وأدوات أتمتة للأمن السيبراني.</li>
-        <li><strong>Cybersecurity Virtual Labs:</strong> بيئات شبكات واختبار اختراق على VirtualBox و Kali.</li>
+        <li><strong>AI & Machine Learning:</strong> نماذج ذكاء اصطناعي وتحليل البيانات الضخمة.</li>
+        <li><strong>Cybersecurity Tools:</strong> سكريبتات حماية واختبار اختراق متقدمة.</li>
+        <li><strong>Interactive 3D Web:</strong> واجهات مستخدم تفاعلية وثلاثية الأبعاد.</li>
       </ul>
     </div>
   </div>
@@ -147,33 +152,33 @@
     <div class="modal-header"><h3 class="modal-title">⚡ المهارات والتقنيات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>البرمجة والتطوير:</strong> C++, Python, JavaScript, HTML5, CSS3, Node.js, Three.js</li>
-        <li><strong>الأمن السيبراني:</strong> Ethical Hacking, Nmap, Metasploit, Linux Terminal</li>
-        <li><strong>أنظمة التشغيل:</strong> Parrot OS, Kali Linux, Windows</li>
+        <li><strong>البرمجة:</strong> Python, C++, JavaScript, HTML/CSS</li>
+        <li><strong>الأمن السيبراني:</strong> Ethical Hacking, Linux, Metasploit</li>
+        <li><strong>التخصصات:</strong> AI, Machine Learning, Web Development</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-about" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">🛡️ عنّي</h3><button class="close-modal" onclick="closeModal(event, 'modal-about')">✖ إغلاق</button></div>
-    <div class="modal-body"><p>أهلاً بك! أنا يوسف بدر، طالب علوم حاسب، مهتم ومبتكر في مجالات تطوير البرمجيات واختبار الاختراق والأمن السيبراني.</p></div>
+    <div class="modal-body"><p>أهلاً بك! أنا يوسف، طالب علوم حاسب، مهتم ومبتكر في مجالات الذكاء الاصطناعي والأمن السيبراني وتطوير الأنظمة الرقمية الحديثة.</p></div>
   </div>
 
   <div id="modal-contact" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">📬 التواصل</h3><button class="close-modal" onclick="closeModal(event, 'modal-contact')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
-        <li><strong>GitHub:</strong> ybadr2008-oss</li>
-        <li><strong>التخصص:</strong> Computer Science / Cybersecurity</li>
-        <li><strong>الموقع:</strong> الشرقية، مصر</li>
+        <li><strong>المجال:</strong> Computer Science & Cybersecurity</li>
+        <li><strong>البلد:</strong> مصر (الشرقية)</li>
       </ul>
     </div>
   </div>
 
   <div id="modal-terminal" class="modal" onclick="stopPropagation(event)">
     <div class="modal-header"><h3 class="modal-title">💻 Terminal</h3><button class="close-modal" onclick="closeModal(event, 'modal-terminal')">✖ إغلاق</button></div>
-    <div class="modal-body" style="font-family: monospace; background: #000; padding: 10px; border-radius: 6px; color: #00ffcc;">
-      <p>youssef@os:~$ whoami</p><p style="color: #fff;">youssef_badr_developer</p>
+    <div class="modal-body" style="font-family: monospace; background: #000; padding: 12px; border-radius: 6px; color: #00ffcc;">
+      <p>youssef@ai-security:~$ whoami</p>
+      <p style="color: #fff; margin-top: 5px;">youssef_badr_developer</p>
     </div>
   </div>
 
@@ -188,11 +193,10 @@
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x030712);
-    scene.fog = new THREE.FogExp2(0x030712, 0.08);
+    scene.fog = new THREE.FogExp2(0x030712, 0.05);
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const isMobile = window.innerWidth < 768;
-    camera.position.set(0, isMobile ? 3.4 : 2.8, isMobile ? 6.8 : 5.5);
+    camera.position.set(0, 1.5, 6);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -201,221 +205,92 @@
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.maxPolarAngle = Math.PI / 2 - 0.05;
-    controls.target.set(0, 1.1, 0);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.maxPolarAngle = Math.PI / 2 + 0.1;
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.5));
-    const spot = new THREE.SpotLight(0x00ffcc, 3);
-    spot.position.set(0, 5, 2);
-    scene.add(spot);
+    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
+    const pointLight = new THREE.PointLight(0x00ffcc, 3, 50);
+    pointLight.position.set(0, 5, 5);
+    scene.add(pointLight);
 
-    // Floor & Grid
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: 0x050811, roughness: 0.2 }));
-    floor.rotation.x = -Math.PI / 2;
-    scene.add(floor);
-    
-    const grid = new THREE.GridHelper(30, 40, 0x00ffcc, 0x1e293b);
-    grid.position.y = 0.01;
-    scene.add(grid);
-
-    // --- Desk ---
-    const deskGroup = new THREE.Group();
-    const deskMat = new THREE.MeshStandardMaterial({ color: 0x0b0f19, metalness: 0.8, roughness: 0.3 });
-    const deskTop = new THREE.Mesh(new THREE.BoxGeometry(4.2, 0.08, 1.8), deskMat);
-    deskTop.position.set(0, 1.1, 0);
-    deskGroup.add(deskTop);
-    scene.add(deskGroup);
-
-    // دالة إنشاء شعار أبل المضبوط الصحيح على ظهر الأجهزة
-    function createAppleLogoMesh() {
-      const appleGroup = new THREE.Group();
-      const appleMat = new THREE.MeshStandardMaterial({ color: 0xf3f4f6, metalness: 0.9, roughness: 0.1 });
-      
-      const bodyShape = new THREE.Shape();
-      bodyShape.absarc(0, 0, 0.045, 0, Math.PI * 2, false);
-      const bodyGeo = new THREE.ShapeGeometry(bodyShape);
-      const bodyMesh = new THREE.Mesh(bodyGeo, appleMat);
-      bodyMesh.scale.set(1, 1.2, 1);
-      appleGroup.add(bodyMesh);
-
-      const biteGeo = new THREE.CircleGeometry(0.018, 16);
-      const biteMat = new THREE.MeshBasicMaterial({ color: 0x0b0f19 });
-      const biteMesh = new THREE.Mesh(biteGeo, biteMat);
-      biteMesh.position.set(0.035, 0.01, 0.001);
-      appleGroup.add(biteMesh);
-
-      const stemCurve = new THREE.QuadraticBezierCurve3(
-        new THREE.Vector3(0, 0.05, 0),
-        new THREE.Vector3(0.01, 0.07, 0),
-        new THREE.Vector3(0.015, 0.075, 0)
-      );
-      const stemGeo = new THREE.TubeGeometry(stemCurve, 8, 0.003, 6, false);
-      const stemMesh = new THREE.Mesh(stemGeo, appleMat);
-      appleGroup.add(stemMesh);
-
-      return appleGroup;
-    }
-
-    // --- رسم خلفية Parrot OS وجرافيك الشاشة مباشرة (بدون روابط خارجية معطلة) ---
+    // --- Dynamic 3D Display & 4 Main Cards ---
     const canvasTex = document.createElement('canvas');
     canvasTex.width = 1200; canvasTex.height = 675;
     const ctx = canvasTex.getContext('2d');
 
-    function drawParrotOSScreen(hoverIndex) {
-      // خلفية سوداء متدرجة أنيقة
-      ctx.fillStyle = '#030712';
+    function drawScreen(hoverIndex) {
+      // خلفية الشاشة الفاجرة
+      ctx.fillStyle = '#050b14';
       ctx.fillRect(0, 0, 1200, 675);
 
-      // رسم شعار الببغاء (Parrot OS Art) على الجانب الأيمن بالشكل الأصلي
-      ctx.save();
-      ctx.translate(950, 320);
-      const grad = ctx.createLinearGradient(-150, -150, 150, 150);
-      grad.addColorStop(0, '#00ffcc');
-      grad.addColorStop(0.5, '#22c55e');
-      grad.addColorStop(1, '#3b82f6');
-      
-      ctx.fillStyle = grad;
+      // تأثير نيون خفيف في الخلفية
+      ctx.fillStyle = 'rgba(0, 255, 204, 0.03)';
       ctx.beginPath();
-      ctx.moveTo(0, -120);
-      ctx.lineTo(120, -60);
-      ctx.lineTo(80, 100);
-      ctx.lineTo(-40, 140);
-      ctx.lineTo(-100, 40);
-      ctx.closePath();
-      ctx.shadowColor = '#00ffcc';
-      ctx.shadowBlur = 35;
+      ctx.arc(600, 337, 400, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
 
-      // نافذة Terminal افتراضية على اليسار شكلها تحفة
-      ctx.fillStyle = 'rgba(10, 15, 30, 0.9)';
-      ctx.strokeStyle = 'rgba(0, 255, 204, 0.4)';
-      ctx.lineWidth = 3;
-      ctx.fillRect(80, 180, 500, 360);
-      ctx.strokeRect(80, 180, 500, 360);
-
-      // شريط نافذة الـ Terminal
-      ctx.fillStyle = '#1e293b';
-      ctx.fillRect(80, 180, 500, 35);
-      ctx.fillStyle = '#ff4757'; ctx.beginPath(); ctx.arc(105, 197, 6, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#ffa502'; ctx.beginPath(); ctx.arc(125, 197, 6, 0, Math.PI*2); ctx.fill();
-      ctx.fillStyle = '#2ed573'; ctx.beginPath(); ctx.arc(145, 197, 6, 0, Math.PI*2); ctx.fill();
-
-      // نصوص الكود داخل التيرمينال
-      ctx.font = 'bold 16px monospace';
-      ctx.fillStyle = '#00ffcc';
-      ctx.fillText('youssef@parrot:~$ aircrack-ng --help', 105, 245);
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillText('Usage: aircrack-ng [options] <file(s)>', 105, 280);
-      ctx.fillStyle = '#e2e8f0';
-      ctx.font = '14px monospace';
-      ctx.fillText('-a <amode> : force attack mode', 105, 320);
-      ctx.fillText('-e <essid> : target network identifier', 105, 350);
-      ctx.fillText('-b <baddr> : target mac address', 105, 380);
-      ctx.fillText('-p <nbcpu> : # of CPU to use', 105, 410);
-      ctx.fillStyle = '#2ed573';
-      ctx.fillText('[+] Security Lab Environment Active...', 105, 470);
-
-      // عنوان الرئيسي Welcome to Youssef's World كبير وواضح وفي النص تماماً
+      // العنوان الرئيسي الفاجر فوق
       ctx.shadowColor = '#00ffcc';
-      ctx.shadowBlur = 30;
+      ctx.shadowBlur = 25;
       ctx.fillStyle = '#ffffff';
-      ctx.font = '900 56px "Cairo", sans-serif';
+      ctx.font = '900 52px "Cairo", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText("Welcome to Youssef's World", 600, 85);
+      ctx.fillText("اختر مسارك في عالم البرمجة والفوضى الرقمية", 600, 100);
       ctx.shadowBlur = 0;
 
-      // الكروت الأربعة وسط الشاشة
+      // الخيارات الأربعة الكبيرة (المربعات الفاجرة)
       const cards = [
-        { text: '📂 المشاريع', x: 120, w: 200, h: 150 },
-        { text: '⚡ المهارات', x: 360, w: 200, h: 150 },
-        { text: '🛡️ عنّي', x: 600, w: 200, h: 150 },
-        { text: '📬 التواصل', x: 840, w: 200, h: 150 }
+        { text: 'AI & Machine Learning', x: 100, y: 240, w: 230, h: 280 },
+        { text: 'Cybersecurity', x: 360, y: 240, w: 230, h: 280 },
+        { text: 'Web Development', x: 620, y: 240, w: 230, h: 280 },
+        { text: 'Data Science', x: 880, y: 240, w: 230, h: 280 }
       ];
 
       cards.forEach((card, index) => {
         let isHovered = (hoverIndex === index);
-        let boxX = isHovered ? card.x - 10 : card.x;
-        let boxY = isHovered ? 230 : 240;
-        let boxW = isHovered ? 220 : card.w;
-        let boxH = isHovered ? 170 : card.h;
+        let boxX = isHovered ? card.x - 5 : card.x;
+        let boxY = isHovered ? card.y - 5 : card.y;
+        let boxW = isHovered ? card.w + 10 : card.w;
+        let boxH = isHovered ? card.h + 10 : card.h;
 
-        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.3)' : 'rgba(15, 23, 42, 0.9)';
+        // خلفية الكارد مع التفاعل
+        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.2)' : 'rgba(15, 23, 42, 0.9)';
         ctx.strokeStyle = isHovered ? '#00ffcc' : 'rgba(0, 255, 204, 0.3)';
-        ctx.lineWidth = isHovered ? 5 : 3;
-        
+        ctx.lineWidth = isHovered ? 4 : 2;
+
         ctx.fillRect(boxX, boxY, boxW, boxH);
         ctx.strokeRect(boxX, boxY, boxW, boxH);
         
+        // النص جوا المربع
         ctx.fillStyle = isHovered ? '#00ffcc' : '#ffffff'; 
-        ctx.font = 'bold 28px "Cairo", sans-serif';
+        ctx.font = '800 24px "Cairo", sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2));
+        
+        // تقسيم الكلام لو طويل
+        const words = card.text.split(' ');
+        if(words.length > 1) {
+          ctx.fillText(words[0], boxX + (boxW / 2), boxY + (boxH / 2) - 15);
+          ctx.fillText(words.slice(1).join(' '), boxX + (boxW / 2), boxY + (boxH / 2) + 20);
+        } else {
+          ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2));
+        }
       });
     }
 
-    drawParrotOSScreen(-1);
+    drawScreen(-1);
     const screenTexture = new THREE.CanvasTexture(canvasTex);
 
-    // --- الشاشة الكبيرة ---
-    const pcGroup = new THREE.Group();
-    const macMat = new THREE.MeshStandardMaterial({ color: 0xd1d5db, metalness: 0.9, roughness: 0.2 });
+    // مجسم العرض الثلاثي الأبعاد الرئيسي في النص
+    const boardGeo = new THREE.PlaneGeometry(7.5, 4.2);
+    const boardMat = new THREE.MeshBasicMaterial({ map: screenTexture });
+    const mainBoard = new THREE.Mesh(boardGeo, boardMat);
+    mainBoard.position.set(0, 1.2, 0);
+    scene.add(mainBoard);
 
-    const stand = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.35, 0.3), macMat);
-    stand.position.set(0, 0.175, 0);
-    pcGroup.add(stand);
-
-    const pcFrame = new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.25, 0.04), macMat);
-    pcFrame.position.set(0, 0.9, 0);
-    pcGroup.add(pcFrame);
-
-    const pcApple = createAppleLogoMesh();
-    pcApple.position.set(0, 0.9, -0.022);
-    pcApple.rotation.y = Math.PI;
-    pcGroup.add(pcApple);
-
-    const pcScreenMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.92, 1.17), 
-      new THREE.MeshBasicMaterial({ map: screenTexture })
-    );
-    pcScreenMesh.position.set(0, 0.9, 0.022);
-    pcGroup.add(pcScreenMesh);
-    pcGroup.position.set(-0.2, 1.14, -0.2);
-    scene.add(pcGroup);
-
-    // --- لابتوب ماك بوك (مع شاشة Parrot OS وشعار أبل الصحيح على الظهر) ---
-    const laptopGroup = new THREE.Group();
-    const lapBase = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.02, 0.75), macMat);
-    laptopGroup.add(lapBase);
-
-    const lapLid = new THREE.Group();
-    const lapFrame = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.7, 0.02), macMat);
-    lapFrame.position.set(0, 0.35, 0);
-    lapLid.add(lapFrame);
-
-    const lapApple = createAppleLogoMesh();
-    lapApple.position.set(0, 0.35, -0.012);
-    lapApple.rotation.y = Math.PI;
-    lapLid.add(lapApple);
-
-    const parrotDisplay = new THREE.Mesh(
-      new THREE.PlaneGeometry(1.04, 0.64), 
-      new THREE.MeshBasicMaterial({ map: screenTexture })
-    );
-    parrotDisplay.position.set(0, 0.35, 0.012);
-    lapLid.add(parrotDisplay);
-
-    lapLid.position.set(0, 0, -0.36);
-    lapLid.rotation.x = -0.25;
-    laptopGroup.add(lapLid);
-
-    laptopGroup.position.set(1.3, 1.15, 0.2);
-    laptopGroup.rotation.y = -0.35;
-    scene.add(laptopGroup);
-
-    // --- التفاعل مع الكروت والماوس ---
+    // --- التفاعل مع المربعات بالماوس ---
     let hoveredCardIndex = -1;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -425,59 +300,14 @@
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
       
       raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObject(pcScreenMesh);
+      const intersects = raycaster.intersectObject(mainBoard);
       
       if (intersects.length > 0) {
         const uv = intersects[0].uv;
         const px = uv.x * 1200;
         const py = (1 - uv.y) * 675;
         
-        if (py >= 240 && py <= 390) {
-          if (px >= 120 && px <= 320) hoveredCardIndex = 0;
-          else if (px >= 360 && px <= 560) hoveredCardIndex = 1;
-          else if (px >= 600 && px <= 800) hoveredCardIndex = 2;
-          else if (px >= 840 && px <= 1040) hoveredCardIndex = 3;
-          else hoveredCardIndex = -1;
-        } else {
-          hoveredCardIndex = -1;
-        }
-      } else {
-        hoveredCardIndex = -1;
-      }
-    });
-
-    function handleInteraction(e) {
-      if (document.getElementById('desktop-ui').style.display === 'flex') return;
-      let clientX = e.clientX, clientY = e.clientY;
-      if (e.changedTouches && e.changedTouches.length > 0) {
-        clientX = e.changedTouches[0].clientX;
-        clientY = e.changedTouches[0].clientY;
-      }
-      mouse.x = (clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(clientY / window.innerHeight) * 2 + 1;
-      raycaster.setFromCamera(mouse, camera);
-      if (raycaster.intersectObject(pcScreenMesh).length > 0) openDesktopUI();
-    }
-
-    window.addEventListener('touchend', handleInteraction);
-    window.addEventListener('click', handleInteraction);
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    function animate() {
-      requestAnimationFrame(animate);
-      
-      drawParrotOSScreen(hoveredCardIndex);
-      screenTexture.needsUpdate = true;
-
-      controls.update();
-      renderer.render(scene, camera);
-    }
-    animate();
-  </script>
-</body>
-</html>
+        if (py >= 240 && py <= 520) {
+          if (px >= 100 && px <= 330) hoveredCardIndex = 0;
+          else if (px >= 360 && px <= 590) hoveredCardIndex = 1;
+          else
