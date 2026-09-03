@@ -14,6 +14,12 @@
     
     body {
       background-color: #030305;
+      /* دمج صورتك الشخصية كخلفية سينمائية للموقع بالزوم والكادر المظبوط تماماً */
+      background-image: linear-gradient(rgba(3, 3, 5, 0.82), rgba(3, 3, 5, 0.92)), url('IMG-20260903-WA0003.jpg');
+      background-size: cover;
+      background-position: center 15%; /* الكادر اللي بيجيب الوش والكتفين بظبط */
+      background-repeat: no-repeat;
+      background-attachment: fixed;
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -45,37 +51,10 @@
       pointer-events: none;
     }
 
-    /* حاوية صورتك بالكادر والزوم والشفافية المضبوطة ورا الكروت */
-    .bg-avatar-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 400px;
-      height: 500px;
-      z-index: 3;
-      pointer-events: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0.35; /* شفافة وشياكة ورا الكروت */
-      mix-blend-mode: luminosity; /* دمج سينمائي مع فضاء النجوم */
-      filter: drop-shadow(0 0 50px rgba(255, 119, 0, 0.5));
-    }
-
-    .bg-avatar-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 12%; /* التركيز على الوش والكتاف زي ما انت ظبطتها */
-      mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
-      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
-    }
-
     .top-bar {
       width: 100%;
       padding: 18px 25px;
-      background: rgba(5, 5, 8, 0.9);
+      background: rgba(5, 5, 8, 0.85);
       border-bottom: 2px solid rgba(255, 122, 0, 0.4);
       display: flex;
       justify-content: space-between;
@@ -165,7 +144,7 @@
     }
 
     .cyber-card {
-      background: linear-gradient(145deg, rgba(12, 12, 18, 0.88), rgba(20, 10, 5, 0.92));
+      background: linear-gradient(145deg, rgba(12, 12, 18, 0.9), rgba(20, 10, 5, 0.92));
       border: 2px solid rgba(255, 119, 0, 0.35);
       border-radius: 28px;
       padding: 40px 25px;
@@ -282,7 +261,6 @@
       .top-bar .side-text-left { font-size: 0.75rem; }
       .hero-name { font-size: 2rem; }
       .cyber-card { min-height: 200px; padding: 30px 20px; }
-      .bg-avatar-container { max-width: 320px; height: 400px; opacity: 0.3; }
     }
   </style>
 </head>
@@ -290,10 +268,6 @@
 
   <canvas id="space-canvas"></canvas>
   <div class="cosmic-glow"></div>
-
-  <div class="bg-avatar-container">
-    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" alt="Youssef Badr" id="user-avatar-img">
-  </div>
 
   <div class="top-bar">
     <div class="side-text-right">صلى على النبي ﷺ</div>
@@ -343,9 +317,6 @@
   </div>
 
   <script>
-    // ربط صورتك الأصلية الحقيقية بالسكربت مباشرة لتظهر فوراً
-    document.getElementById('user-avatar-img').src = "IMG-20260903-WA0003.jpg";
-
     const canvas = document.getElementById('space-canvas');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -422,4 +393,15 @@
           textBody.innerText += textContent.charAt(i);
           i++;
         } else {
-          clearInterval(typingInterval
+          clearInterval(typingInterval);
+        }
+      }, 18);
+    }
+
+    function closeModal() {
+      clearInterval(typingInterval);
+      document.getElementById('dynamicModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
