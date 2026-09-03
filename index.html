@@ -1,144 +1,200 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Youssef | AI & Cybersecurity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background-color: #030712; color: #fff; position: fixed; }
-    
-    #canvas-container { width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1; touch-action: none; }
-    
-    #top-bar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-      background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 71, 87, 0.3); z-index: 100;
-      display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
-    }
-    
-    .nav-left { display: flex; gap: 8px; }
-    
-    .hover-btn {
-      background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(0, 255, 204, 0.4);
-      color: #00ffcc; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
-      transition: all 0.2s ease;
-    }
-    .hover-btn:hover { background: rgba(0, 255, 204, 0.2); transform: scale(1.05); color: #fff; }
-
-    .dad-btn {
-      background: linear-gradient(135deg, #ef4444, #e11d48);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
-      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-      transition: all 0.2s ease;
-    }
-    .dad-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
-    
-    .nav-center {
-      font-family: 'Orbitron', sans-serif; font-size: 0.85rem; font-weight: 800;
-      color: #00ffcc; text-transform: uppercase; letter-spacing: 1px;
-      text-shadow: 0 0 10px rgba(0, 255, 204, 0.5); display: none;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    body {
+      background-color: #030712;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    #desktop-ui {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(7, 11, 25, 0.98); z-index: 200; display: none;
-      padding: 60px 15px 20px 15px; flex-direction: column; justify-content: center; align-items: center;
+    /* خلفية نيون خفيفة جمالية */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: rgba(0, 255, 204, 0.05);
+      filter: blur(150px);
+      border-radius: 50%;
+      z-index: 0;
     }
-    
-    .desktop-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 15px; max-width: 500px; width: 100%;
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1000px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    
-    .os-card {
-      background: rgba(15, 23, 42, 0.9); border: 2px solid rgba(0, 255, 204, 0.3);
-      border-radius: 12px; padding: 20px 15px; text-align: center; cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* العنوان الرئيسي الفاجر */
+    .main-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #00ffcc;
+      text-align: center;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+      letter-spacing: 1px;
     }
-    .os-card i { font-size: 2.2rem; color: #00ffcc; margin-bottom: 10px; display: block; transition: transform 0.3s; }
-    .os-card h3 { font-size: 1.1rem; color: #fff; transition: color 0.3s; }
-    
-    .os-card:hover {
-      transform: scale(1.08);
-      background: rgba(0, 255, 204, 0.15);
+
+    /* شبكة الكروت (2x2) */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 800px;
+      perspective: 1000px;
+    }
+
+    /* تصميم الكارت الفاجر مع الانعكاس والأنيميشن */
+    .cyber-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 2px solid rgba(0, 255, 204, 0.3);
+      border-radius: 20px;
+      padding: 35px 20px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    /* خط إضاءة نيون متحرك فوق الكارت */
+    .cyber-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.1), transparent);
+      transition: 0.5s;
+    }
+
+    .cyber-card:hover::before {
+      left: 100%;
+    }
+
+    .cyber-card i {
+      font-size: 3rem;
+      color: #00ffcc;
+      margin-bottom: 15px;
+      display: block;
+      transition: transform 0.3s ease, color 0.3s ease;
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.6);
+    }
+
+    .cyber-card h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      font-weight: 800;
+      transition: color 0.3s ease;
+    }
+
+    /* تأثير الهفر الفاجر: تكبير وانعكاس مائل للجنب وإضاءة نيون قوية */
+    .cyber-card:hover {
       border-color: #00ffcc;
-      box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+      box-shadow: -15px 15px 35px rgba(0, 255, 204, 2), 0 0 25px rgba(0, 255, 204, 0.4);
+      transform: translateY(-8px) scale(1.05) rotateY(5deg);
     }
-    .os-card:hover i { transform: scale(1.15); color: #38bdf8; }
-    .os-card:hover h3 { color: #00ffcc; }
 
-    #exit-os-btn {
-      margin-top: 25px; background: #ff4757; color: #fff; border: none;
-      padding: 10px 25px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; cursor: pointer;
-      transition: transform 0.2s;
+    .cyber-card:nth-child(even):hover {
+      transform: translateY(-8px) scale(1.05) rotateY(-5deg);
     }
-    #exit-os-btn:hover { transform: scale(1.05); background: #ff6b81; }
 
+    .cyber-card:hover i {
+      transform: scale(1.2) translateY(-5px);
+      color: #38bdf8;
+    }
+
+    .cyber-card:hover h3 {
+      color: #00ffcc;
+    }
+
+    /* نافذة المودال (Popup) لما تدوس على أي كارت */
     .modal {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
-      width: 90vw; max-width: 450px; background: rgba(10, 15, 30, 0.99);
-      border: 2px solid #00ffcc; border-radius: 12px; padding: 20px; z-index: 300;
-      display: none; opacity: 0; transition: all 0.3s ease; max-height: 75vh; overflow-y: auto;
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 90vw; max-width: 450px;
+      background: rgba(10, 15, 30, 0.98);
+      border: 2px solid #00ffcc;
+      border-radius: 16px; padding: 25px;
+      z-index: 100; display: none; opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 40px rgba(0, 255, 204, 0.4);
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 8px; margin-bottom: 12px; }
-    .modal-title { font-size: 1.05rem; color: #00ffcc; font-weight: 800; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; }
-    .modal-body { color: #e2e8f0; font-size: 0.9rem; line-height: 1.6; }
-    .modal-body li { margin-bottom: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px; border-right: 3px solid #00ffcc; list-style: none; }
-    
-    @media (min-width: 768px) {
-      .nav-center { display: block; }
-      .desktop-grid { grid-template-columns: repeat(4, 1fr); max-width: 850px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 10px; margin-bottom: 15px; }
+    .modal-title { font-size: 1.2rem; color: #00ffcc; font-weight: 900; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+    .close-modal:hover { background: #ff6b81; transform: scale(1.05); }
+    .modal-body { color: #e2e8f0; font-size: 0.95rem; line-height: 1.7; }
+    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 8px; border-right: 4px solid #00ffcc; list-style: none; }
+
+    /* تجاوب الشاشات الصغيرة */
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: 1fr; gap: 20px; }
+      .main-title { font-size: 1.6rem; }
     }
   </style>
 </head>
 <body>
 
-  <div id="top-bar">
-    <div class="nav-left">
-      <button class="hover-btn" onclick="openDesktopUI()"><i class="fas fa-th-large"></i> الأقسام الرئيسية</button>
-      <button class="dad-btn" onclick="openModal('modal-dad')"><i class="fas fa-heart"></i> إلى والدي الغالي ❤️</button>
+  <div class="container">
+    <h1 class="main-title">Welcome To Youssef Badr</h1>
+    
+    <div class="cards-grid">
+      <!-- كارت المشاريع -->
+      <div class="cyber-card" onclick="openModal('modal-projects')">
+        <i class="fas fa-code"></i>
+        <h3>المشاريع</h3>
+      </div>
+
+      <!-- كارت المهارات -->
+      <div class="cyber-card" onclick="openModal('modal-skills')">
+        <i class="fas fa-bolt"></i>
+        <h3>المهارات</h3>
+      </div>
+
+      <!-- كارت عني -->
+      <div class="cyber-card" onclick="openModal('modal-about')">
+        <i class="fas fa-user-shield"></i>
+        <h3>عنّي</h3>
+      </div>
+
+      <!-- كارت التواصل -->
+      <div class="cyber-card" onclick="openModal('modal-contact')">
+        <i class="fas fa-envelope"></i>
+        <h3>التواصل</h3>
+      </div>
     </div>
-    <div class="nav-center">Youssef | AI & Cybersecurity</div>
-    <div class="hover-btn" onclick="openModal('modal-terminal')"><i class="fas fa-terminal"></i> Terminal</div>
   </div>
 
-  <div id="canvas-container"></div>
-
-  <div id="desktop-ui">
-    <div class="desktop-grid">
-      <div class="os-card" onclick="openModal('modal-projects')"><i class="fas fa-code"></i><h3>المشاريع</h3></div>
-      <div class="os-card" onclick="openModal('modal-skills')"><i class="fas fa-bolt"></i><h3>المهارات</h3></div>
-      <div class="os-card" onclick="openModal('modal-about')"><i class="fas fa-user-shield"></i><h3>عنّي</h3></div>
-      <div class="os-card" onclick="openModal('modal-contact')"><i class="fas fa-envelope"></i><h3>التواصل</h3></div>
-    </div>
-    <button id="exit-os-btn" onclick="closeDesktopUI()"><i class="fas fa-undo"></i> العودة للخلفية الرئيسية</button>
-  </div>
-
-  <div id="modal-dad" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">إلى والدي الغالي ❤️</h3><button class="close-modal" onclick="closeModal(event, 'modal-dad')">✖ إغلاق</button></div>
-    <div class="modal-body">
-      <p style="font-weight: bold; color: #38bdf8; margin-bottom: 10px;">والدي الحبيب،</p>
-      <p style="margin-bottom: 10px;">حبيت تكون أول حد يشوف ثمرة شغفي وتجاربي في عالم البرمجة والتكنولوجيا. كل خطوة بتعلمها وكل نجاح بكون عايز أحققه، بيكون بعد فضل ربنا بفضل دعمك وتعابك معايا.</p>
-      <p style="color: #00ffcc;">ربنا يرجعك بالسلامة من السفر، ويحفظك لينا دائماً سند وظهر يا أغلى الناس!</p>
-      <div style="margin-top: 15px; text-align: left; font-size: 0.8rem; color: #94a3b8;">ابنك: يوسف ⚡</div>
-    </div>
-  </div>
-
-  <div id="modal-projects" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📂 قسم المشاريع</h3><button class="close-modal" onclick="closeModal(event, 'modal-projects')">✖ إغلاق</button></div>
+  <!-- Modals -->
+  <div id="modal-projects" class="modal">
+    <div class="modal-header"><h3 class="modal-title">📂 قسم المشاريع</h3><button class="close-modal" onclick="closeModal('modal-projects')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
         <li><strong>AI & Machine Learning:</strong> نماذج ذكاء اصطناعي وتحليل البيانات الضخمة.</li>
@@ -148,8 +204,8 @@
     </div>
   </div>
 
-  <div id="modal-skills" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">⚡ المهارات والتقنيات</h3><button class="close-modal" onclick="closeModal(event, 'modal-skills')">✖ إغلاق</button></div>
+  <div id="modal-skills" class="modal">
+    <div class="modal-header"><h3 class="modal-title">⚡ المهارات والتقنيات</h3><button class="close-modal" onclick="closeModal('modal-skills')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
         <li><strong>البرمجة:</strong> Python, C++, JavaScript, HTML/CSS</li>
@@ -159,155 +215,24 @@
     </div>
   </div>
 
-  <div id="modal-about" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">🛡️ عنّي</h3><button class="close-modal" onclick="closeModal(event, 'modal-about')">✖ إغلاق</button></div>
+  <div id="modal-about" class="modal">
+    <div class="modal-header"><h3 class="modal-title">🛡️ عنّي</h3><button class="close-modal" onclick="closeModal('modal-about')">✖ إغلاق</button></div>
     <div class="modal-body"><p>أهلاً بك! أنا يوسف، طالب علوم حاسب، مهتم ومبتكر في مجالات الذكاء الاصطناعي والأمن السيبراني وتطوير الأنظمة الرقمية الحديثة.</p></div>
   </div>
 
-  <div id="modal-contact" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">📬 التواصل</h3><button class="close-modal" onclick="closeModal(event, 'modal-contact')">✖ إغلاق</button></div>
+  <div id="modal-contact" class="modal">
+    <div class="modal-header"><h3 class="modal-title">📬 التواصل</h3><button class="close-modal" onclick="closeModal('modal-contact')">✖ إغلاق</button></div>
     <div class="modal-body">
       <ul>
         <li><strong>المجال:</strong> Computer Science & Cybersecurity</li>
-        <li><strong>البلد:</strong> مصر (الشرقية)</li>
+        <li><strong>البلد:</strong> مصر (الشرقية - كفر صقر)</li>
       </ul>
     </div>
   </div>
 
-  <div id="modal-terminal" class="modal" onclick="stopPropagation(event)">
-    <div class="modal-header"><h3 class="modal-title">💻 Terminal</h3><button class="close-modal" onclick="closeModal(event, 'modal-terminal')">✖ إغلاق</button></div>
-    <div class="modal-body" style="font-family: monospace; background: #000; padding: 12px; border-radius: 6px; color: #00ffcc;">
-      <p>youssef@ai-security:~$ whoami</p>
-      <p style="color: #fff; margin-top: 5px;">youssef_badr_developer</p>
-    </div>
-  </div>
-
   <script>
-    function openDesktopUI() { document.getElementById('desktop-ui').style.display = 'flex'; }
-    function closeDesktopUI() { document.getElementById('desktop-ui').style.display = 'none'; }
-    function stopPropagation(e) { if (e) e.stopPropagation(); }
     function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(e, id) { if (e) e.stopPropagation(); document.getElementById(id).classList.remove('active'); }
-
-    // --- Scene Setup ---
-    const container = document.getElementById('canvas-container');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x030712);
-    scene.fog = new THREE.FogExp2(0x030712, 0.05);
-
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.5, 6);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.enableZoom = false;
-    controls.enablePan = false;
-    controls.maxPolarAngle = Math.PI / 2 + 0.1;
-
-    scene.add(new THREE.AmbientLight(0xffffff, 1.2));
-    const pointLight = new THREE.PointLight(0x00ffcc, 3, 50);
-    pointLight.position.set(0, 5, 5);
-    scene.add(pointLight);
-
-    // --- Dynamic 3D Display & 4 Main Cards ---
-    const canvasTex = document.createElement('canvas');
-    canvasTex.width = 1200; canvasTex.height = 675;
-    const ctx = canvasTex.getContext('2d');
-
-    function drawScreen(hoverIndex) {
-      // خلفية الشاشة الفاجرة
-      ctx.fillStyle = '#050b14';
-      ctx.fillRect(0, 0, 1200, 675);
-
-      // تأثير نيون خفيف في الخلفية
-      ctx.fillStyle = 'rgba(0, 255, 204, 0.03)';
-      ctx.beginPath();
-      ctx.arc(600, 337, 400, 0, Math.PI * 2);
-      ctx.fill();
-
-      // العنوان الرئيسي الفاجر فوق
-      ctx.shadowColor = '#00ffcc';
-      ctx.shadowBlur = 25;
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '900 52px "Cairo", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText("اختر مسارك في عالم البرمجة والفوضى الرقمية", 600, 100);
-      ctx.shadowBlur = 0;
-
-      // الخيارات الأربعة الكبيرة (المربعات الفاجرة)
-      const cards = [
-        { text: 'AI & Machine Learning', x: 100, y: 240, w: 230, h: 280 },
-        { text: 'Cybersecurity', x: 360, y: 240, w: 230, h: 280 },
-        { text: 'Web Development', x: 620, y: 240, w: 230, h: 280 },
-        { text: 'Data Science', x: 880, y: 240, w: 230, h: 280 }
-      ];
-
-      cards.forEach((card, index) => {
-        let isHovered = (hoverIndex === index);
-        let boxX = isHovered ? card.x - 5 : card.x;
-        let boxY = isHovered ? card.y - 5 : card.y;
-        let boxW = isHovered ? card.w + 10 : card.w;
-        let boxH = isHovered ? card.h + 10 : card.h;
-
-        // خلفية الكارد مع التفاعل
-        ctx.fillStyle = isHovered ? 'rgba(0, 255, 204, 0.2)' : 'rgba(15, 23, 42, 0.9)';
-        ctx.strokeStyle = isHovered ? '#00ffcc' : 'rgba(0, 255, 204, 0.3)';
-        ctx.lineWidth = isHovered ? 4 : 2;
-
-        ctx.fillRect(boxX, boxY, boxW, boxH);
-        ctx.strokeRect(boxX, boxY, boxW, boxH);
-        
-        // النص جوا المربع
-        ctx.fillStyle = isHovered ? '#00ffcc' : '#ffffff'; 
-        ctx.font = '800 24px "Cairo", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        
-        // تقسيم الكلام لو طويل
-        const words = card.text.split(' ');
-        if(words.length > 1) {
-          ctx.fillText(words[0], boxX + (boxW / 2), boxY + (boxH / 2) - 15);
-          ctx.fillText(words.slice(1).join(' '), boxX + (boxW / 2), boxY + (boxH / 2) + 20);
-        } else {
-          ctx.fillText(card.text, boxX + (boxW / 2), boxY + (boxH / 2));
-        }
-      });
-    }
-
-    drawScreen(-1);
-    const screenTexture = new THREE.CanvasTexture(canvasTex);
-
-    // مجسم العرض الثلاثي الأبعاد الرئيسي في النص
-    const boardGeo = new THREE.PlaneGeometry(7.5, 4.2);
-    const boardMat = new THREE.MeshBasicMaterial({ map: screenTexture });
-    const mainBoard = new THREE.Mesh(boardGeo, boardMat);
-    mainBoard.position.set(0, 1.2, 0);
-    scene.add(mainBoard);
-
-    // --- التفاعل مع المربعات بالماوس ---
-    let hoveredCardIndex = -1;
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-
-    window.addEventListener('mousemove', (e) => {
-      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-      
-      raycaster.setFromCamera(mouse, camera);
-      const intersects = raycaster.intersectObject(mainBoard);
-      
-      if (intersects.length > 0) {
-        const uv = intersects[0].uv;
-        const px = uv.x * 1200;
-        const py = (1 - uv.y) * 675;
-        
-        if (py >= 240 && py <= 520) {
-          if (px >= 100 && px <= 330) hoveredCardIndex = 0;
-          else if (px >= 360 && px <= 590) hoveredCardIndex = 1;
-          else
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+  </script>
+</body>
+</html>
