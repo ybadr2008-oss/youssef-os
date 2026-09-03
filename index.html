@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Youssef | AI & Cybersecurity</title>
+  <title>Youssef World | AI & Cybersecurity</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
@@ -18,68 +18,90 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       overflow-x: hidden;
       position: relative;
-      -webkit-font-smoothing: antialiased; /* تظبيط حِدة الخطوط على الموبايل */
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* خلفية نيون عملاقة وفاجرة */
+    /* خلفية نيون متحركة وساطعة */
     body::before {
       content: '';
       position: absolute;
-      width: 600px; height: 600px;
-      background: rgba(0, 255, 204, 0.08);
-      filter: blur(120px);
+      width: 700px; height: 700px;
+      background: rgba(0, 255, 204, 0.07);
+      filter: blur(140px);
       border-radius: 50%;
       z-index: 0;
+      top: 10%;
+    }
+
+    /* البار العلوي الفاجر */
+    .top-bar {
+      width: 100%;
+      padding: 18px 20px;
+      background: rgba(10, 15, 30, 0.95);
+      border-bottom: 2px solid rgba(0, 255, 204, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 50;
+      box-shadow: 0 5px 25px rgba(0, 255, 204, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .top-bar h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #00ffcc;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0, 255, 204, 0.8), 0 0 5px rgba(0, 255, 204, 0.5);
+      text-align: center;
     }
 
     .container {
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 1000px;
-      padding: 20px;
+      max-width: 1100px;
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      flex-grow: 1;
+      justify-content: center;
     }
 
-    /* العنوان الرئيسي الفاجر */
-    .main-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      color: #00ffcc;
-      text-align: center;
-      margin-bottom: 35px;
-      text-shadow: 0 0 25px rgba(0, 255, 204, 0.6), 0 0 10px rgba(0, 255, 204, 0.4);
-      letter-spacing: 1.5px;
-    }
-
-    /* شبكة الكروت (2x2) */
+    /* شبكة الكروت الأربعة الكبيرة (2x2) */
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 25px;
+      gap: 30px;
       width: 100%;
-      max-width: 750px;
+      max-width: 900px;
     }
 
-    /* تصميم الكارت الفاجر بجرافيك عالي وناعم */
+    /* تصميم الكارت الفاجر والمكبر */
     .cyber-card {
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(7, 11, 25, 0.98));
-      border: 2px solid rgba(0, 255, 204, 0.4);
-      border-radius: 22px;
-      padding: 30px 15px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(7, 11, 25, 0.98));
+      border: 2px solid rgba(0, 255, 204, 0.35);
+      border-radius: 24px;
+      padding: 40px 20px;
       text-align: center;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 255, 204, 0.05);
-      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 255, 204, 0.04);
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.35s ease, border-color 0.35s ease;
       backdrop-filter: blur(12px);
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     /* خط إضاءة نيون متحرك فوق الكارت */
@@ -88,7 +110,7 @@
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.25), transparent);
       transition: 0.6s;
     }
 
@@ -97,93 +119,108 @@
     }
 
     .cyber-card i {
-      font-size: 2.8rem;
+      font-size: 3.2rem;
       color: #00ffcc;
-      margin-bottom: 12px;
+      margin-bottom: 15px;
       display: block;
-      text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+      text-shadow: 0 0 25px rgba(0, 255, 204, 0.8);
+      transition: transform 0.3s ease;
     }
 
     .cyber-card h3 {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       color: #fff;
-      font-weight: 800;
+      font-weight: 900;
+      margin-bottom: 8px;
       letter-spacing: 0.5px;
     }
 
-    /* تأثير اللمس والهفر العنيف والفاجر */
+    .cyber-card p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    /* تأثير الهفر واللمس العنيف مع الانعكاس المكبر */
     .cyber-card:hover, .cyber-card:active {
       border-color: #00ffcc;
-      box-shadow: 0 0 35px rgba(0, 255, 204, 0.6), inset 0 0 20px rgba(0, 255, 204, 0.2);
-      transform: translateY(-5px) scale(1.03);
+      box-shadow: -10px 10px 40px rgba(0, 255, 204, 0.4), inset 0 0 25px rgba(0, 255, 204, 0.15);
+      transform: translateY(-8px) scale(1.04);
     }
 
     .cyber-card:hover i {
+      transform: scale(1.15) translateY(-3px);
       color: #38bdf8;
-      text-shadow: 0 0 25px rgba(56, 189, 248, 0.9);
+      text-shadow: 0 0 30px rgba(56, 189, 248, 0.9);
     }
 
     .cyber-card:hover h3 {
       color: #00ffcc;
     }
 
-    /* نافذة المودال الفاجرة */
+    /* نافذة المودال الفاجرة للتفاصيل */
     .modal {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.85);
-      width: 90vw; max-width: 420px;
-      background: rgba(8, 12, 24, 0.98);
+      width: 90vw; max-width: 450px;
+      background: rgba(8, 12, 24, 0.99);
       border: 2px solid #00ffcc;
-      border-radius: 18px; padding: 22px;
+      border-radius: 20px; padding: 25px;
       z-index: 100; display: none; opacity: 0;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 0 50px rgba(0, 255, 204, 0.5);
+      box-shadow: 0 0 60px rgba(0, 255, 204, 0.6);
     }
     .modal.active { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 10px; margin-bottom: 15px; }
-    .modal-title { font-size: 1.15rem; color: #00ffcc; font-weight: 900; }
-    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; }
-    .modal-body { color: #e2e8f0; font-size: 0.92rem; line-height: 1.7; }
-    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.04); padding: 10px 12px; border-radius: 8px; border-right: 4px solid #00ffcc; list-style: none; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,255,204,0.3); padding-bottom: 12px; margin-bottom: 15px; }
+    .modal-title { font-size: 1.25rem; color: #00ffcc; font-weight: 900; }
+    .close-modal { background: #ff4757; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+    .close-modal:hover { background: #ff6b81; transform: scale(1.05); }
+    .modal-body { color: #e2e8f0; font-size: 0.95rem; line-height: 1.7; }
+    .modal-body li { margin-bottom: 10px; background: rgba(255,255,255,0.04); padding: 12px 14px; border-radius: 8px; border-right: 4px solid #00ffcc; list-style: none; }
 
     /* تجاوب الشاشات الصغيرة جداً */
-    @media (max-width: 480px) {
-      .cards-grid { gap: 15px; }
-      .cyber-card { padding: 25px 10px; border-radius: 18px; }
-      .cyber-card i { font-size: 2.4rem; }
-      .cyber-card h3 { font-size: 1.1rem; }
-      .main-title { font-size: 1.6rem; margin-bottom: 25px; }
+    @media (max-width: 600px) {
+      .cards-grid { grid-template-columns: 1fr; gap: 20px; max-width: 400px; }
+      .top-bar h2 { font-size: 1.1rem; }
+      .cyber-card { min-height: 180px; padding: 30px 15px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- البار العلوي الفاجر -->
+  <div class="top-bar">
+    <h2>Welcome To Youssef World</h2>
+  </div>
+
   <div class="container">
-    <h1 class="main-title">Welcome To Youssef Badr</h1>
-    
     <div class="cards-grid">
       <!-- كارت المشاريع -->
       <div class="cyber-card" onclick="openModal('modal-projects')">
         <i class="fas fa-code"></i>
         <h3>المشاريع</h3>
+        <p>استكشف ابتكارات وأعمال البرمجة والذكاء الاصطناعي</p>
       </div>
 
       <!-- كارت المهارات -->
       <div class="cyber-card" onclick="openModal('modal-skills')">
         <i class="fas fa-bolt"></i>
         <h3>المهارات</h3>
+        <p>تقنيات متقدمة في الأمن السيبراني ولغات البرمجة</p>
       </div>
 
       <!-- كارت عني -->
       <div class="cyber-card" onclick="openModal('modal-about')">
         <i class="fas fa-user-shield"></i>
         <h3>عنّي</h3>
+        <p>شغف بالتكنولوجيا وعالم الأنظمة الرقمية الحديثة</p>
       </div>
 
       <!-- كارت التواصل -->
       <div class="cyber-card" onclick="openModal('modal-contact')">
         <i class="fas fa-envelope"></i>
         <h3>التواصل</h3>
+        <p>تواصل معي واعرف المزيد عن أعمالي ومجالي</p>
       </div>
     </div>
   </div>
