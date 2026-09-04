@@ -201,8 +201,9 @@
         } else {
           resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
         }
-      } catch (error) {
-        resultText.innerHTML = `<span style="color:#c53030;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
+     } catch (error) {
+        console.error("Fetch Error:", error);
+        resultText.innerHTML = `<span style="color:#c53030;">خطأ تقني: ${error.message}</span>`;
       }
     }
   </script>
