@@ -470,21 +470,60 @@
 
       fetch("https://script.google.com/macros/s/AKfycbzKjp6WT9R-RVZmmx48VxK-G9kzK5Xeh0BLWyrEsXrcdc4dme-mO-0rFrMHcUHuGPLpTw/exec", {
         method: "POST",
-        body: JSON.stringify({
-          message: msg
-        })
+        body: JSON.stringify({ message: msg })
       })
       .then(res => res.json())
       .then(data => {
-        console.log("تم إرسال الطلب للبوت بنجاح", data);
+        console.log("تم الإرسال بنجاح:", data);
       })
       .catch(err => {
-        console.log("خطأ في الاتصال:", err);
+        console.log("خطأ:", err);
       });
 
       // إظهار رسالة النجاح وتصفير الفورم
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('newMemberForm').reset();
+    }
+
+    // إرسال طلب التجديد للبوت
+    function handleRenewRegistration(event) {
+      event.preventDefault();
+      const phone = document.getElementById('sheetSearchPhone').value.trim();
+      const startDate = document.getElementById('renewStartDate').value;
+      const expiryDate = calculateExpiryDate(startDate);
+      const receiptFile = document.getElementById('renewReceipt').files[0];
+
+      if(!receiptFile) {
+        alert("يرجى إرفاق صورة إيصال التجديد!");
+        return;
+      }
+
+      const msg = `🔄 *طلب تجديد اشتراك معلق* - جيم نزاهة\n\n` +
+                  `📱 الموبايل: ${phone}\n` +
+                  `🎟️ باقة التجديد: ${selectedRenewPlan.name} (${selectedRenewPlan.price} جنيه)\n` +
+                  `📅 تاريخ البدء الجديد: ${startDate}\n` +
+                  `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
+                  `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
+
+      fetch("https://script.google.com/macros/s/AKfycbzKjp6WT9R-RVZmmx48VxK-G9kzK5Xeh0BLWyrEsXrcdc4dme-mO-0rFrMHcUHuGPLpTw/exec", {
+        method: "POST",
+        body: JSON.stringify({ message: msg })
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("تم تجديد الطلب بنجاح:", data);
+      })
+      .catch(err => {
+        console.log("خطأ:", err);
+      });
+
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('renewCard').style.display = 'none';
+      document.getElementById('sheetResultArea').style.display = 'none';
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').style.display = 'none';
     }
 
     // إرسال طلب التجديد
