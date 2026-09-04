@@ -468,10 +468,22 @@
                   `⏳ تاريخ الانتهاء المتوقع: ${expiryDate}\n` +
                   `📎 (يرجى مراجعة إيصال التحويل المرفق وتفعيل الحساب)`;
 
-      // فتح الواتساب برقمك أو رابط تليجرام المباشر للكابتن
-      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappUrl, '_blank');
+      // إرسال البيانات للبوت عبر Google Apps Script
+      fetch("https://script.google.com/macros/s/AKfycbzqErurWW6W6gMkSHIGVQ24Ox6J4QSqNQ4hQI2NFdowuxka__BEEHBNHBBpf-Hw8S77xA/exec", {
+        method: "POST",
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          area: area,
+          plan: selectedNewPlan.name,
+          startDate: startDate,
+          expiryDate: expiryDate
+        })
+      }).then(res => res.json()).then(data => {
+        console.log("تم الإرسال للبوت بنجاح");
+      });
 
+      // إظهار رسالة النجاح وتصفير الفورم
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('newMemberForm').reset();
     }
