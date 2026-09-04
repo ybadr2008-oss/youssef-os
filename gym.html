@@ -444,7 +444,7 @@
       }
     }
 
-    // إرسال بيانات المشترك الجديد (التوجيه لتليجرام أو واتساب كبديل فوري وبدون أخطاء)
+    // إرسال بيانات المشترك الجديد للبوت
     function handleNewRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('newName').value.trim();
@@ -468,25 +468,18 @@
                   `⏳ تاريخ الانتهاء المتوقع: ${expiryDate}\n` +
                   `📎 (يرجى مراجعة إيصال التحويل المرفق وتفعيل الحساب)`;
 
-      // إرسال البيانات للبوت عبر Google Apps Script بدون مشاكل CORS
-            fetch("https://script.google.com/macros/s/AKfycbzBdu5oRXXrH741I94PJJ2saFJDW-v5qu6UOas5hSrvwX8mwyI-_BN4mGkJFmK5Oor7kw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbzKjp6WT9R-RVZmmx48VxK-G9kzK5Xeh0BLWyrEsXrcdc4dme-mO-0rFrMHcUHuGPLpTw/exec", {
         method: "POST",
-              mode: "no-cors",
-              headers: {
-                "Content-Type": "application/json"
-              },
         body: JSON.stringify({
-          name: name,
-          phone: phone,
-          area: area,
-          plan: selectedNewPlan.name,
-          startDate: startDate,
-          expiryDate: expiryDate
+          message: msg
         })
-      }).then(() => {
-        console.log("تم إرسال الطلب للبوت بنجاح");
-      }).catch(err => {
-        console.log("خطأ:", err);
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log("تم إرسال الطلب للبوت بنجاح", data);
+      })
+      .catch(err => {
+        console.log("خطأ في الاتصال:", err);
       });
 
       // إظهار رسالة النجاح وتصفير الفورم
