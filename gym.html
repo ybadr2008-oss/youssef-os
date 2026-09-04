@@ -10,76 +10,118 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+    :root {
+      --bg-color: #f4f5f7;
+      --card-bg: #ffffff;
+      --text-main: #111111;
+      --text-sub: #4a5568;
+      --border-color: #e2e8f0;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --info-bg: #fafbfc;
+      --result-bg: #edf2f7;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0b0f19;
+      --card-bg: #131b2e;
+      --text-main: #f7fafc;
+      --text-sub: #a0aec0;
+      --border-color: #2d3748;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --info-bg: #1a2238;
+      --result-bg: #1e293b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
     
-    /* شاشة البداية المعدلة والمضبوطة تماماً */
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: #ffffff; display: flex; flex-direction: column;
+      background: var(--card-bg); display: flex; flex-direction: column;
       align-items: center; justify-content: center; z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s ease; color: #000000; text-align: center; padding: 20px;
+      transition: opacity 0.8s ease, visibility 0.8s ease; color: var(--text-main); text-align: center; padding: 20px;
     }
     
     .splash-title {
-      font-size: clamp(2rem, 5vw, 4rem); /* حجم متجاوب وكبير جداً وواضح */
+      font-size: clamp(2rem, 5vw, 4rem);
       font-weight: 900; 
-      color: #000000; 
+      color: var(--text-main); 
       margin-bottom: 15px;
-      border-right: 6px solid #ff7700; /* خط برتقالي فخم على اليمين للغة العربية */
+      border-right: 6px solid #ff7700; 
       padding-right: 15px; 
     }
 
     .splash-sub { 
       font-size: clamp(1.2rem, 3vw, 2rem); 
-      color: #4a5568; 
+      color: var(--text-sub); 
       font-weight: 700; 
       letter-spacing: 2px;
     }
 
-    body { background-color: #f4f5f7; color: #111111; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-    .container { max-width: 900px; width: 100%; margin: auto; }
-    header { text-align: center; margin-bottom: 35px; padding-top: 20px; }
-    header h1 { color: #000000; font-size: 3rem; font-weight: 900; letter-spacing: 1px; }
-    header h1 span { color: #ff7700; }
-    header p { color: #333333; font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    
+    .top-bar { max-width: 900px; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 10px; }
+    .theme-toggle { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); padding: 8px 16px; border-radius: 50px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: var(--box-shadow); }
+    .theme-toggle:hover { border-color: #ff7700; color: #ff7700; }
 
-    .card { background: #ffffff; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); }
-    .card h2 { color: #000000; margin-bottom: 20px; font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid #edf2f7; padding-bottom: 10px; }
+    .container { max-width: 900px; width: 100%; margin: auto; }
+    header { text-align: center; margin-bottom: 35px; padding-top: 10px; }
+    header h1 { color: var(--text-main); font-size: 3rem; font-weight: 900; letter-spacing: 1px; }
+    header h1 span { color: #ff7700; }
+    header p { color: var(--text-sub); font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
+
+    .card { background: var(--card-bg); border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: var(--box-shadow); }
+    .card h2 { color: var(--text-main); margin-bottom: 20px; font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
     .card h2 i { color: #ff7700; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    .info-box { background: #fafbfc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 14px; text-align: center; }
+    .info-box { background: var(--info-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 14px; text-align: center; }
     .info-box h3 { color: #ff7700; margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
-    .info-box p { color: #1a202c; line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
+    .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
-    .price-tag { font-size: 2.2rem; font-weight: 900; color: #000000; margin-top: 8px; }
-    .price-tag span { font-size: 1.1rem; color: #4a5568; font-weight: 700; }
+    .price-tag { font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-top: 8px; }
+    .price-tag span { font-size: 1.1rem; color: var(--text-sub); font-weight: 700; }
 
-    .vodafone-section { background: linear-gradient(135deg, #fff5f0, #ffffff); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
-    .vodafone-number { font-size: 2rem; font-weight: 900; color: #c53030; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
+    .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
+    .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
     .pay-btn { display: inline-block; background: #dd6b20; color: #ffffff; padding: 14px 32px; border-radius: 50px; font-weight: 900; font-size: 1.15rem; text-decoration: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35); transition: 0.3s; }
     .pay-btn:hover { background: #c05621; transform: scale(1.03); }
 
     .tracker-box { display: flex; gap: 10px; margin-top: 15px; }
-    .tracker-box input { flex: 1; padding: 14px 18px; border-radius: 12px; border: 2px solid #cbd5e0; background: #ffffff; color: #000000; font-size: 1.05rem; font-weight: 700; outline: none; }
+    .tracker-box input { flex: 1; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
     .tracker-box input:focus { border-color: #ff7700; }
-    .tracker-box button { padding: 14px 28px; background: #000000; border: none; border-radius: 12px; color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-    .tracker-box button:hover { background: #ff7700; }
+    .tracker-box button { padding: 14px 28px; background: #ff7700; border: none; border-radius: 12px; color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+    .tracker-box button:hover { background: #e06600; }
 
-    .result-area { margin-top: 15px; background: #edf2f7; padding: 18px; border-radius: 12px; display: none; border: 1px solid #cbd5e0; font-weight: 700; color: #1a202c; font-size: 1.1rem; }
-    ul.rules-list { padding-right: 20px; line-height: 2.2; color: #1a202c; font-weight: 700; font-size: 1.05rem; }
+    .result-area { margin-top: 15px; background: var(--result-bg); padding: 18px; border-radius: 12px; display: none; border: 1px solid var(--border-color); font-weight: 700; color: var(--text-main); font-size: 1.1rem; line-height: 1.8; }
+    ul.rules-list { padding-right: 20px; line-height: 2.2; color: var(--text-main); font-weight: 700; font-size: 1.05rem; }
     ul.rules-list li { margin-bottom: 10px; }
-    .store-teaser { background: #000000; color: #fff; text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; }
+    
+    .store-teaser { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: var(--box-shadow); }
     .store-teaser span { color: #ff7700; font-weight: 900; }
+
+    /* زرار الواتساب العائم الفخم */
+    .whatsapp-float {
+      position: fixed; bottom: 25px; left: 25px; background: #25d366; color: #fff;
+      width: 60px; height: 60px; border-radius: 50px; display: flex; align-items: center;
+      justify-content: center; font-size: 30px; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+      z-index: 1000; text-decoration: none; transition: 0.3s;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
   </style>
 </head>
-<body>
+<body data-theme="light">
 
   <div id="splash-screen">
     <div class="splash-title">مرحباً بك في جيم نزاهة</div>
     <div class="splash-sub">Welcome to NAZAHA Gym</div>
+  </div>
+
+  <div class="top-bar">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <i id="themeIcon" class="fas fa-moon"></i> <span id="themeText">الوضع الليلي</span>
+    </button>
   </div>
 
   <div class="container">
@@ -94,12 +136,12 @@
         <div class="info-box">
           <h3>مواعيد الرجال</h3>
           <p>من <strong>12:00 ظهراً</strong> إلى <strong>4:00 عصراً</strong> ومن <strong>6:00 مساءً</strong> إلى <strong>9:00 صباحاً</strong><br>
-          <span style="color:#276749; font-size:0.95rem;">(الجمعة: طوال اليوم عدا فترة السيدات)</span></p>
+          <span style="color:#38a169; font-size:0.95rem;">(الجمعة: طوال اليوم عدا فترة السيدات)</span></p>
         </div>
         <div class="info-box">
           <h3>مواعيد السيدات</h3>
           <p>يومياً: من <strong>9:00 صباحاً</strong> لـ <strong>12:00 ظهراً</strong> ومن <strong>4:00 عصراً</strong> لـ <strong>6:00 مساءً</strong><br>
-          <span style="color:#c53030; font-size:0.95rem;">(الجمعة: من 4:00 عصراً لـ 7:00 مساءً)</span></p>
+          <span style="color:#e53e3e; font-size:0.95rem;">(الجمعة: من 4:00 عصراً لـ 7:00 مساءً)</span></p>
         </div>
       </div>
     </div>
@@ -107,7 +149,7 @@
     <div class="card">
       <h2><i class="fas fa-ticket-alt"></i> تكلفة الاشتراك الشهري</h2>
       <div style="text-align: center; padding: 10px;">
-        <p style="color: #2d3748; font-weight: 700;">باقة شهرية شاملة كامل الأجهزة</p>
+        <p style="font-weight: 700;">باقة شهرية شاملة كامل الأجهزة</p>
         <div class="price-tag">550 <span>جنيه / شهرياً</span></div>
       </div>
     </div>
@@ -115,16 +157,16 @@
     <div class="card">
       <h2><i class="fas fa-wallet"></i> الاشتراك السريع (فودافون كاش)</h2>
       <div class="vodafone-section">
-        <p style="color: #2d3748; font-weight: 700;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
+        <p style="font-weight: 700;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
         <div class="vodafone-number">01017995678</div>
-        <p style="font-size: 0.95rem; color: #4a5568; font-weight: 700; margin-bottom: 10px;">للتحويل السريع (يعمل مباشرة من الموبايل):</p>
+        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 10px;">للتحويل السريع (يعمل مباشرة من الموبايل):</p>
         <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع الآن مباشر (*9*7...)</a>
       </div>
     </div>
 
     <div class="card">
       <h2><i class="fas fa-search"></i> استعلام عن اشتراكك</h2>
-      <p style="color: #2d3748; font-size: 0.95rem; font-weight: 700;">اكتب رقم هاتفك لمعرفة الأيام المتبقية وموعد التجديد:</p>
+      <p style="font-size: 0.95rem; font-weight: 700;">اكتب رقم هاتفك لمعرفة الأيام المتبقية وموعد التجديد:</p>
       <div class="tracker-box">
         <input type="tel" id="phoneInput" placeholder="ادخل رقم الموبايل المسجل..." maxlength="11">
         <button onclick="checkSubscription()">استعلام</button>
@@ -148,7 +190,41 @@
     </div>
   </div>
 
+  <!-- زرار واتساب عائم -->
+  <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
   <script>
+    // نظام الثيم (ليلي / نهاري)
+    function toggleTheme() {
+      const body = document.body;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+      
+      if (body.getAttribute('data-theme') === 'light') {
+        body.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fas fa-sun';
+        themeText.innerText = 'الوضع النهاري';
+        localStorage.setItem('nazaha_theme', 'dark');
+      } else {
+        body.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fas fa-moon';
+        themeText.innerText = 'الوضع الليلي';
+        localStorage.setItem('nazaha_theme', 'light');
+      }
+    }
+
+    // استرجاع الثيم المفضل عند فتح الموقع
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('nazaha_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeIcon').className = 'fas fa-sun';
+        document.getElementById('themeText').innerText = 'الوضع النهاري';
+      }
+    });
+
     setTimeout(() => {
       const splash = document.getElementById('splash-screen');
       splash.style.opacity = '0';
@@ -186,7 +262,7 @@
           
           if (expiryRaw.toLowerCase() === "lifetime" || expiryRaw === "أبدي" || expiryRaw.startsWith("2099")) {
             resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
-              🎉 نوع الاشتراك: <span style="color:#276749; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
+              🎉 نوع الاشتراك: <span style="color:#38a169; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
               ✅ حالتك: مسموح لك بالدخول في أي وقت!`;
           } else {
             const expiryDate = new Date(expiryRaw);
@@ -204,18 +280,18 @@
 
             if (daysLeft >= 0) {
               resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
-                📅 موعد التجديد القادم: <span style="color:#c53030;">${member.expiry}</span><br>
-                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#276749' : '#c53030'};">${daysLeft === 0 ? 'اليوم ينتهي اشتراكك!' : daysLeft + ' أيام'}</span>`;
+                📅 موعد التجديد القادم: <span style="color:#e53e3e;">${member.expiry}</span><br>
+                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#38a169' : '#e53e3e'};">${daysLeft === 0 ? 'اليوم ينتهي اشتراكك!' : daysLeft + ' أيام'}</span>`;
             } else {
-              resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
+              resultText.innerHTML = `<span style="color:#e53e3e; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
             }
           }
         } else {
-          resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
+          resultText.innerHTML = `<span style="color:#e53e3e; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
         }
       } catch (error) {
         console.error("Fetch Error:", error);
-        resultText.innerHTML = `<span style="color:#c53030;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
+        resultText.innerHTML = `<span style="color:#e53e3e;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
       }
     }
   </script>
