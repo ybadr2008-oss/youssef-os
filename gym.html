@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gym Nazaha | نظام الاستعلام</title>
+  <title>NAZAHA Gym | جيم نزاهة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- استبدال الخط بـ Tajawal ليكون أشيك وأفخم -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
     
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -72,7 +73,7 @@
 <body>
 
   <div id="splash-screen">
-    <div class="splash-title" id="typing-text">كابتن نزاهة يرحب بكم</div>
+    <div class="splash-title" id="typing-text"></div>كابتن نزاهة يرحب بكم</div>
     <div class="splash-sub">Welcome to NAZAHA Gym</div>
   </div>
 
@@ -149,7 +150,6 @@
       setTimeout(() => { splash.style.display = 'none'; }, 800);
     }, 2500);
 
-    // رابط الـ API الصحيح الجديد
     const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
 
     async function checkSubscription() {
@@ -178,14 +178,13 @@
 
         if (member) {
           const expiryRaw = member.expiry ? String(member.expiry).trim() : "";
-
-          // لو الاشتراك أبدي أو ممتد
+          
+          // دعم الاشتراك الأبدي
           if (expiryRaw.toLowerCase() === "lifetime" || expiryRaw === "أبدي" || expiryRaw.startsWith("2099")) {
             resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
               🎉 نوع الاشتراك: <span style="color:#276749; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
               ✅ حالتك: مسموح لك بالدخول في أي وقت!`;
           } else {
-            // الحساب العادي لباقي الاشتراكات الشهرية
             const expiryDate = new Date(expiryRaw);
             const today = new Date();
             
@@ -210,9 +209,9 @@
         } else {
           resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
         }
-     } catch (error) {
+      } catch (error) {
         console.error("Fetch Error:", error);
-        resultText.innerHTML = `<span style="color:#c53030;">خطأ تقني: ${error.message}</span>`;
+        resultText.innerHTML = `<span style="color:#c53030;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
       }
     }
   </script>
