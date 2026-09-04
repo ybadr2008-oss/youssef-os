@@ -182,7 +182,7 @@
         <i class="fas fa-user-plus"></i> مشترك جديد
       </button>
       <button class="tab-btn" onclick="switchPortal('renew')">
-        <i class="fas fa-search"></i> الاستعلام والاشتراك الحالي
+        <i class="fas fa-sync-alt"></i> تجديد / استعلام (مشترك حالي)
       </button>
     </div>
 
@@ -190,7 +190,7 @@
     <div id="newMemberPortal" class="portal-section active">
       <div class="hero-welcome-box">
         <h2>أهلاً بيك في عائلة أبطال نزاهة! 🔥</h2>
-        <p>اختر باقتك، املأ بياناتك، وارفع سكرين شوت التحويل لتنتظر مراجعة الكابتن وتفعيل حسابك!</p>
+        <p>اختر باقتك، املأ بياناتك بدقة، وارفع إيصال التحويل لتنتظر مراجعة الكابتن وتفعيل حسابك!</p>
       </div>
 
       <div class="card">
@@ -246,7 +246,7 @@
           <div class="form-group">
             <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
             <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
-            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن.</span>
+            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن. (يرجى إرفاق التحويل عند الإرسال)</span>
           </div>
 
           <button type="submit" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال وتفعيل الاشتراك الآن</button>
@@ -254,16 +254,62 @@
       </div>
     </div>
 
-    <!-- بوابة الاستعلام للمشترك الحالي عبر SheetDB -->
+    <!-- بوابة المشترك الحالي (تجديد + استعلام) -->
     <div id="renewMemberPortal" class="portal-section">
+      <div class="hero-welcome-box" style="border-color: #38a169; background: linear-gradient(135deg, rgba(56,161,105,0.15), var(--card-bg));">
+        <h2 style="color: #38a169;">منور بيتك يا وحش! 💪🔥</h2>
+        <p>ابحث برقم هاتفك للاستعلام عن حالتك أو تجديد اشتراكك بكل سهولة.</p>
+      </div>
+
       <div class="card">
-        <h2><i class="fas fa-search"></i> استعلام عن بيانات المشترك</h2>
-        <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل للبحث في جدول البيانات:</p>
+        <h2><i class="fas fa-search"></i> التحقق من حسابك الحالي</h2>
+        <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل للبحث في قاعدة البيانات:</p>
         <div style="display: flex; gap: 10px;">
           <input type="tel" id="sheetSearchPhone" class="form-control" placeholder="ادخل رقم الموبايل..." maxlength="11">
           <button type="button" onclick="checkSheetMember()" class="action-btn" style="width: auto; padding: 0 30px;">بحث</button>
         </div>
         <div id="sheetResultArea" style="margin-top: 20px; display: none;" class="vodafone-section"></div>
+      </div>
+
+      <!-- كارد التجديد (يظهر عند رغبة العضو في التجديد) -->
+      <div class="card" id="renewCard" style="display: none;">
+        <h2><i class="fas fa-sync-alt"></i> تجديد اشتراك العضوية</h2>
+        
+        <div class="prices-grid" style="margin-bottom: 20px;">
+          <div class="price-card active" onclick="selectRenewPlan(550, 'بدون مشاية', this)">
+            <h3>بدون مشاية</h3>
+            <div class="price-tag">550 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectRenewPlan(600, 'شامل المشاية', this)">
+            <h3>شامل المشاية</h3>
+            <div class="price-tag">600 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectRenewPlan(800, 'تأهيل عسكري', this)">
+            <h3>تأهيل عسكري</h3>
+            <div class="price-tag">800 <span>جنيه</span></div>
+          </div>
+        </div>
+
+        <div class="vodafone-section">
+          <p style="font-weight: 700;">حول مبلغ التجديد على فودافون كاش:</p>
+          <div class="vodafone-number">01017995678</div>
+          <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب: <span id="renewDisplayPrice">550</span> جنيه</p>
+        </div>
+
+        <form id="renewMemberForm" onsubmit="handleRenewRegistration(event)">
+          <div class="grid-2">
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> تاريخ بدء التجديد:</label>
+              <input type="date" id="renewStartDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-image"></i> صورة إيصال التجديد:</label>
+              <input type="file" id="renewReceipt" class="form-control" accept="image/*" required>
+              <span class="receipt-note">⚠️ إرسال صورة إيصال التحويل إجباري.</span>
+            </div>
+          </div>
+          <button type="submit" class="action-btn" style="background: #38a169;"><i class="fas fa-paper-plane"></i> إرسال طلب التجديد للكابتن</button>
+        </form>
       </div>
     </div>
   </div>
@@ -283,7 +329,7 @@
   </div>
 
   <script>
-    // 1. تحديد الثيم تلقائياً بناءً على وضع الجهاز (Dark / Light System)
+    // تحديد الثيم تلقائياً حسب وضع الجهاز
     function initTheme() {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('nazaha_theme') || (prefersDark ? 'dark' : 'light');
@@ -317,7 +363,9 @@
         splash.style.opacity = '0';
         splash.style.visibility = 'hidden';
       }, 2000);
-      document.getElementById('newStartDate').value = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('newStartDate').value = today;
+      document.getElementById('renewStartDate').value = today;
     });
 
     function switchPortal(type) {
@@ -334,18 +382,33 @@
 
     let selectedNewPlan = { price: 550, name: 'بدون مشاية' };
     function selectNewPlan(price, name, el) {
-      document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('#newMemberPortal .price-card').forEach(c => c.classList.remove('active'));
       el.classList.add('active');
       selectedNewPlan = { price, name };
       document.getElementById('newDisplayPrice').innerText = price;
     }
 
-    // 2. البحث برقم الهاتف في Google Sheets (عبر SheetDB API)
+    let selectedRenewPlan = { price: 550, name: 'بدون مشاية' };
+    function selectRenewPlan(price, name, el) {
+      document.querySelectorAll('#renewMemberPortal .price-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedRenewPlan = { price, name };
+      document.getElementById('renewDisplayPrice').innerText = price;
+    }
+
+    // دالة لحساب تاريخ الانتهاء بإضافة 30 يوم
+    function calculateExpiryDate(startDateStr) {
+      let date = new Date(startDateStr);
+      date.setDate(date.getDate() + 30);
+      return date.toISOString().split('T')[0];
+    }
+
+    // البحث في جدول SheetDB مع جلب (الاسم، الموبايل، المنطقة، تاريخ الاشتراك وتاريخ الانتهاء)
     async function checkSheetMember() {
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const resultArea = document.getElementById('sheetResultArea');
       if(phone.length < 11) {
-        alert("يرجى إدخال رقم هاتف صحيج (11 رقم)!");
+        alert("يرجى إدخال رقم هاتف صحيح (11 رقم)!");
         return;
       }
 
@@ -358,57 +421,87 @@
         
         if(data && data.length > 0) {
           const member = data[0];
+          const name = member.name || member.الاسم || 'غير محدد';
+          const area = member.area || member.المنطقة || 'غير محددة';
+          const startDate = member.date || member.التاريخ || new Date().toISOString().split('T')[0];
+          const expiryDate = member.expiry || calculateExpiryDate(startDate);
+          
           resultArea.innerHTML = `
             <h3 style="color: #38a169;">✅ تم العثور على بيانات المشترك</h3>
-            <p>👤 الاسم: <strong>${member.name || member.الاسم}</strong></p>
-            <p>📱 الموبايل: <strong>${member.phone || member.الموبايل}</strong></p>
-            <p>📍 المنطقة: <strong>${member.area || member.المنطقة}</strong></p>
-            <p>🎟️ الباقة: <strong>${member.plan || member.الباقة}</strong></p>
-            <p>📅 تاريخ الاشتراك: <strong>${member.date || member.التاريخ}</strong></p>
+            <p>👤 الاسم: <strong>${name}</strong></p>
+            <p>📱 الموبايل: <strong>${member.phone || member.الموبايل || phone}</strong></p>
+            <p>📍 المنطقة: <strong>${area}</strong></p>
+            <p>🎟️ الباقة السابقة: <strong>${member.plan || member.الباقة || 'عادية'}</strong></p>
+            <p>📅 تاريخ الاشتراك: <strong>${startDate}</strong></p>
+            <p style="color: #e53e3e;">⏳ تاريخ انتهاء الاشتراك: <strong>${expiryDate}</strong></p>
+            <button onclick="document.getElementById('renewCard').style.display='block'; window.scrollTo({top: document.getElementById('renewCard').offsetTop, behavior: 'smooth'});" class="action-btn" style="margin-top: 15px; background: #38a169; padding: 10px;">الانتقال لتجديد الاشتراك</button>
           `;
         } else {
-          resultArea.innerHTML = `<span style="color: #e53e3e;">❌ لم يتم العثور على بيانات مسجلة لهذا الرقم في الجدول.</span>`;
+          resultArea.innerHTML = `<span style="color: #e53e3e;">❌ لم يتم العثور على بيانات لهذا الرقم. برجاء التأكد أو التسجيل كعضو جديد.</span>`;
         }
       } catch(error) {
         resultArea.innerHTML = `<span style="color: #e53e3e;">حدث خطأ أثناء الاتصال بقاعدة البيانات.</span>`;
       }
     }
 
-    // 3. إرسال الطلب وتعليق التفعيل لحين مراجعتك (عبر تليجرام أو واتساب كبديل)
-    async function handleNewRegistration(event) {
+    // إرسال بيانات المشترك الجديد (التوجيه لتليجرام أو واتساب كبديل فوري وبدون أخطاء)
+    function handleNewRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('newName').value.trim();
       const phone = document.getElementById('newPhone').value.trim();
       const area = document.getElementById('newArea').value.trim();
       const startDate = document.getElementById('newStartDate').value;
+      const expiryDate = calculateExpiryDate(startDate);
       const receiptFile = document.getElementById('newReceipt').files[0];
 
       if(!receiptFile) {
-        alert("يرجى إرفاق صورة إيصال التحويل أولاً!");
+        alert("يرجى إرفاق صورة إيصال التحويل!");
         return;
       }
 
-      // بناء رسالة تليجرام وبديل واتساب لو تليجرام مش متاح
-      const messageText = `🏋️‍♂️ *طلب اشتراك جديد معلق*\n\n` +
-                          `👤 *الاسم:* ${name}\n` +
-                          `📱 *الموبايل:* ${phone}\n` +
-                          `📍 *المنطقة:* ${area}\n` +
-                          `🎟️ *الباقة:* ${selectedNewPlan.name} (${selectedNewPlan.price} جنيه)\n` +
-                          `📅 *التاريخ:* ${startDate}`;
+      const msg = `🏋️‍♂️ *طلب اشتراك جديد معلق* - جيم نزاهة\n\n` +
+                  `👤 الاسم: ${name}\n` +
+                  `📱 الموبايل: ${phone}\n` +
+                  `📍 المنطقة: ${area}\n` +
+                  `🎟️ الباقة: ${selectedNewPlan.name} (${selectedNewPlan.price} جنيه)\n` +
+                  `📅 تاريخ البدء: ${startDate}\n` +
+                  `⏳ تاريخ الانتهاء المتوقع: ${expiryDate}\n` +
+                  `📎 (يرجى مراجعة إيصال التحويل المرفق وتفعيل الحساب)`;
 
-      // فحص إمكانية فتح تليجرام أو تحويله للواتساب تلقائياً كبديل
-      // محاولة فتح رابط تليجرام للبوت مع بيانات الطلب
-      const telegramBotUsername = "YOUR_BOT_USERNAME"; // اسم بوتك على تليجرام
-      const telegramUrl = `https://t.me/${telegramBotUsername}?text=${encodeURIComponent(messageText)}`;
-      
-      // كبديل (لو مفيش تليجرام أو المستخدم بيفضل الواتساب):
-      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(messageText + "\n(مرفق صورة التحويل مع الرسالة)")}`;
-
-      // فتح رابط تليجرام، ولو الجهاز مش عليه تليجرام يحول واتساب بعد ثانية
-      window.open(telegramUrl, '_blank');
+      // فتح الواتساب برقمك أو رابط تليجرام المباشر للكابتن
+      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(msg)}`;
+      window.open(whatsappUrl, '_blank');
 
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('newMemberForm').reset();
+    }
+
+    // إرسال طلب التجديد
+    function handleRenewRegistration(event) {
+      event.preventDefault();
+      const phone = document.getElementById('sheetSearchPhone').value.trim();
+      const startDate = document.getElementById('renewStartDate').value;
+      const expiryDate = calculateExpiryDate(startDate);
+      const receiptFile = document.getElementById('renewReceipt').files[0];
+
+      if(!receiptFile) {
+        alert("يرجى إرفاق صورة إيصال التجديد!");
+        return;
+      }
+
+      const msg = `🏋️‍♂️ *طلب تجديد اشتراك معلق* - جيم نزاهة\n\n` +
+                  `📱 الموبايل: ${phone}\n` +
+                  `🎟️ باقة التجديد: ${selectedRenewPlan.name} (${selectedRenewPlan.price} جنيه)\n` +
+                  `📅 تاريخ البدء الجديد: ${startDate}\n` +
+                  `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
+                  `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
+
+      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(msg)}`;
+      window.open(whatsappUrl, '_blank');
+
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('renewCard').style.display = 'none';
+      document.getElementById('sheetResultArea').style.display = 'none';
     }
 
     function closeSuccessModal() {
