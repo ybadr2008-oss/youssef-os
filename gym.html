@@ -403,7 +403,7 @@
       return date.toISOString().split('T')[0];
     }
 
-    // البحث في جدول SheetDB مع جلب (الاسم، الموبايل، المنطقة، تاريخ الاشتراك وتاريخ الانتهاء)
+    // البحث في جدول SheetDB
     async function checkSheetMember() {
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const resultArea = document.getElementById('sheetResultArea');
@@ -444,89 +444,53 @@
       }
     }
 
-    // إرسال بيانات المشترك الجديد للبوت
+    // إرسال طلب المشترك الجديد للبوت
     function handleNewRegistration(event) {
       event.preventDefault();
-      const name = document.getElementById('newName').value.trim();
-      const phone = document.getElementById('newPhone').value.trim();
-      const area = document.getElementById('newArea').value.trim();
-      const startDate = document.getElementById('newStartDate').value;
-      const expiryDate = calculateExpiryDate(startDate);
-      const receiptFile = document.getElementById('newReceipt').files[0];
 
-      if(!receiptFile) {
-        alert("يرجى إرفاق صورة إيصال التحويل!");
-        return;
-      }
+      var fullName = document.getElementById('newName').value;
+      var phone = document.getElementById('newPhone').value;
+      var area = document.getElementById('newArea').value;
+      var startDate = document.getElementById('newStartDate').value;
+      var expiryDate = calculateExpiryDate(startDate);
+      var planName = selectedNewPlan.name + " (" + selectedNewPlan.price + " جنيه)";
 
-      const msg = `🏋️‍♂️ *طلب اشتراك جديد معلق* - جيم نزاهة\n\n` +
-                  `👤 الاسم: ${name}\n` +
-                  `📱 الموبايل: ${phone}\n` +
-                  `📍 المنطقة: ${area}\n` +
-                  `🎟️ الباقة: ${selectedNewPlan.name} (${selectedNewPlan.price} جنيه)\n` +
-                  `📅 تاريخ البدء: ${startDate}\n` +
-                  `⏳ تاريخ الانتهاء المتوقع: ${expiryDate}\n` +
-                  `📎 (يرجى مراجعة إيصال التحويل المرفق وتفعيل الحساب)`;
+      var messageText = "🏋️ *طلب جديد - جيم نزاهة*\n\n" +
+                        "👤 *الاسم:* " + fullName + "\n" +
+                        "📱 *الموبايل:* " + phone + "\n" +
+                        "📍 *المنطقة:* " + area + "\n" +
+                        "💳 *الباقة:* " + planName + "\n" +
+                        "📅 *تاريخ البدء:* " + startDate + "\n" +
+                        "⏳ *تاريخ الانتهاء:* " + expiryDate + "\n" +
+                        "⚠️ *يرجى مراجعة الإيصال وتفعيل الحساب*";
 
-      fetch("https://script.google.com/macros/s/AKfycbzKjp6WT9R-RVZmmx48VxK-G9kzK5Xeh0BLWyrEsXrcdc4dme-mO-0rFrMHcUHuGPLpTw/exec", {
-        method: "POST",
-        body: JSON.stringify({ message: msg })
+      var scriptURL = "https://script.google.com/macros/s/AKfycbyC_qDKX6IdZs4dJNfQRzf6VOCAI9NwQdqGosGF3QbAcQbyrVQMsm9GydfWgdVBZKgO/exec";
+
+      fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              message: messageText,
+              phone: phone,
+              name: fullName,
+              plan: planName
+          })
       })
-      .then(res => res.json())
-      .then(data => {
-        console.log("تم الإرسال بنجاح:", data);
+      .then(() => {
+          console.log('تم إرسال الطلب بنجاح');
       })
-      .catch(err => {
-        console.log("خطأ:", err);
+      .catch(error => {
+          console.error('خطأ في الإرسال:', error);
       });
 
-      // إظهار رسالة النجاح وتصفير الفورم
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('newMemberForm').reset();
     }
 
     // إرسال طلب التجديد للبوت
-    function handleRenewRegistration(event) {
-      event.preventDefault();
-      const phone = document.getElementById('sheetSearchPhone').value.trim();
-      const startDate = document.getElementById('renewStartDate').value;
-      const expiryDate = calculateExpiryDate(startDate);
-      const receiptFile = document.getElementById('renewReceipt').files[0];
-
-      if(!receiptFile) {
-        alert("يرجى إرفاق صورة إيصال التجديد!");
-        return;
-      }
-
-      const msg = `🔄 *طلب تجديد اشتراك معلق* - جيم نزاهة\n\n` +
-                  `📱 الموبايل: ${phone}\n` +
-                  `🎟️ باقة التجديد: ${selectedRenewPlan.name} (${selectedRenewPlan.price} جنيه)\n` +
-                  `📅 تاريخ البدء الجديد: ${startDate}\n` +
-                  `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
-                  `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
-
-      fetch("https://script.google.com/macros/s/AKfycbzKjp6WT9R-RVZmmx48VxK-G9kzK5Xeh0BLWyrEsXrcdc4dme-mO-0rFrMHcUHuGPLpTw/exec", {
-        method: "POST",
-        body: JSON.stringify({ message: msg })
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log("تم تجديد الطلب بنجاح:", data);
-      })
-      .catch(err => {
-        console.log("خطأ:", err);
-      });
-
-      document.getElementById('successModal').style.display = 'flex';
-      document.getElementById('renewCard').style.display = 'none';
-      document.getElementById('sheetResultArea').style.display = 'none';
-    }
-
-    function closeSuccessModal() {
-      document.getElementById('successModal').style.display = 'none';
-    }
-
-    // إرسال طلب التجديد
     function handleRenewRegistration(event) {
       event.preventDefault();
       const phone = document.getElementById('sheetSearchPhone').value.trim();
@@ -546,10 +510,30 @@
                   `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
                   `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
 
-      
-          document.getElementById('successModal').style.display = 'flex';
-          document.getElementById('renewCard').style.display = 'none';
-          document.getElementById('sheetResultArea').style.display = 'none';
+      var scriptURL = "https://script.google.com/macros/s/AKfycbyC_qDKX6IdZs4dJNfQRzf6VOCAI9NwQdqGosGF3QbAcQbyrVQMsm9GydfWgdVBZKgO/exec";
+
+      fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              message: msg,
+              phone: phone
+          })
+      })
+      .then(() => {
+          console.log('تم إرسال طلب التجديد بنجاح');
+      })
+      .catch(error => {
+          console.error('خطأ في إرسال التجديد:', error);
+      });
+
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('renewCard').style.display = 'none';
+      document.getElementById('sheetResultArea').style.display = 'none';
+      document.getElementById('renewMemberForm').reset();
     }
 
     function closeSuccessModal() {
