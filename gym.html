@@ -80,19 +80,60 @@
     .info-box h3 { color: #ff7700; margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
     .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
+    /* مربعات الأسعار القابلة للاختيار مع أنيميشن فاخر */
     .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
     @media (max-width: 768px) { .prices-grid { grid-template-columns: 1fr; } }
     
-    .price-card { background: var(--info-bg); border: 1px solid var(--border-color); padding: 20px 15px; border-radius: 14px; text-align: center; }
-    .price-card.highlight { border: 2px solid #ff7700; background: linear-gradient(135deg, rgba(255,119,0,0.05), var(--info-bg)); }
+    .price-card { 
+      background: var(--info-bg); border: 2px solid var(--border-color); padding: 20px 15px; 
+      border-radius: 14px; text-align: center; cursor: pointer; position: relative; 
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    }
+    .price-card:hover { transform: translateY(-5px); border-color: #ff7700; }
+    
+    /* حالة الاختيار (Active) مع نبضة فخمة */
+    .price-card.active { 
+      border-color: #ff7700; 
+      background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--info-bg)); 
+      box-shadow: 0 10px 25px rgba(255, 119, 0, 0.25);
+      transform: scale(1.03);
+    }
+    .price-card.active::after {
+      content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+      position: absolute; top: 10px; left: 10px; color: #ff7700; font-size: 1.2rem;
+      animation: popIn 0.3s ease;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0); }
+      80% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
     .price-card h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; color: var(--text-main); }
     .price-tag { font-size: 1.8rem; font-weight: 900; color: #ff7700; margin-top: 5px; }
     .price-tag span { font-size: 0.95rem; color: var(--text-sub); font-weight: 700; }
 
     .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
-    .pay-btn { display: inline-block; background: #dd6b20; color: #ffffff; padding: 14px 32px; border-radius: 50px; font-weight: 900; font-size: 1.15rem; text-decoration: none; margin-top: 15px; box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35); transition: 0.3s; }
-    .pay-btn:hover { background: #c05621; transform: scale(1.03); }
+    
+    .pay-btn { 
+      display: inline-block; background: #dd6b20; color: #ffffff; padding: 14px 32px; 
+      border-radius: 50px; font-weight: 900; font-size: 1.15rem; text-decoration: none; 
+      margin-top: 15px; box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35); 
+      transition: all 0.3s ease; 
+    }
+    .pay-btn:hover { background: #c05621; transform: scale(1.05); }
+
+    /* أنيميشن تغيير السعر بنعومة */
+    .price-animate {
+      display: inline-block;
+      animation: pricePulse 0.4s ease;
+    }
+    @keyframes pricePulse {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.1); color: #ff7700; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
     .tracker-box { display: flex; gap: 10px; margin-top: 15px; }
     .tracker-box input { flex: 1; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
@@ -152,19 +193,19 @@
     </div>
 
     <div class="card">
-      <h2><i class="fas fa-ticket-alt"></i> باقات وأسعار الاشتراكات</h2>
+      <h2><i class="fas fa-ticket-alt"></i> اختر باقة الاشتراك (اضغط للاختيار)</h2>
       <div class="prices-grid">
-        <div class="price-card">
+        <div class="price-card active" onclick="selectPlan(550, 'اشتراك بدون مشاية', this)">
           <h3>بدون مشاية</h3>
           <p style="font-size: 0.85rem; color: var(--text-sub);">أجهزة الحديد فقط</p>
           <div class="price-tag">550 <span>جنيه</span></div>
         </div>
-        <div class="price-card highlight">
+        <div class="price-card" onclick="selectPlan(600, 'اشتراك شامل المشاية', this)">
           <h3>شامل المشاية</h3>
           <p style="font-size: 0.85rem; color: var(--text-sub);">الحديد + المشاية الكهربائية</p>
           <div class="price-tag">600 <span>جنيه</span></div>
         </div>
-        <div class="price-card">
+        <div class="price-card" onclick="selectPlan(800, 'تدريب التأهيل العسكري', this)">
           <h3>تأهيل عسكري</h3>
           <p style="font-size: 0.85rem; color: var(--text-sub);">تدريب خاص ومكثف</p>
           <div class="price-tag">800 <span>جنيه</span></div>
@@ -175,10 +216,13 @@
     <div class="card">
       <h2><i class="fas fa-wallet"></i> الاشتراك السريع (فودافون كاش)</h2>
       <div class="vodafone-section">
-        <p style="font-weight: 700;">حول قيمة الاشتراك على الرقم الآتي:</p>
+        <p style="font-weight: 700;" id="selectedPlanText">الباقة المختارة: <span style="color:#ff7700;">بدون مشاية</span></p>
         <div class="vodafone-number">01017995678</div>
-        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 10px;">للتحويل السريع (بدون مشاية 550 جنيه):</p>
-        <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع 550 جنيه (*9*7...)</a>
+        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 5px;">المبلغ المطلوب تحويله:</p>
+        <div style="font-size: 2.2rem; font-weight: 900; color: #ff7700; margin-bottom: 10px;">
+          <span id="displayPrice" class="price-animate">550</span> جنيه
+        </div>
+        <a id="vodafonePayBtn" href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع <span id="btnPriceText">550</span> جنيه الآن (*9*7...)</a>
       </div>
     </div>
 
@@ -208,11 +252,38 @@
     </div>
   </div>
 
-  <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة وتدريب التأهيل العسكري" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب">
+  <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </a>
 
   <script>
+    // اختيار الباقة وتحديث الأسعار بـ Animation فاخر
+    function selectPlan(price, planName, element) {
+      // إزالة الكلاس active من كل الكروت
+      document.querySelectorAll('.price-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      // إضافة الكلاس للكارت المحدد
+      element.classList.add('active');
+
+      // تحديث النصوص والروابط مع تطبيق أنيميشن النبضة
+      document.getElementById('selectedPlanText').innerHTML = `الباقة المختارة: <span style="color:#ff7700;">${planName}</span>`;
+      
+      const displayPrice = document.getElementById('displayPrice');
+      const btnPriceText = document.getElementById('btnPriceText');
+      const vodafonePayBtn = document.getElementById('vodafonePayBtn');
+
+      displayPrice.innerText = price;
+      btnPriceText.innerText = price;
+      vodafonePayBtn.href = `tel:*9*7*01017995678*${price}#`;
+
+      // إعادة تشغيل الأنيميشن
+      displayPrice.classList.remove('price-animate');
+      void displayPrice.offsetWidth; // Trigger reflow
+      displayPrice.classList.add('price-animate');
+    }
+
     function getPreferredTheme() {
       const savedTheme = localStorage.getItem('nazaha_theme');
       if (savedTheme) return savedTheme;
