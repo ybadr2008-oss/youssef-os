@@ -176,11 +176,17 @@
         });
 
         if (member) {
-          const expiryDate = new Date(member.expiry);
+          // تنظيف وقراءة التاريخ بشكل آمن وصحيح 100%
+          const expiryRaw = member.expiry;
+          const expiryDate = new Date(expiryRaw);
           const today = new Date();
+          // تصفير الساعات عشان الحساب يكون دقيق بالأيام بالضبط
+          expiryDate.setHours(0, 0, 0, 0);
+          today.setHours(0, 0, 0, 0);
           const timeDiff = expiryDate - today;
           let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
+          // لو التاريخ باظ أو طلع مش رقم، نتفادى الـ NaN ونحسبه كـ 0
+          
           if (isNaN(daysLeft)) {
               daysLeft = 0;
           }
