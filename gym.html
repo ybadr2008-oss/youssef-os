@@ -123,21 +123,19 @@
     .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed var(--primary-color); text-align: center; padding: 25px; border-radius: 16px; margin-bottom: 20px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
 
-    /* زر التحويل السريع المباشر */
     .btn-direct-transfer {
       display: inline-block;
       background: #25D366;
       color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 900;
+      font-size: 1.05rem;
       margin: 10px 0 15px 0;
       box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
     }
-    .btn-direct-transfer:hover {
-      background: #1ebd56;
-    }
+    .btn-direct-transfer:hover { background: #1ebd56; }
 
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 900; font-size: 1.05rem; color: var(--text-main); }
@@ -206,7 +204,7 @@
     <div id="newMemberPortal" class="portal-section active">
       <div class="hero-welcome-box">
         <h2>أهلاً بيك في عائلة أبطال نزاهة! 🔥</h2>
-        <p>اختر باقتك، املأ بياناتك بدقة، وارفع إيصال التحويل لتنتظر مراجعة الكابتن وتفعيل حسابك!</p>
+        <p>اختر باقتك، املأ بياناتك بدقة، وارفع إيصال التحويل لإثبات الدفع وتنتظر مراجعة الكابتن وتفعيل حسابك!</p>
       </div>
 
       <div class="card">
@@ -234,9 +232,9 @@
           <p style="font-weight: 700;">حول المبلغ المطلوب عبر فودافون كاش على الرقم:</p>
           <div class="vodafone-number">01017995678</div>
           <div>
-            <!-- زر التحويل السريع تحت رقم الكاش مباشرة -->
-            <a href="tel:*9*01017995678#" class="btn-direct-transfer">
-              <i class="fas fa-bolt"></i> اضغط للتحويل السريع (*9*...)
+            <!-- زر التحويل السريع المباشر بالكود الصحيح والمبلغ المحدد -->
+            <a href="tel:*9*7*01017995678*550#" id="newDirectTransferBtn" class="btn-direct-transfer">
+              <i class="fas fa-bolt"></i> تحويل مباشر بقيمة <span id="newBtnPrice">550</span> جنيه (*9*...)
             </a>
           </div>
           <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب تحويله: <span id="newDisplayPrice">550</span> جنيه</p>
@@ -266,9 +264,9 @@
           </div>
 
           <div class="form-group">
-            <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
+            <label><i class="fas fa-image"></i> صورة إيصال التحويل (إجباري للتأكيد):</label>
             <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
-            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن.</span>
+            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لضمان حقك وتفعيل اشتراكك مع الكابتن.</span>
           </div>
 
           <button type="submit" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال وتفعيل الاشتراك الآن</button>
@@ -316,9 +314,9 @@
           <p style="font-weight: 700;">حول مبلغ التجديد على فودافون كاش:</p>
           <div class="vodafone-number">01017995678</div>
           <div>
-            <!-- زر التحويل السريع تحت رقم الكاش مباشرة -->
-            <a href="tel:*9*01017995678#" class="btn-direct-transfer">
-              <i class="fas fa-bolt"></i> اضغط للتحويل السريع (*9*...)
+            <!-- زر التحويل السريع المباشر بالكود الصحيح والمبلغ المحدد للتجديد -->
+            <a href="tel:*9*7*01017995678*550#" id="renewDirectTransferBtn" class="btn-direct-transfer">
+              <i class="fas fa-bolt"></i> تحويل مباشر بقيمة <span id="renewBtnPrice">550</span> جنيه (*9*...)
             </a>
           </div>
           <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب: <span id="renewDisplayPrice">550</span> جنيه</p>
@@ -357,7 +355,6 @@
   </div>
 
   <script>
-    // تحديد الثيم تلقائياً حسب وضع الجهاز
     function initTheme() {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('nazaha_theme') || (prefersDark ? 'dark' : 'light');
@@ -414,6 +411,8 @@
       el.classList.add('active');
       selectedNewPlan = { price, name };
       document.getElementById('newDisplayPrice').innerText = price;
+      document.getElementById('newBtnPrice').innerText = price;
+      document.getElementById('newDirectTransferBtn').href = `tel:*9*7*01017995678*${price}#`;
     }
 
     let selectedRenewPlan = { price: 550, name: 'بدون مشاية' };
@@ -422,6 +421,8 @@
       el.classList.add('active');
       selectedRenewPlan = { price, name };
       document.getElementById('renewDisplayPrice').innerText = price;
+      document.getElementById('renewBtnPrice').innerText = price;
+      document.getElementById('renewDirectTransferBtn').href = `tel:*9*7*01017995678*${price}#`;
     }
 
     function calculateExpiryDate(startDateStr) {
@@ -479,44 +480,48 @@
       var startDate = document.getElementById('newStartDate').value;
       var expiryDate = calculateExpiryDate(startDate);
       var planName = selectedNewPlan.name + " (" + selectedNewPlan.price + " جنيه)";
+      var receiptFile = document.getElementById('newReceipt').files[0];
 
-      var messageText = "🏋️ *طلب جديد - جيم نزاهة*\n\n" +
-                        "👤 *الاسم:* " + fullName + "\n" +
-                        "📱 *الموبايل:* " + phone + "\n" +
-                        "📍 *المنطقة:* " + area + "\n" +
-                        "💳 *الباقة:* " + planName + "\n" +
-                        "📅 *تاريخ البدء:* " + startDate + "\n" +
-                        "⏳ *تاريخ الانتهاء:* " + expiryDate + "\n" +
-                        "⚠️ *يرجى مراجعة الإيصال وتفعيل الحساب*";
+      if(!receiptFile) {
+        alert("يرجى إرفاق صورة إيصال التحويل!");
+        return;
+      }
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
-
-      fetch(scriptURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              message: messageText,
-              phone: phone,
-              name: fullName,
-              plan: planName
-          })
-      })
-      .then(() => {
-          console.log('تم إرسال الطلب بنجاح');
-      })
-      .catch(error => {
-          console.error('خطأ في الإرسال:', error);
-      });
-
+      // إظهار الرسالة للمستخدم فوراً لعدم الشعور بأي بطء
       document.getElementById('successModal').style.display = 'flex';
       document.getElementById('newMemberForm').reset();
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Image = e.target.result;
+        var messageText = "🏋️ *طلب مشترك جديد - جيم نزاهة*\n\n" +
+                          "👤 *الاسم:* " + fullName + "\n" +
+                          "📱 *الموبايل:* " + phone + "\n" +
+                          "📍 *المنطقة:* " + area + "\n" +
+                          "💳 *الباقة:* " + planName + "\n" +
+                          "📅 *تاريخ البدء:* " + startDate + "\n" +
+                          "⏳ *تاريخ الانتهاء:* " + expiryDate + "\n" +
+                          "⚠️ *تم إرفاق إيصال الدفع للمراجعة*";
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: messageText,
+                phone: phone,
+                name: fullName,
+                plan: planName,
+                image: base64Image
+            })
+        }).catch(error => console.error('خطأ في الإرسال:', error));
+      };
+      reader.readAsDataURL(receiptFile);
     }
 
-    // إرسال طلب التجديد للبوت مع تصليح الفاصلة وتمرير الـ isRenewal صح
-    async function handleRenewRegistration(event) {
+    function handleRenewRegistration(event) {
       event.preventDefault();
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const startDate = document.getElementById('renewStartDate').value;
@@ -527,10 +532,15 @@
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        const base64Image = e.target.result;
+      // إظهار رسالة النجاح فوراً لعدم تعليق الشاشة
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('renewCard').style.display = 'none';
+      document.getElementById('sheetResultArea').style.display = 'none';
+      document.getElementById('renewMemberForm').reset();
 
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64Image = e.target.result;
         const nameElement = document.getElementById('foundMemberName');
         const userName = nameElement ? nameElement.innerText : "مشترك";
         const planName = selectedRenewPlan ? selectedRenewPlan.name : "تجديد اشتراك";
@@ -541,26 +551,17 @@
           plan: planName + " (" + selectedRenewPlan.price + " جنيه)",
           date: startDate,
           image: base64Image,
-          isRenewal: true  // <--- الفاصلة اتحطت ومبقاش فيه أي مشاكل syntax
+          isRenewal: true
         };
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
         
-        try {
-          const response = await fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(payloadData)
-          });
-          const result = await response.json();
-          console.log('تم إرسال طلب التجديد والصورة بنجاح', result);
-        } catch (error) {
-          console.error('خطأ في إرسال التجديد:', error);
-        }
-
-        document.getElementById('successModal').style.display = 'flex';
-        document.getElementById('renewCard').style.display = 'none';
-        document.getElementById('sheetResultArea').style.display = 'none';
-        document.getElementById('renewMemberForm').reset();
+        fetch(scriptURL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payloadData)
+        }).catch(error => console.error('خطأ في إرسال التجديد:', error));
       };
 
       reader.readAsDataURL(receiptFile);
