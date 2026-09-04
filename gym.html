@@ -545,7 +545,7 @@
             👤 الاسم المسجل: <b>${member.name}</b><br>
             📱 رقم الموبايل: <b>${member.phone}</b><br>
             🎟️ باقتك السابقة: <b>${member.plan || 'غير محدد'}</b><br>
-            📅 تاريخ انتهاء اشتراكك الحالي: <span style="color:#e53e3e;">${member.expiry || 'منتهي'}</span>
+             📅 حالة الاشتراك: ${expiryStatus}
           `;
           document.getElementById('renewEditName').value = member.name;
           document.getElementById('renewEditPhone').value = member.phone;
