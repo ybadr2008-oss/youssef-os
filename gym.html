@@ -520,7 +520,7 @@
       }
     }
 
-    // البحث عن المشترك الحالي للتجديد
+    // البحث عن المشترك الحالي للتجديد مع الحساب التلقائي لتاريخ الانتهاء
     async function lookupMember() {
       const phoneInput = document.getElementById('renewPhoneInput').value.trim();
       if (!phoneInput) {
@@ -534,6 +534,7 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        
         const membersList = Array.isArray(data) ? data : (data.data || data.records || []);
         const cleanInput = phoneInput.replace(/[^0-9]/g, '');
 
@@ -547,11 +548,22 @@
           const memberName = member.name || member.Name || 'غير معروف';
           const memberPhone = member.phone || member.Phone || phoneInput;
           const memberPlan = member.plan || member.Plan || 'غير محدد';
-          const memberExpiry = member.expiry || member.Expiry || 'غير محدد';
-          let expiryStatus = `<span style="color:#38a169; font-weight:900;">ساري حتى: ${memberExpiry}</span>`;
+          
+          // لو تاريخ الانتهاء مش موجود في الشيت، بنحسبه أوتوماتيك (تاريخ البدء + 30 يوم)
+          let memberExpiry = member.expiry || member.Expiry;
+          const startDate = member.start_date || member.Start_date || member.startDate;
+          
+          if (!memberExpiry && startDate) {
+            memberExpiry = calculateExpiryDate(startDate);
+          }
+          memberExpiry = memberExpiry || 'غير محدد';
 
-          if (memberExpiry !== 'غير محدد' && memberExpiry < new Date().toISOString().split('T')[0]) {
-            expiryStatus = `<span style="color:#e53e3e; font-weight:900;">منتهي (تاريخ الانتهاء: ${memberExpiry}) - يلا جدد يا بطل!</span>`;
+          let expiryStatus = `<span style="color:#38a169; font-weight:900;">ساري حتى: ${memberExpiry}</span>`;
+          if (memberExpiry !== 'غير محدد') {
+            const today = new Date().toISOString().split('T')[0];
+            if (memberExpiry < today) {
+              expiryStatus = `<span style="color:#e53e3e; font-weight:900;">منتهي (تاريخ الانتهاء: ${memberExpiry}) - يلا جدد يا بطل!</span>`;
+            }
           }
 
           document.getElementById('memberFoundInfo').innerHTML = `
@@ -569,7 +581,7 @@
         }
       } catch (error) {
         console.error("Lookup Error:", error);
-        alert("حدث خطأ أثناء الاتصال بقاعدة البيانات. تأكد من رابط الـ API أو اتصال الإنترنت.");
+        alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
       }
     }
 
@@ -592,6 +604,14 @@
       const expiryDate = new Date(startDate);
       expiryDate.setDate(expiryDate.getDate() + 30);
       const expiryStr = expiryDate.toISOString().split('T')[0];
+
+      // دالة لحساب تاريخ الانتهاء (إضافة 30 يوم لتاريخ البدء)
+    function calculateExpiryDate(startDateStr) {
+      const date = new Date(startDateStr);
+      if (isNaN(date.getTime())) return 'غير محدد';
+      date.setDate(date.getDate() + 30);
+      return date.toISOString().split('T')[0];
+    }
 
       try {
         // تحديث البيانات في SheetDB باستخدام الهاتف القديم كمعيار للبحث
