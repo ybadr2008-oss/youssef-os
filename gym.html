@@ -43,26 +43,14 @@
     }
     
     .nazaha-welcome-title {
-      font-size: 2.2rem;
-      font-weight: bold;
-      text-align: center;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 20px 0;
+      font-size: 2.2rem; font-weight: bold; text-align: center;
+      display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 20px 0;
     }
-
     .nazaha-welcome-title span {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(-50px);
-      animation: fallAndShine 0.8s forwards;
-      color: var(--primary-color);
+      display: inline-block; opacity: 0; transform: translateY(-50px);
+      animation: fallAndShine 0.8s forwards; color: var(--primary-color);
       text-shadow: 0 0 15px rgba(255, 119, 0, 0.4);
     }
-
     .nazaha-welcome-title span:nth-child(1) { animation-delay: 0.1s; }
     .nazaha-welcome-title span:nth-child(2) { animation-delay: 0.2s; }
     .nazaha-welcome-title span:nth-child(3) { animation-delay: 0.3s; }
@@ -88,20 +76,19 @@
 
     .container { max-width: 900px; width: 100%; margin: auto; }
     header { text-align: center; margin-bottom: 30px; padding-top: 10px; }
-    header h1 { color: var(--text-main); font-size: 3rem; font-weight: 900; letter-spacing: 1px; }
+    header h1 { color: var(--text-main); font-size: 3rem; font-weight: 900; }
     header h1 span { color: var(--primary-color); }
     header p { color: var(--text-sub); font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
 
     .portal-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-    .tab-btn { background: var(--card-bg); border: 2px solid var(--border-color); padding: 18px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: var(--box-shadow); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .tab-btn { background: var(--card-bg); border: 2px solid var(--border-color); padding: 18px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: var(--box-shadow); }
     .tab-btn.active { border-color: var(--primary-color); background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--card-bg)); color: var(--primary-color); transform: translateY(-3px); }
-    .tab-btn i { font-size: 1.4rem; }
 
     .portal-section { display: none; }
     .portal-section.active { display: block; animation: fadeInSection 0.5s ease; }
     @keyframes fadeInSection { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .hero-welcome-box { background: linear-gradient(135deg, rgba(255,119,0,0.15), var(--card-bg)); border: 2px solid var(--primary-color); padding: 25px; border-radius: 18px; text-align: center; margin-bottom: 25px; box-shadow: var(--box-shadow); }
+    .hero-welcome-box { background: linear-gradient(135deg, rgba(255,119,0,0.15), var(--card-bg)); border: 2px solid var(--primary-color); padding: 25px; border-radius: 18px; text-align: center; margin-bottom: 25px; }
     .hero-welcome-box h2 { color: var(--primary-color); font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
     .hero-welcome-box p { color: var(--text-main); font-size: 1.1rem; line-height: 1.8; font-weight: 700; }
 
@@ -112,24 +99,18 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    .info-box { background: var(--info-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 14px; text-align: center; }
-    .info-box h3 { color: var(--primary-color); margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
-    .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
-
     .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
     @media (max-width: 768px) { .prices-grid { grid-template-columns: 1fr; } }
     
     .price-card { 
       background: var(--info-bg); border: 2px solid var(--border-color); padding: 20px 15px; 
       border-radius: 14px; text-align: center; cursor: pointer; position: relative; 
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     }
     .price-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
     .price-card.active { 
       border-color: var(--primary-color); 
       background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--info-bg)); 
       box-shadow: 0 10px 25px rgba(255, 119, 0, 0.25);
-      transform: scale(1.03);
     }
     .price-card.active::after {
       content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
@@ -150,16 +131,11 @@
     .action-btn { 
       width: 100%; background: var(--primary-color); color: #ffffff; padding: 16px; 
       border: none; border-radius: 14px; font-weight: 900; font-size: 1.2rem; cursor: pointer; 
-      box-shadow: 0 5px 20px rgba(255, 119, 0, 0.35); transition: all 0.3s ease; 
+      box-shadow: 0 5px 20px rgba(255, 119, 0, 0.35); 
     }
     .action-btn:hover { background: #e06600; transform: translateY(-2px); }
 
-    .result-area { margin-top: 15px; background: var(--result-bg); padding: 18px; border-radius: 12px; display: none; border: 1px solid var(--border-color); font-weight: 700; color: var(--text-main); font-size: 1.1rem; line-height: 1.8; }
-    ul.rules-list { padding-right: 20px; line-height: 2.2; color: var(--text-main); font-weight: 700; font-size: 1.05rem; }
-    ul.rules-list li { margin-bottom: 10px; }
-    
-    .store-teaser { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: var(--box-shadow); }
-    .store-teaser span { color: var(--primary-color); font-weight: 900; }
+    .receipt-note { color: #e53e3e; font-size: 0.9rem; font-weight: 700; margin-top: 5px; display: block; }
 
     #successModal {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -168,17 +144,14 @@
     .modal-content {
       background: var(--card-bg); width: 100%; max-width: 500px; padding: 30px; border-radius: 20px;
       text-align: center; border: 2px solid var(--primary-color); box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-      animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes popModal { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .modal-content i { font-size: 4rem; color: #38a169; margin-bottom: 15px; }
+    .modal-content i { font-size: 4rem; color: var(--primary-color); margin-bottom: 15px; }
     .modal-content h3 { font-size: 1.8rem; font-weight: 900; color: var(--text-main); margin-bottom: 10px; }
     .modal-content p { font-size: 1.1rem; color: var(--text-sub); line-height: 1.7; font-weight: 700; margin-bottom: 20px; }
     .modal-close-btn { background: var(--primary-color); color: #fff; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; cursor: pointer; }
 
     .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-    .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: 0.3s; }
-    .float-btn:hover { transform: scale(1.1); }
+    .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; }
     .facebook-float { background-color: #1877F2; }
     .whatsapp-float { background-color: #25d366; }
   </style>
@@ -209,14 +182,15 @@
         <i class="fas fa-user-plus"></i> مشترك جديد
       </button>
       <button class="tab-btn" onclick="switchPortal('renew')">
-        <i class="fas fa-sync-alt"></i> تجديد اشتراك (الحالي)
+        <i class="fas fa-search"></i> الاستعلام والاشتراك الحالي
       </button>
     </div>
 
+    <!-- بوابة مشترك جديد -->
     <div id="newMemberPortal" class="portal-section active">
       <div class="hero-welcome-box">
         <h2>أهلاً بيك في عائلة أبطال نزاهة! 🔥</h2>
-        <p>خطوتك الأولى نحو بناء جسم قوي وصحي تبدأ من هنا. اختر باقتك، املأ بياناتك بكل حماس، وابدأ رحلة المجد والالتزام معنا!</p>
+        <p>اختر باقتك، املأ بياناتك، وارفع سكرين شوت التحويل لتنتظر مراجعة الكابتن وتفعيل حسابك!</p>
       </div>
 
       <div class="card">
@@ -224,17 +198,14 @@
         <div class="prices-grid">
           <div class="price-card active" onclick="selectNewPlan(550, 'بدون مشاية', this)">
             <h3>بدون مشاية</h3>
-            <p style="font-size: 0.85rem; color: var(--text-sub);">أجهزة الحديد فقط</p>
             <div class="price-tag">550 <span>جنيه</span></div>
           </div>
           <div class="price-card" onclick="selectNewPlan(600, 'شامل المشاية', this)">
             <h3>شامل المشاية</h3>
-            <p style="font-size: 0.85rem; color: var(--text-sub);">الحديد + المشاية الكهربائية</p>
             <div class="price-tag">600 <span>جنيه</span></div>
           </div>
           <div class="price-card" onclick="selectNewPlan(800, 'تأهيل عسكري', this)">
             <h3>تأهيل عسكري</h3>
-            <p style="font-size: 0.85rem; color: var(--text-sub);">تدريب خاص ومكثف</p>
             <div class="price-tag">800 <span>جنيه</span></div>
           </div>
         </div>
@@ -250,25 +221,32 @@
         </div>
 
         <form id="newMemberForm" onsubmit="handleNewRegistration(event)">
-          <div class="form-group">
-            <label><i class="fas fa-user"></i> الاسم الرباعي:</label>
-            <input type="text" id="newName" class="form-control" placeholder="اكتب اسمك رباعياً بدقة..." required>
-          </div>
-
-          <div class="form-group">
-            <label><i class="fas fa-phone"></i> رقم الموبايل:</label>
-            <input type="tel" id="newPhone" class="form-control" placeholder="رقم هاتفك المسجل أو واتساب..." maxlength="11" required>
+          <div class="grid-2">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> الاسم الرباعي:</label>
+              <input type="text" id="newName" class="form-control" placeholder="اسمك رباعي..." required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-phone"></i> رقم الموبايل:</label>
+              <input type="tel" id="newPhone" class="form-control" placeholder="رقم هاتفك..." maxlength="11" required>
+            </div>
           </div>
 
           <div class="grid-2">
             <div class="form-group">
+              <label><i class="fas fa-map-marker-alt"></i> المنطقة / القرية / الحي:</label>
+              <input type="text" id="newArea" class="form-control" placeholder="اكتب منطقتك هنا..." required>
+            </div>
+            <div class="form-group">
               <label><i class="fas fa-calendar-alt"></i> تاريخ الدفع:</label>
               <input type="date" id="newStartDate" class="form-control" required>
             </div>
-            <div class="form-group">
-              <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
-              <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
-            </div>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
+            <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
+            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن.</span>
           </div>
 
           <button type="submit" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال وتفعيل الاشتراك الآن</button>
@@ -276,261 +254,40 @@
       </div>
     </div>
 
+    <!-- بوابة الاستعلام للمشترك الحالي عبر SheetDB -->
     <div id="renewMemberPortal" class="portal-section">
-      <div class="hero-welcome-box" style="border-color: #38a169; background: linear-gradient(135deg, rgba(56,161,105,0.15), var(--card-bg));">
-        <h2 style="color: #38a169;">منور بيتك يا وحش! 💪🔥</h2>
-        <p>عظمة استمرارك والتزامك هي سر قوتنا. جدد اشتراكك بكل سهولة وتابع طريق البطولات معنا!</p>
+      <div class="card">
+        <h2><i class="fas fa-search"></i> استعلام عن بيانات المشترك</h2>
+        <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل للبحث في جدول البيانات:</p>
+        <div style="display: flex; gap: 10px;">
+          <input type="tel" id="sheetSearchPhone" class="form-control" placeholder="ادخل رقم الموبايل..." maxlength="11">
+          <button type="button" onclick="checkSheetMember()" class="action-btn" style="width: auto; padding: 0 30px;">بحث</button>
+        </div>
+        <div id="sheetResultArea" style="margin-top: 20px; display: none;" class="vodafone-section"></div>
       </div>
-
-      <div class="card" id="lookupCard">
-        <h2><i class="fas fa-search"></i> التحقق من حسابك الحالي</h2>
-        <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل لمعرفة حالتك وتجديد اشتراكك:</p>
-        <div class="tracker-box" style="display: flex; gap: 10px;">
-          <input type="tel" id="renewPhoneInput" class="form-control" placeholder="ادخل رقم الموبايل للتجديد..." maxlength="11">
-          <button type="button" onclick="lookupMember()" class="action-btn" style="width: auto; padding: 0 30px;">بحث</button>
-        </div>
-      </div>
-
-      <div class="card" id="renewDetailsCard" style="display: none;">
-        <h2><i class="fas fa-user-check"></i> تأكيد بيانات العضو وتجديد الباقة</h2>
-        
-        <div id="memberFoundInfo" style="background: var(--info-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; line-height: 1.8;">
-        </div>
-
-        <div class="form-group">
-          <label><i class="fas fa-user-edit"></i> تعديل الاسم (اختياري):</label>
-          <input type="text" id="renewEditName" class="form-control">
-        </div>
-        <div class="form-group">
-          <label><i class="fas fa-phone-alt"></i> تعديل رقم الموبايل (اختياري):</label>
-          <input type="tel" id="renewEditPhone" class="form-control" maxlength="11">
-        </div>
-
-        <h3 style="font-size: 1.2rem; font-weight: 900; margin: 20px 0 10px 0;"><i class="fas fa-ticket-alt"></i> اختر باقة التجديد:</h3>
-        <div class="prices-grid">
-          <div class="price-card active" onclick="selectRenewPlan(550, 'بدون مشاية', this)">
-            <h3>بدون مشاية</h3>
-            <div class="price-tag">550 <span>جنيه</span></div>
-          </div>
-          <div class="price-card" onclick="selectRenewPlan(600, 'شامل المشاية', this)">
-            <h3>شامل المشاية</h3>
-            <div class="price-tag">600 <span>جنيه</span></div>
-          </div>
-          <div class="price-card" onclick="selectRenewPlan(800, 'تأهيل عسكري', this)">
-            <h3>تأهيل عسكري</h3>
-            <div class="price-tag">800 <span>جنيه</span></div>
-          </div>
-        </div>
-
-        <div class="vodafone-section" style="margin-top: 20px;">
-          <p style="font-weight: 700;">حول المبلغ لفودافون كاش على:</p>
-          <div class="vodafone-number">01017995678</div>
-          <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">مبلغ التجديد: <span id="renewDisplayPrice">550</span> جنيه</p>
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label><i class="fas fa-calendar-alt"></i> تاريخ الدفع:</label>
-            <input type="date" id="renewStartDate" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label><i class="fas fa-image"></i> صورة إيصال التجديد:</label>
-            <input type="file" id="renewReceipt" class="form-control" accept="image/*" required>
-          </div>
-        </div>
-
-        <button type="button" onclick="handleRenewalSubmit()" class="action-btn" style="background: #38a169;"><i class="fas fa-check-circle"></i> تأكيد تجديد الاشتراك</button>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top: 30px;">
-      <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية</h2>
-      <div class="grid-2">
-        <div class="info-box">
-          <h3>مواعيد الرجال</h3>
-          <p>من <strong>12:00 ظهراً</strong> لـ <strong>4:00 عصراً</strong> ومن <strong>6:00 مساءً</strong> لـ <strong>9:00 صباحاً</strong><br>
-          <span style="color:#38a169; font-size:0.95rem;">(الجمعة: طوال اليوم عدا فترة السيدات)</span></p>
-        </div>
-        <div class="info-box">
-          <h3>مواعيد السيدات</h3>
-          <p>يومياً: من <strong>9:00 صباحاً</strong> لـ <strong>12:00 ظهراً</strong> ومن <strong>4:00 عصراً</strong> لـ <strong>6:00 مساءً</strong><br>
-          <span style="color:#e53e3e; font-size:0.95rem;">(الجمعة: من 4:00 عصراً لـ 7:00 مساءً)</span></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><i class="fas fa-shield-alt"></i> تعليمات هامة للمشتركين</h2>
-      <ul class="rules-list">
-        <li>🎒 ضرورة إحضار حقيبة تحتوي على الملابس الرياضية والفوطة الشخصية.</li>
-        <li>👟 ممنوع الدخول نهائياً إلا بارتداء حذاء رياضي (Sneakers) نظيف ومخصص للجيم فقط.</li>
-        <li>🧼 المحافظة على النظافة العامة وإعادة الأوزان لمكانها بعد الانتهاء.</li>
-      </ul>
-    </div>
-
-    <div class="store-teaser">
-      <p>🛒 قريباً جداً افتح <span>متجر جيم نزاهة</span> لشراء المكملات والأدوات الرياضية الخاصة!</p>
     </div>
   </div>
 
   <div id="successModal">
     <div class="modal-content">
-      <i class="fas fa-check-circle"></i>
-      <h3 id="modalTitle">تم الاشتراك بنجاح!</h3>
-      <p id="modalMessage">تم تسجيل بياناتك وتحديث نظام الجيم. كابتن نزاهة تلقى إشعاراً بانضمامك، وخلال ثوانٍ ستظهر في قاعدة بيانات الجيم. عاش يا بطل!</p>
-      <button class="modal-close-btn" onclick="closeSuccessModal()">حسناً، عظّم اشتراكك</button>
+      <i class="fas fa-clock"></i>
+      <h3 id="modalTitle">تم إرسال طلبك بنجاح!</h3>
+      <p id="modalMessage">طلبك قيد المراجعة حالياً من كابتن نزاهة. سيتم تفعيل الحساب وحفظ البيانات فور الموافقة.</p>
+      <button class="modal-close-btn" onclick="closeSuccessModal()">حسناً</button>
     </div>
   </div>
 
   <div class="floating-buttons">
-    <a href="https://www.facebook.com/share/1CtZqk8xjR/?mibextid=wwXIfr" target="_blank" class="float-btn facebook-float" title="تابعنا على فيسبوك">
-      <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://wa.me/201017995678?text=مرحباً كابتن نزاهة، أستفسر عن اشتراك الجيم" target="_blank" class="float-btn whatsapp-float" title="تواصل معنا عبر واتساب">
-      <i class="fab fa-whatsapp"></i>
-    </a>
+    <a href="https://www.facebook.com/share/1CtZqk8xjR/?mibextid=wwXIfr" target="_blank" class="float-btn facebook-float" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://wa.me/201017995678?text=مرحباً كابتن نزاهة" target="_blank" class="float-btn whatsapp-float" title="واتساب"><i class="fab fa-whatsapp"></i></a>
   </div>
 
-  
   <script>
-    // إخفاء شاشة الترحيب بعد التحميل
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        splash.style.opacity = '0';
-        splash.style.visibility = 'hidden';
-      }, 2500);
-      
-      // تعيين تاريخ اليوم افتراضياً في خانات التواريخ
-      const todayStr = new Date().toISOString().split('T')[0];
-      const newStartDateEl = document.getElementById('newStartDate');
-      const renewStartDateEl = document.getElementById('renewStartDate');
-      if(newStartDateEl) newStartDateEl.value = todayStr;
-      if(renewStartDateEl) renewStartDateEl.value = todayStr;
-    });
-
-    // التبديل بين بوابات (مشترك جديد / تجديد)
-    function switchPortal(type) {
-      const btns = document.querySelectorAll('.tab-btn');
-      const sections = document.querySelectorAll('.portal-section');
-      
-      btns.forEach(btn => btn.classList.remove('active'));
-      sections.forEach(sec => sec.classList.remove('active'));
-
-      if (type === 'new') {
-        btns[0].classList.add('active');
-        document.getElementById('newMemberPortal').classList.add('active');
-      } else {
-        btns[1].classList.add('active');
-        document.getElementById('renewMemberPortal').classList.add('active');
-      }
-    }
-
-    // إدارة اختيار الباقات (جديد)
-    let selectedNewPlanData = { price: 550, name: 'بدون مشاية' };
-    function selectNewPlan(price, name, element) {
-      document.querySelectorAll('#newMemberPortal .price-card').forEach(card => card.classList.remove('active'));
-      element.classList.add('active');
-      selectedNewPlanData = { price, name };
-      document.getElementById('newDisplayPrice').innerText = price;
-    }
-
-    // إدارة اختيار الباقات (تجديد)
-    let selectedRenewPlanData = { price: 550, name: 'بدون مشاية' };
-    function selectRenewPlan(price, name, element) {
-      document.querySelectorAll('#renewMemberPortal .price-card').forEach(card => card.classList.remove('active'));
-      element.classList.add('active');
-      selectedRenewPlanData = { price, name };
-      document.getElementById('renewDisplayPrice').innerText = price;
-    }
-
-    // إرسال بيانات المشترك الجديد مع ربط تليجرام البوت
-    async function handleNewRegistration(event) {
-      event.preventDefault();
-
-      const name = document.getElementById('newName').value.trim();
-      const phone = document.getElementById('newPhone').value.trim();
-      const startDate = document.getElementById('newStartDate').value;
-      const receiptInput = document.getElementById('newReceipt');
-
-      if (!name || !phone || !startDate) {
-        alert("يرجى إكمال جميع البيانات المطلوبة!");
-        return;
-      }
-
-      // إرسال الإشعار لتليجرام أو الواتساب تلقائياً
-      triggerTelegramNotification(name, phone, selectedNewPlanData.name, selectedNewPlanData.price, startDate, "اشتراك جديد (عضو جديد)");
-      triggerWhatsAppNotification(name, phone, selectedNewPlanData.name, "اشتراك جديد");
-
-      showSuccessModal("تم إرسال طلب الاشتراك بنجاح!", `أهلاً بيك يا بطل <strong>${name}</strong>.<br>تم تسجيل باقة (${selectedNewPlanData.name}) بنجاح وإرسال إشعار لكابتن نزاهة لتفعيل حسابك وإضافتك لجدول التمارين فوراً.`);
-      
-      // إعادة ضبط الفورم
-      document.getElementById('newMemberForm').reset();
-    }
-
-    // محاكاة أو البحث عن مشترك حالي للتجديد
-    function lookupMember() {
-      const phoneInput = document.getElementById('renewPhoneInput').value.trim();
-      if(phoneInput.length < 10) {
-        alert("يرجى إدخال رقم هاتف صحيح ومكون من 11 رقماً!");
-        return;
-      }
-
-      // عرض كارد تفاصيل التجديد وتعبئة البيانات الوهمية أو المتاحة
-      document.getElementById('renewDetailsCard').style.display = 'block';
-      document.getElementById('memberFoundInfo').innerHTML = `
-        <i class="fas fa-check-circle" style="color: #38a169;"></i> تم العثور على سجل العضو برقم الهاتف: <strong>${phoneInput}</strong><br>
-        👤 الاسم المسجل: <strong>بطل سابقة</strong><br>
-        🎟️ آخر باقة اشتراك: <strong>شامل المشاية (منتهية أو قريبة الانتهاء)</strong>
-      `;
-      document.getElementById('renewEditPhone').value = phoneInput;
-    }
-
-    // إرسال طلب التجديد
-    function handleRenewalSubmit() {
-      const name = document.getElementById('renewEditName').value.trim() || "مشترك حالي";
-      const phone = document.getElementById('renewEditPhone').value.trim();
-      const startDate = document.getElementById('renewStartDate').value;
-
-      triggerTelegramNotification(name, phone, selectedRenewPlanData.name, selectedRenewPlanData.price, startDate, "تجديد اشتراك");
-      triggerWhatsAppNotification(name, phone, selectedRenewPlanData.name, "تجديد اشتراك");
-
-      showSuccessModal("تم طلب تجديد الاشتراك بنجاح!", `عاش يا وحش! تم إرسال طلب تجديد باقة (${selectedRenewPlanData.name}) لكابتن نزاهة بنجاح لتحديث جدولك الزمني.`);
-      document.getElementById('renewDetailsCard').style.display = 'none';
-      document.getElementById('renewPhoneInput').value = '';
-    }
-
-    // وظيفة إرسال البيانات عبر بوت تليجرام (مع دعم الأزرار التفاعلية للمشرف)
-    function triggerTelegramNotification(name, phone, plan, price, startDate, type) {
-      // توكن البوت ومعرف الكابتن (يمكنك تعديلهم لاحقاً لو رغبت)
-      const botToken = "YOUR_BOT_TOKEN_HERE"; 
-      const chatId = "YOUR_CHAT_ID_HERE";
-
-      const telegramMessage = `🏋️‍♂️ *إشعار نظام جيم نزاهة*\n\n` +
-                              `📌 *النوع:* ${type}\n` +
-                              `👤 *الاسم:* ${name}\n` +
-                              `📱 *الموبايل:* ${phone}\n` +
-                              `🎟️ *الباقة:* ${plan} (${price} جنيه)\n` +
-                              `📅 *تاريخ الدفع:* ${startDate}\n\n` +
-                              `✅ _يرجى مراجعة إيصال التحويل وتفعيل الحساب._`;
-
-      // ملاحظة: للإرسال الآمن المباشر يفضل وجود سيرفر، أو يتم تفعيلها عبر الرابط المباشر لو رغبت
-      console.log("Telegram Payload Ready:", telegramMessage);
-    }
-
-    // فتح نافذة واتساب تلقائي لإشعار الكابتن
-    function triggerWhatsAppNotification(name, phone, plan, type) {
-      const captainPhone = "201017995678";
-      const message = `🏋️‍♂️ إشعار رسمي من ${type} - جيم نزاهة\n\n👤 الاسم: ${name}\n📱 الموبايل: ${phone}\n🎟️ الباقة: ${plan}\n✅ الحالة: تمت العملية بنجاح وبانتظار المراجعة!`;
-      const encodedMsg = encodeURIComponent(message);
-      
-      // فتح واتساب في نافذة خفية أو جديدة لإرسال الإشعار
-      window.open(`https://wa.me/${captainPhone}?text=${encodedMsg}`, '_blank');
-    }
-
-    // إدارة الثيم (ليلي / نهاري)
-    function getPreferredTheme() {
-      return localStorage.getItem('nazaha_theme') || 'light';
+    // 1. تحديد الثيم تلقائياً بناءً على وضع الجهاز (Dark / Light System)
+    function initTheme() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('nazaha_theme') || (prefersDark ? 'dark' : 'light');
+      applyTheme(savedTheme);
     }
 
     function applyTheme(theme) {
@@ -552,7 +309,111 @@
       applyTheme(next);
       localStorage.setItem('nazaha_theme', next);
     }
-  </script>
 
+    window.addEventListener('load', () => {
+      initTheme();
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+      }, 2000);
+      document.getElementById('newStartDate').value = new Date().toISOString().split('T')[0];
+    });
+
+    function switchPortal(type) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.portal-section').forEach(s => s.classList.remove('active'));
+      if(type === 'new') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('newMemberPortal').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('renewMemberPortal').classList.add('active');
+      }
+    }
+
+    let selectedNewPlan = { price: 550, name: 'بدون مشاية' };
+    function selectNewPlan(price, name, el) {
+      document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      selectedNewPlan = { price, name };
+      document.getElementById('newDisplayPrice').innerText = price;
+    }
+
+    // 2. البحث برقم الهاتف في Google Sheets (عبر SheetDB API)
+    async function checkSheetMember() {
+      const phone = document.getElementById('sheetSearchPhone').value.trim();
+      const resultArea = document.getElementById('sheetResultArea');
+      if(phone.length < 11) {
+        alert("يرجى إدخال رقم هاتف صحيج (11 رقم)!");
+        return;
+      }
+
+      resultArea.style.display = 'block';
+      resultArea.innerHTML = "جاري البحث في قاعدة البيانات...";
+
+      try {
+        const response = await fetch(`https://sheetdb.io/api/v1/6s0hwfqbut9f4/search?phone=${phone}`);
+        const data = await response.json();
+        
+        if(data && data.length > 0) {
+          const member = data[0];
+          resultArea.innerHTML = `
+            <h3 style="color: #38a169;">✅ تم العثور على بيانات المشترك</h3>
+            <p>👤 الاسم: <strong>${member.name || member.الاسم}</strong></p>
+            <p>📱 الموبايل: <strong>${member.phone || member.الموبايل}</strong></p>
+            <p>📍 المنطقة: <strong>${member.area || member.المنطقة}</strong></p>
+            <p>🎟️ الباقة: <strong>${member.plan || member.الباقة}</strong></p>
+            <p>📅 تاريخ الاشتراك: <strong>${member.date || member.التاريخ}</strong></p>
+          `;
+        } else {
+          resultArea.innerHTML = `<span style="color: #e53e3e;">❌ لم يتم العثور على بيانات مسجلة لهذا الرقم في الجدول.</span>`;
+        }
+      } catch(error) {
+        resultArea.innerHTML = `<span style="color: #e53e3e;">حدث خطأ أثناء الاتصال بقاعدة البيانات.</span>`;
+      }
+    }
+
+    // 3. إرسال الطلب وتعليق التفعيل لحين مراجعتك (عبر تليجرام أو واتساب كبديل)
+    async function handleNewRegistration(event) {
+      event.preventDefault();
+      const name = document.getElementById('newName').value.trim();
+      const phone = document.getElementById('newPhone').value.trim();
+      const area = document.getElementById('newArea').value.trim();
+      const startDate = document.getElementById('newStartDate').value;
+      const receiptFile = document.getElementById('newReceipt').files[0];
+
+      if(!receiptFile) {
+        alert("يرجى إرفاق صورة إيصال التحويل أولاً!");
+        return;
+      }
+
+      // بناء رسالة تليجرام وبديل واتساب لو تليجرام مش متاح
+      const messageText = `🏋️‍♂️ *طلب اشتراك جديد معلق*\n\n` +
+                          `👤 *الاسم:* ${name}\n` +
+                          `📱 *الموبايل:* ${phone}\n` +
+                          `📍 *المنطقة:* ${area}\n` +
+                          `🎟️ *الباقة:* ${selectedNewPlan.name} (${selectedNewPlan.price} جنيه)\n` +
+                          `📅 *التاريخ:* ${startDate}`;
+
+      // فحص إمكانية فتح تليجرام أو تحويله للواتساب تلقائياً كبديل
+      // محاولة فتح رابط تليجرام للبوت مع بيانات الطلب
+      const telegramBotUsername = "YOUR_BOT_USERNAME"; // اسم بوتك على تليجرام
+      const telegramUrl = `https://t.me/${telegramBotUsername}?text=${encodeURIComponent(messageText)}`;
+      
+      // كبديل (لو مفيش تليجرام أو المستخدم بيفضل الواتساب):
+      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(messageText + "\n(مرفق صورة التحويل مع الرسالة)")}`;
+
+      // فتح رابط تليجرام، ولو الجهاز مش عليه تليجرام يحول واتساب بعد ثانية
+      window.open(telegramUrl, '_blank');
+
+      document.getElementById('successModal').style.display = 'flex';
+      document.getElementById('newMemberForm').reset();
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
