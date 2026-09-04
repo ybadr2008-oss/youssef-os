@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="موقع الاستعلام عن الاشتراكات وتجديد العضويات في ناظحة جيم - Gym Nazaha">
-  <meta name="keywords" content="Gym Nazaha, ناظحة جيم, اشتراكات الجيم">
   <title>Gym Nazaha | نظام الاستعلام</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,15 +83,16 @@
     </header>
 
     <div class="card">
-      <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية</h2>
+      <h2><i class="fas faاق-clock"></i> مواعيد العمل الرسمية</h2>
       <div class="grid-2">
         <div class="info-box">
           <h3>مواعيد الرجال</h3>
-          <p>يومياً من الساعة <strong>2:00 ظهراً</strong> وحتى <strong>6:00 صباحاً</strong></p>
+          <p>باقي ساعات اليوم (ما عدا مواعيد السيدات المذكورة)</p>
         </div>
         <div class="info-box">
           <h3>مواعيد السيدات</h3>
-          <p>يومياً من الساعة <strong>7:00 صباحاً</strong> وحتى <strong>12:00 ظهراً</strong></p>
+          <p>يومياً: من <strong>9:00 صباحاً</strong> لـ <strong>12:00 ظهراً</strong> ومن <strong>4:00 عصراً</strong> لـ <strong>6:00 مساءً</strong><br>
+          <span style="color:#c53030; font-size:0.95rem;">(ما عدا يوم الجمعة: من 4:00 عصراً لـ 7:00 مساءً)</span></p>
         </div>
       </div>
     </div>
@@ -112,7 +111,7 @@
         <p style="color: #2d3748; font-weight: 700;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
         <div class="vodafone-number">01017995678</div>
         <p style="font-size: 0.95rem; color: #4a5568; font-weight: 700; margin-bottom: 10px;">للتحويل السريع (يعمل مباشرة من الموبايل):</p>
-        <a href="instapay://pay?pa=01017995678&am=550&cu=EGP" class="btn">ادفع بـ InstaPay</a>
+        <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع الآن مباشر (*9*7...)</a>
       </div>
     </div>
 
@@ -138,7 +137,7 @@
     </div>
 
     <div class="store-teaser">
-      <p>🛒 قريباً جداً عرض <span>Nazaha Store</span> لشراء المكملات والأدوات الرياضية الخاصة!</p>
+      <p>🛒 قريباً جداً افتح <span>متجر جيم نزاهة</span> لشراء المكملات والأدوات الرياضية الخاصة!</p>
     </div>
   </div>
 
@@ -149,8 +148,7 @@
       setTimeout(() => { splash.style.display = 'none'; }, 800);
     }, 2500);
 
-    // رابط الـ API الخاص بـ SheetDB (تأكد إنه مربوط بجدول الـ Google Sheets الصح)
-    const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
+    const SHEET_API_URL = "https://sheetdb.io/api/v1/8mdd58x2eulpy";
 
     async function checkSubscription() {
       const phoneInput = document.getElementById('phoneInput').value.trim();
@@ -167,15 +165,10 @@
 
       try {
         const response = await fetch(SHEET_API_URL);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
         const data = await response.json();
 
-        // تنظيف الرقم المدخل وحذف أي رموز لتجنب الأخطاء
         const cleanInput = phoneInput.replace(/[^0-9]/g, '');
 
-        // البحث عن الرقم بغض النظر عن مشاكل الأصفار أو مسافات الإكسل
         const member = data.find(m => {
           const sheetPhone = String(m.phone || '').replace(/[^0-9]/g, '');
           return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
@@ -185,7 +178,11 @@
           const expiryDate = new Date(member.expiry);
           const today = new Date();
           const timeDiff = expiryDate - today;
-          const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+          let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+          if (isNaN(daysLeft)) {
+              daysLeft = 0;
+          }
 
           if (daysLeft >= 0) {
             resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
@@ -198,7 +195,6 @@
           resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
         }
       } catch (error) {
-        console.error("Error:", error);
         resultText.innerHTML = `<span style="color:#c53030;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
       }
     }
