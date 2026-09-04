@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Youssef World | Cinematic UI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Cairo:wght@600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      background-color: #030305;
+      /* دمج صورتك الشخصية كخلفية سينمائية للموقع بالزوم والكادر المظبوط تماماً */
+      background-image: linear-gradient(rgba(3, 3, 5, 0.82), rgba(3, 3, 5, 0.92)), url('IMG-20260903-WA0003.jpg');
+      background-size: cover;
+      background-position: center 15%; /* الكادر اللي بيجيب الوش والكتفين بظبط */
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #space-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .cosmic-glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255, 122, 0, 0.15) 0%, rgba(255, 68, 0, 0.05) 50%, transparent 80%);
+      filter: blur(100px);
+      border-radius: 50%;
+      z-index: 2;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .top-bar {
+      width: 100%;
+      padding: 18px 25px;
+      background: rgba(5, 5, 8, 0.85);
+      border-bottom: 2px solid rgba(255, 122, 0, 0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 50;
+      box-shadow: 0 10px 40px rgba(255, 122, 0, 0.2);
+      backdrop-filter: blur(15px);
+    }
+
+    .top-bar .side-text-right {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #ffb703;
+      text-shadow: 0 0 12px rgba(255, 183, 3, 0.6);
+    }
+
+    .top-bar .center-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(135deg, #ffffff 20%, #ff7700 100%);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .top-bar .side-text-left {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #00f2fe;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+    }
+
+    .top-bar .side-text-left .pulse-dot {
+      width: 8px; height: 8px;
+      background-color: #00f2fe;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00f2fe;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: center;
+    }
+
+    .hero-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 25px;
+      letter-spacing: 4px;
+      text-shadow: 0 0 25px rgba(255, 119, 0, 0.6), 0 0 10px rgba(255, 255, 255, 0.4);
+      z-index: 10;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      width: 100%;
+      max-width: 1000px;
+      z-index: 10;
+    }
+
+    .cyber-card {
+      background: linear-gradient(145deg, rgba(12, 12, 18, 0.9), rgba(20, 10, 5, 0.92));
+      border: 2px solid rgba(255, 119, 0, 0.35);
+      border-radius: 28px;
+      padding: 40px 25px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 0 25px rgba(255, 119, 0, 0.05);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+      backdrop-filter: blur(12px);
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cyber-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.6s;
+    }
+
+    .cyber-card:active::before, .cyber-card:hover::before {
+      left: 100%;
+    }
+
+    .cyber-card i {
+      font-size: 3.5rem;
+      color: #ff7700;
+      margin-bottom: 15px;
+      display: block;
+      text-shadow: 0 0 25px rgba(255, 119, 0, 0.8);
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .cyber-card h3 {
+      font-size: 1.6rem;
+      color: #ffffff;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .cyber-card p {
+      font-size: 0.9rem;
+      color: #b0b0ba;
+      font-weight: 600;
+    }
+
+    .cyber-card:hover, .cyber-card:active {
+      border-color: #ff7700;
+      box-shadow: -12px 12px 45px rgba(255, 119, 0, 0.45), inset 0 0 30px rgba(255, 119, 0, 0.2);
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    .cyber-card:hover i {
+      transform: scale(1.15) translateY(-4px);
+      color: #ffffff;
+      text-shadow: 0 0 35px rgba(255, 255, 255, 0.9);
+    }
+
+    .cyber-card:hover h3 {
+      color: #ff7700;
+    }
+
+    .modal {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      width: 92vw; max-width: 580px;
+      min-height: 420px;
+      background: linear-gradient(160deg, rgba(8, 8, 12, 0.98), rgba(22, 11, 4, 0.99));
+      border: 2px solid #ff7700;
+      border-radius: 28px; padding: 35px;
+      z-index: 100; display: none; opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 80px rgba(255, 119, 0, 0.5), inset 0 0 35px rgba(255, 255, 255, 0.05);
+    }
+    .modal.active { display: flex; flex-direction: column; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 119, 0, 0.35); padding-bottom: 15px; margin-bottom: 20px; }
+    .modal-title { font-size: 1.4rem; color: #ff7700; font-weight: 900; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 15px rgba(255, 119, 0, 0.6); }
+    
+    .close-modal { background: #ff3333; color: white; border: none; padding: 7px 16px; border-radius: 10px; font-weight: bold; font-size: 0.9rem; cursor: pointer; transition: 0.2s; }
+    .close-modal:hover { background: #ff5555; transform: scale(1.05); }
+
+    .modal-body { 
+      color: #f3f3f7; 
+      font-size: 1.1rem; 
+      line-height: 1.9; 
+      flex-grow: 1;
+      background: rgba(3, 3, 5, 0.75);
+      border: 1px solid rgba(255, 119, 0, 0.3);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+      white-space: pre-line;
+    }
+
+    .typing-cursor::after {
+      content: '|';
+      color: #ff7700;
+      animation: blink 0.8s infinite;
+      font-weight: bold;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; gap: 20px; max-width: 420px; }
+      .top-bar .side-text-right { font-size: 0.9rem; }
+      .top-bar .center-title { font-size: 0.95rem; }
+      .top-bar .side-text-left { font-size: 0.75rem; }
+      .hero-name { font-size: 2rem; }
+      .cyber-card { min-height: 200px; padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="space-canvas"></canvas>
+  <div class="cosmic-glow"></div>
+
+  <div class="top-bar">
+    <div class="side-text-right">صلى على النبي ﷺ</div>
+    <div class="center-title">Youssef World</div>
+    <div class="side-text-left">
+      <span class="pulse-dot"></span>
+      <span>SECURE v2.6</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1 class="hero-name">Youssef Badr</h1>
+
+    <div class="cards-grid">
+      <div class="cyber-card" onclick="openModal('projects', '📂 قسم المشاريع:\n\n• AI & Machine Learning: تطوير نماذج ذكاء اصطناعي وتحليل البيانات الضخمة بدقة فائقة.\n\n• Cybersecurity Tools: بناء سكريبتات حماية متقدمة وأدوات لاختبار الاختراق الآمن.\n\n• Interactive 3D Web: تصميم وتطوير واجهات مستخدم تفاعلية وعصرية.')">
+        <i class="fas fa-code"></i>
+        <h3>المشاريع</h3>
+        <p>استكشف ابتكارات وأعمال البرمجة والذكاء الاصطناعي</p>
+      </div>
+
+      <div class="cyber-card" onclick="openModal('skills', '⚡ المهارات والتقنيات:\n\n• لغات البرمجة: Python, C++, JavaScript, HTML/CSS\n\n• الأمن السيبراني: Ethical Hacking, Linux, Metasploit, Network Security\n\n• الذكاء الاصطناعي: Machine Learning & Deep Learning Fundamentals')">
+        <i class="fas fa-bolt"></i>
+        <h3>المهارات</h3>
+        <p>تقنيات متقدمة في الأمن السيبراني ولغات البرمجة</p>
+      </div>
+
+      <div class="cyber-card" onclick="openModal('about', '🛡️ عنّي:\n\nأهلاً بك في عالمي الرقمي! أنا يوسف، طالب علوم حاسب، شغوف جداً بعالم الذكاء الاصطناعي والأمن السيبراني.\n\nأسعى دائماً لابتكار حلول برمجية آمنة وتطوير أنظمة رقمية تتسم بالكفاءة والذكاء.')">
+        <i class="fas fa-user-shield"></i>
+        <h3>عنّي</h3>
+        <p>شغف بالتكنولوجيا وعالم الأنظمة الرقمية الحديثة</p>
+      </div>
+
+      <div class="cyber-card" onclick="openModal('contact', '📬 التواصل والمجال:\n\n• التخصص الأساسي: Computer Science & Cybersecurity\n\n• الموقع الجغرافي: مصر (الشرقية - كفر صقر)\n\n• تواصل معي عبر قنوات المنصات الرقمية لبدء مشاريع مستقبلية مشتركة!')">
+        <i class="fas fa-envelope"></i>
+        <h3>التواصل</h3>
+        <p>تواصل معي واعرف المزيد عن أعمالي ومجالي</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="dynamicModal" class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle" class="modal-title">العنوان</h3>
+      <button class="close-modal" onclick="closeModal()">✖ إغلاق</button>
+    </div>
+    <div id="modalTextBody" class="modal-body typing-cursor"></div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('space-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const numStars = 250;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: (Math.random() - 0.5) * canvas.width * 2,
+        y: (Math.random() - 0.5) * canvas.height * 2,
+        z: Math.random() * canvas.width,
+        size: Math.random() * 1.8,
+        color: Math.random() > 0.3 ? '#ffffff' : '#ff7700'
+      });
+    }
+
+    function animateSpace() {
+      ctx.fillStyle = '#030305';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      for (let i = 0; i < stars.length; i++) {
+        let star = stars[i];
+        star.z -= 0.6;
+        if (star.z <= 0) {
+          star.z = canvas.width;
+          star.x = (Math.random() - 0.5) * canvas.width * 2;
+          star.y = (Math.random() - 0.5) * canvas.height * 2;
+        }
+        let k = 250 / star.z;
+        let px = star.x * k + centerX;
+        let py = star.y * k + centerY;
+
+        if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+          let pSize = Math.max(0, (1 - star.z / canvas.width) * star.size * 2);
+          ctx.fillStyle = star.color;
+          ctx.shadowBlur = star.color === '#ff7700' ? 10 : 0;
+          ctx.shadowColor = '#ff7700';
+          ctx.beginPath();
+          ctx.arc(px, py, pSize, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+      requestAnimationFrame(animateSpace);
+    }
+    animateSpace();
+
+    let typingInterval;
+    function openModal(type, textContent) {
+      const modal = document.getElementById('dynamicModal');
+      const textBody = document.getElementById('modalTextBody');
+      const titleElement = document.getElementById('modalTitle');
+      
+      if(type === 'projects') titleElement.innerText = "📂 المشاريع";
+      if(type === 'skills') titleElement.innerText = "⚡ المهارات";
+      if(type === 'about') titleElement.innerText = "🛡️ عنّي";
+      if(type === 'contact') titleElement.innerText = "📬 التواصل";
+
+      modal.classList.add('active');
+      textBody.innerText = "";
+      let i = 0;
+      clearInterval(typingInterval);
+      
+      typingInterval = setInterval(() => {
+        if (i < textContent.length) {
+          textBody.innerText += textContent.charAt(i);
+          i++;
+        } else {
+          clearInterval(typingInterval);
+        }
+      }, 18);
+    }
+
+    function closeModal() {
+      clearInterval(typingInterval);
+      document.getElementById('dynamicModal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
