@@ -123,6 +123,22 @@
     .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed var(--primary-color); text-align: center; padding: 25px; border-radius: 16px; margin-bottom: 20px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
 
+    /* زر التحويل السريع المباشر */
+    .btn-direct-transfer {
+      display: inline-block;
+      background: #25D366;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 10px 0 15px 0;
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+    }
+    .btn-direct-transfer:hover {
+      background: #1ebd56;
+    }
+
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 900; font-size: 1.05rem; color: var(--text-main); }
     .form-control { width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
@@ -217,6 +233,12 @@
         <div class="vodafone-section">
           <p style="font-weight: 700;">حول المبلغ المطلوب عبر فودافون كاش على الرقم:</p>
           <div class="vodafone-number">01017995678</div>
+          <div>
+            <!-- زر التحويل السريع تحت رقم الكاش مباشرة -->
+            <a href="tel:*9*01017995678#" class="btn-direct-transfer">
+              <i class="fas fa-bolt"></i> اضغط للتحويل السريع (*9*...)
+            </a>
+          </div>
           <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب تحويله: <span id="newDisplayPrice">550</span> جنيه</p>
         </div>
 
@@ -246,7 +268,7 @@
           <div class="form-group">
             <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
             <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
-            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن. (يرجى إرفاق التحويل عند الإرسال)</span>
+            <span class="receipt-note">⚠️ إرسال صورة التحويل إجباري لتأكيد اشتراكك مع الكابتن.</span>
           </div>
 
           <button type="submit" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال وتفعيل الاشتراك الآن</button>
@@ -271,7 +293,7 @@
         <div id="sheetResultArea" style="margin-top: 20px; display: none;" class="vodafone-section"></div>
       </div>
 
-      <!-- كارد التجديد (يظهر عند رغبة العضو في التجديد) -->
+      <!-- كارد التجديد -->
       <div class="card" id="renewCard" style="display: none;">
         <h2><i class="fas fa-sync-alt"></i> تجديد اشتراك العضوية</h2>
         
@@ -293,6 +315,12 @@
         <div class="vodafone-section">
           <p style="font-weight: 700;">حول مبلغ التجديد على فودافون كاش:</p>
           <div class="vodafone-number">01017995678</div>
+          <div>
+            <!-- زر التحويل السريع تحت رقم الكاش مباشرة -->
+            <a href="tel:*9*01017995678#" class="btn-direct-transfer">
+              <i class="fas fa-bolt"></i> اضغط للتحويل السريع (*9*...)
+            </a>
+          </div>
           <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب: <span id="renewDisplayPrice">550</span> جنيه</p>
         </div>
 
@@ -396,14 +424,12 @@
       document.getElementById('renewDisplayPrice').innerText = price;
     }
 
-    // دالة لحساب تاريخ الانتهاء بإضافة 30 يوم
     function calculateExpiryDate(startDateStr) {
       let date = new Date(startDateStr);
       date.setDate(date.getDate() + 30);
       return date.toISOString().split('T')[0];
     }
 
-    // البحث في جدول SheetDB
     async function checkSheetMember() {
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const resultArea = document.getElementById('sheetResultArea');
@@ -428,7 +454,7 @@
           
           resultArea.innerHTML = `
             <h3 style="color: #38a169;">✅ تم العثور على بيانات المشترك</h3>
-            <p>👤 الاسم: <strong>${name}</strong></p>
+            <p>👤 الاسم: <strong id="foundMemberName">${name}</strong></p>
             <p>📱 الموبايل: <strong>${member.phone || member.الموبايل || phone}</strong></p>
             <p>📍 المنطقة: <strong>${area}</strong></p>
             <p>🎟️ الباقة السابقة: <strong>${member.plan || member.الباقة || 'عادية'}</strong></p>
@@ -444,7 +470,6 @@
       }
     }
 
-    // إرسال طلب المشترك الجديد للبوت
     function handleNewRegistration(event) {
       event.preventDefault();
 
@@ -490,12 +515,11 @@
       document.getElementById('newMemberForm').reset();
     }
 
-// إرسال طلب التجديد للبوت
+    // إرسال طلب التجديد للبوت مع تصليح الفاصلة وتمرير الـ isRenewal صح
     async function handleRenewRegistration(event) {
       event.preventDefault();
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const startDate = document.getElementById('renewStartDate').value;
-      const expiryDate = calculateExpiryDate(startDate);
       const receiptFile = document.getElementById('renewReceipt').files[0];
 
       if(!receiptFile) {
@@ -503,13 +527,11 @@
         return;
       }
 
-      // قراءة الصورة وتحويلها لـ Base64 عشان توصل للبوت
       const reader = new FileReader();
       reader.onload = async function(e) {
         const base64Image = e.target.result;
 
-        // استخراج اسم المشترك الباقة لو متوفرين في الصفحة (أو جلبهم من النتيجة الظاهرة)
-        const nameElement = document.querySelector('#sheetResultArea strong'); // أو حسب الـ ID عندك للاسم
+        const nameElement = document.getElementById('foundMemberName');
         const userName = nameElement ? nameElement.innerText : "مشترك";
         const planName = selectedRenewPlan ? selectedRenewPlan.name : "تجديد اشتراك";
 
@@ -518,8 +540,8 @@
           phone: phone,
           plan: planName + " (" + selectedRenewPlan.price + " جنيه)",
           date: startDate,
-          image: base64Image
-          isRenewal: true
+          image: base64Image,
+          isRenewal: true  // <--- الفاصلة اتحطت ومبقاش فيه أي مشاكل syntax
         };
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
