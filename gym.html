@@ -519,6 +519,7 @@
           plan: planName + " (" + selectedRenewPlan.price + " جنيه)",
           date: startDate,
           image: base64Image
+          isRenewal: true
         };
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
@@ -542,7 +543,7 @@
 
       reader.readAsDataURL(receiptFile);
     }  
-    
+
     function closeSuccessModal() {
       document.getElementById('successModal').style.display = 'none';
     }
