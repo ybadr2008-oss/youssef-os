@@ -6,46 +6,48 @@
   <title>جيم نزاهة - Membership Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { background-color: #121212; color: #f8f9fa; font-family: Tahoma, sans-serif; }
-    .card { background-color: #1e1e1e; border: 1px solid #333; }
-    .form-control, .form-select { background-color: #2a2a2a; color: #fff; border: 1px solid #444; }
-    .form-control:focus, .form-select:focus { background-color: #2a2a2a; color: #fff; border-color: #0d6efd; box-shadow: none; }
-    .nav-pills .nav-link.active { background-color: #0d6efd; }
-    .nav-pills .nav-link { color: #aaa; }
+    body { background-color: #0f172a; color: #f8f9fa; font-family: Tahoma, sans-serif; }
+    .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+    .form-control, .form-select { background-color: #0f172a !important; color: #ffffff !important; border: 1px solid #475569 !important; padding: 12px; border-radius: 8px; }
+    .form-control:focus, .form-select:focus { border-color: #3b82f6 !important; box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25); }
+    .form-control::placeholder { color: #94a3b8 !important; opacity: 1; }
+    .form-label { font-weight: bold; color: #e2e8f0; margin-bottom: 6px; }
+    .nav-pills .nav-link.active { background-color: #2563eb; color: #fff; font-weight: bold; }
+    .nav-pills .nav-link { color: #94a3b8; background-color: #1e293b; border: 1px solid #334155; margin: 0 5px; }
   </style>
 </head>
 <body class="py-5">
 
   <div class="container" style="max-width: 700px;">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>🔥 جيم نزاهة - بوابة الاشتراكات</h2>
-      <button class="btn btn-outline-warning btn-sm" onclick="toggleCaptainDashboard()">👑 لوحة تحكم الكابتن</button>
+      <h2 class="text-white fw-bold">🔥 جيم نزاهة</h2>
+      <button class="btn btn-warning btn-sm fw-bold px-3 py-2" onclick="toggleCaptainDashboard()">👑 لوحة تحكم الكابتن</button>
     </div>
 
-    <!-- لوحة تحكم الكابتن المعلقة -->
-    <div id="captainDashboard" class="card p-4 mb-4" style="display: none; border-color: #ffc107;">
+    <!-- لوحة تحكم الكابتن -->
+    <div id="captainDashboard" class="card p-4 mb-4" style="display: none; border-color: #f59e0b;">
       <h4 class="text-warning mb-3">🛠️ طلبات الأعضاء بانتظار الموافقة</h4>
       <div id="pendingRequestsList">
         <p class="text-muted">جاري التحميل...</p>
       </div>
     </div>
 
-    <!-- التبديل بين مشترك جديد أو تجديد -->
-    <ul class="nav nav-pills mb-4 justify-content-center bg-dark p-2 rounded border border-secondary" id="portalTabs" role="tablist">
+    <!-- التبديل -->
+    <ul class="nav nav-pills mb-4 justify-content-center p-2 rounded card" id="portalTabs" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active fw-bold" id="new-tab" data-bs-toggle="pill" data-bs-target="#newContent" type="button">✨ مشترك جديد</button>
+        <button class="nav-link active" id="new-tab" data-bs-toggle="pill" data-bs-target="#newContent" type="button">✨ مشترك جديد</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link fw-bold" id="renew-tab" data-bs-toggle="pill" data-bs-target="#renewContent" type="button">🔄 تجديد اشتراك</button>
+        <button class="nav-link" id="renew-tab" data-bs-toggle="pill" data-bs-target="#renewContent" type="button">🔄 تجديد اشتراك</button>
       </li>
     </ul>
 
     <div class="tab-content" id="portalTabContent">
       
-      <!-- قسم مشترك جديد -->
+      <!-- مشترك جديد -->
       <div class="tab-pane fade show active" id="newContent">
-        <div class="card p-4 shadow-lg">
-          <h3 class="mb-3 text-primary">تسجيل مشترك جديد</h3>
+        <div class="card p-4">
+          <h3 class="mb-4 text-primary border-bottom pb-2">تسجيل مشترك جديد</h3>
           <form id="newMemberForm" onsubmit="handleNewRegistration(event)">
             <div class="mb-3">
               <label class="form-label">الاسم الكامل</label>
@@ -70,36 +72,32 @@
               <label class="form-label">تاريخ البدء</label>
               <input type="date" id="newStartDate" class="form-control" required>
             </div>
-            <div class="mb-3">
+            <div class="mb-4">
               <label class="form-label">صورة إيصال التحويل</label>
               <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
-              <small class="text-muted">برجاء رفع إيصال فودافون كاش أو التحويل الصحيح.</small>
             </div>
-            <button type="submit" class="btn btn-primary w-100 fw-bold py-2">إرسال طلب الاشتراك لكابتن نزاهة</button>
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-3 shadow">إرسال طلب الاشتراك لكابتن نزاهة 🚀</button>
           </form>
         </div>
       </div>
 
-      <!-- قسم تجديد الاشتراك -->
+      <!-- تجديد اشتراك -->
       <div class="tab-pane fade" id="renewContent">
-        <div class="card p-4 shadow-lg">
-          <h3 class="mb-3 text-success">تجديد اشتراك حالي</h3>
+        <div class="card p-4">
+          <h3 class="mb-4 text-success border-bottom pb-2">تجديد اشتراك حالي</h3>
           <div class="mb-3">
-            <label class="form-label">أدخل رقم الموبايل المسجل به مسبقاً</label>
+            <label class="form-label">رقم الموبايل المسجل مسبقاً</label>
             <div class="input-group">
               <input type="tel" id="renewPhoneInput" class="form-control" placeholder="010xxxxxxxx">
-              <button class="btn btn-outline-success" type="button" onclick="lookupMember()">بحث عن الحساب</button>
+              <button class="btn btn-success px-4" type="button" onclick="lookupMember()">بحث</button>
             </div>
           </div>
 
-          <!-- تفاصيل العضو بعد البحث -->
-          <div id="renewDetailsCard" style="display: none;" class="mt-4 p-3 border border-secondary rounded bg-black">
+          <div id="renewDetailsCard" style="display: none;" class="mt-4 p-3 border border-secondary rounded bg-dark">
             <div id="memberFoundInfo" class="mb-3 text-info"></div>
-            
             <hr class="border-secondary">
-            
             <div class="mb-3">
-              <label class="form-label">تعديل الاسم (اختياري)</label>
+              <label class="form-label">تعديل الاسم</label>
               <input type="text" id="renewEditName" class="form-control">
             </div>
             <div class="mb-3">
@@ -108,10 +106,10 @@
             </div>
             <div class="mb-3">
               <label class="form-label">البلد / المنطقة</label>
-              <input type="text" id="renewEditCountry" class="form-control" placeholder="كفر صقر، الزقازيق...">
+              <input type="text" id="renewEditCountry" class="form-control">
             </div>
             <div class="mb-3">
-              <label class="form-label">اختر الباقة الجديدة</label>
+              <label class="form-label">الباقة الجديدة</label>
               <select id="renewPlanSelect" class="form-select" onchange="selectedRenewPlanName = this.value">
                 <option value="باقة شهرية - 800 جنيه">باقة شهرية - 800 جنيه</option>
                 <option value="باقة VIP - 1500 جنيه">باقة VIP - 1500 جنيه</option>
@@ -122,10 +120,10 @@
               <input type="date" id="renewStartDate" class="form-control">
             </div>
             <div class="mb-3">
-              <label class="form-label">صورة إيصال التجديد الجديد</label>
+              <label class="form-label">صورة إيصال التجديد</label>
               <input type="file" id="renewReceipt" class="form-control" accept="image/*" required>
             </div>
-            <button type="button" class="btn btn-success w-100 fw-bold py-2" onclick="handleRenewalSubmit()">إرسال طلب التجديد لكابتن نزاهة</button>
+            <button type="button" class="btn btn-success w-100 fw-bold py-3 shadow" onclick="handleRenewalSubmit()">إرسال طلب التجديد لكابتن نزاهة 💪</button>
           </div>
         </div>
       </div>
@@ -133,7 +131,7 @@
     </div>
   </div>
 
-  <!-- مودال النجاح -->
+  <!-- مودال -->
   <div class="modal fade" id="successModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content bg-dark text-white border-secondary">
@@ -148,13 +146,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // رابط SheetDB الخاص بك
     const SHEET_API_URL = "https://sheetdb.io/api/v1/8mdd58x2eu9w7"; 
     let selectedNewPlanName = "باقة شهرية - 800 جنيه";
     let selectedRenewPlanName = "باقة شهرية - 800 جنيه";
     let currentFoundMember = null;
 
-    // ضبط التواريخ تلقائياً عند الفتح
     document.addEventListener("DOMContentLoaded", () => {
       const today = new Date().toISOString().split('T')[0];
       if(document.getElementById('newStartDate')) document.getElementById('newStartDate').value = today;
@@ -162,7 +158,6 @@
       renderPendingRequests();
     });
 
-    // دالة لحساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
     function calculateExpiryDate(startDateStr) {
       const date = new Date(startDateStr);
       if (isNaN(date.getTime())) return '';
@@ -170,7 +165,6 @@
       return date.toISOString().split('T')[0];
     }
 
-    // 1. معالجة مشترك جديد (إرسال الطلب للمعلقين)
     function handleNewRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('newName').value.trim();
@@ -179,49 +173,25 @@
       const startDateVal = document.getElementById('newStartDate').value;
       const receiptFile = document.getElementById('newReceipt').files[0];
 
-      if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التحويل!");
-        return;
-      }
+      if (!receiptFile) { alert("برجاء رفع الإيصال!"); return; }
 
       const expiryStr = calculateExpiryDate(startDateVal);
-
-      const newReq = {
-        id: Date.now(),
-        type: 'اشتراك جديد',
-        name,
-        phone,
-        country,
-        plan: selectedNewPlanName,
-        start_date: startDateVal,
-        expiry: expiryStr
-      };
+      const newReq = { id: Date.now(), type: 'اشتراك جديد', name, phone, country, plan: selectedNewPlanName, start_date: startDateVal, expiry: expiryStr };
 
       savePendingRequest(newReq);
-
-      showSuccessModal(
-        "تم إرسال طلبك بنجاح! ⏳",
-        `يا بطل <b>${name}</b> من (${country})، تم إرسال طلبك لكابتن نزاهة للمراجعة والتفعيل الفوري فور مطابقة الإيصال.`
-      );
-
+      showSuccessModal("تم إرسال طلبك بنجاح! ⏳", `يا بطل <b>${name}</b> من (${country})، تم إرسال طلبك لكابتن نزاهة للمراجعة.`);
       triggerApprovalWhatsApp(name, phone, country, selectedNewPlanName, 'اشتراك جديد', startDateVal, expiryStr);
       document.getElementById('newMemberForm').reset();
       renderPendingRequests();
     }
 
-    // 2. البحث عن المشترك للتجديد
     async function lookupMember() {
       const phoneInput = document.getElementById('renewPhoneInput').value.trim();
-      if (!phoneInput) {
-        alert("برجاء إدخال رقم الموبايل أولاً!");
-        return;
-      }
+      if (!phoneInput) { alert("أدخل رقم الموبايل أولاً!"); return; }
 
       try {
         const response = await fetch(SHEET_API_URL);
-        if (!response.ok) throw new Error("فشل الاتصال");
         const data = await response.json();
-        
         const membersList = Array.isArray(data) ? data : (data.data || data.records || []);
         const cleanInput = phoneInput.replace(/[^0-9]/g, '');
 
@@ -239,99 +209,49 @@
           
           let memberExpiry = member.expiry || member.Expiry;
           const startDate = member.start_date || member.Start_date || member.startDate;
-          if ((!memberExpiry || memberExpiry.trim() === '') && startDate) {
-            memberExpiry = calculateExpiryDate(startDate);
-          }
+          if ((!memberExpiry || memberExpiry.trim() === '') && startDate) memberExpiry = calculateExpiryDate(startDate);
           memberExpiry = memberExpiry || 'غير محدد';
 
-          let expiryStatus = `<span style="color:#38a169; font-weight:900;">ساري حتى: ${memberExpiry}</span>`;
-          if (memberExpiry !== 'غير محدد') {
-            const today = new Date().toISOString().split('T')[0];
-            if (memberExpiry < today) {
-              expiryStatus = `<span style="color:#e53e3e; font-weight:900;">منتهي (تاريخ الانتهاء: ${memberExpiry}) - يلا جدد يا بطل!</span>`;
-            }
-          }
-
-          document.getElementById('memberFoundInfo').innerHTML = `
-            ✅ تم العثور على حسابك بنجاح!<br>
-            👤 الاسم المسجل: <b>${memberName}</b><br>
-            🌍 البلد: <b>${memberCountry || 'غير مسجل'}</b><br>
-            📱 رقم الموبايل: <b>${memberPhone}</b><br>
-            🎟️ باقتك السابقة: <b>${memberPlan}</b><br>
-            📅 حالة الاشتراك: ${expiryStatus}
-          `;
+          document.getElementById('memberFoundInfo').innerHTML = `✅ تم العثور على حسابك:<br><b>${memberName}</b> (${memberCountry}) - الباقة: ${memberPlan}`;
           document.getElementById('renewEditName').value = memberName;
           document.getElementById('renewEditPhone').value = memberPhone;
           document.getElementById('renewEditCountry').value = memberCountry;
           document.getElementById('renewDetailsCard').style.display = 'block';
         } else {
-          alert("الرقم غير مسجل في جدول البيانات. تأكد من الرقم أو سجل كـ (مشترك جديد).");
+          alert("الرقم غير مسجل.");
         }
       } catch (error) {
-        console.error(error);
-        alert("حدث خطأ أثناء البحث في قاعدة البيانات.");
+        alert("خطأ في الاتصال.");
       }
     }
 
-    // 3. معالجة طلب التجديد
     function handleRenewalSubmit() {
       if (!currentFoundMember) return;
-
       const editName = document.getElementById('renewEditName').value.trim();
       const editPhone = document.getElementById('renewEditPhone').value.trim();
       const editCountry = document.getElementById('renewEditCountry').value.trim();
       const startDateVal = document.getElementById('renewStartDate').value;
       const receiptFile = document.getElementById('renewReceipt').files[0];
 
-      if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التجديد!");
-        return;
-      }
+      if (!receiptFile) { alert("برجاء رفع الإيصال!"); return; }
 
       const expiryStr = calculateExpiryDate(startDateVal);
-
-      const renewReq = {
-        id: Date.now(),
-        type: 'تجديد اشتراك',
-        name: editName,
-        phone: editPhone,
-        country: editCountry,
-        plan: selectedRenewPlanName,
-        start_date: startDateVal,
-        expiry: expiryStr,
-        oldPhone: currentFoundMember.phone // عشان لو حابب نحدثه مكان القديم
-      };
+      const renewReq = { id: Date.now(), type: 'تجديد اشتراك', name: editName, phone: editPhone, country: editCountry, plan: selectedRenewPlanName, start_date: startDateVal, expiry: expiryStr };
 
       savePendingRequest(renewReq);
-
-      showSuccessModal(
-        "تم إرسال طلب التجديد بنجاح! ⏳",
-        `يا بطل <b>${editName}</b>، تم إرسال طلب تجديد باقتك لكابتن نزاهة للمراجعة والتفعيل.`
-      );
-
+      showSuccessModal("تم إرسال طلب التجديد! ⏳", `يا بطل <b>${editName}</b>، تم إرسال طلبك لكابتن نزاهة.`);
       triggerApprovalWhatsApp(editName, editPhone, editCountry, selectedRenewPlanName, 'تجديد اشتراك', startDateVal, expiryStr);
-
       document.getElementById('renewDetailsCard').style.display = 'none';
       document.getElementById('renewPhoneInput').value = '';
       renderPendingRequests();
     }
 
-    // إرسال واتساب للكابتن
     function triggerApprovalWhatsApp(name, phone, country, plan, type, startDate, expiry) {
       const captainPhone = "201017995678";
-      const message = `🚨 طلب ${type} جديد بحاجة للمراجعة - جيم نزاهة\n\n` +
-                      `👤 الاسم: ${name}\n` +
-                      `🌍 البلد: ${country}\n` +
-                      `📱 الموبايل: ${phone}\n` +
-                      `🎟️ الباقة: ${plan}\n` +
-                      `📅 البدء: ${startDate} | الانتهاء: ${expiry}\n\n` +
-                      `⚠️ [يرجى فتح لوحة تحكم الموقع والضغط على زر (قبول) لترحيل وتحديث البيانات لجوجل شيت أوتوماتيكياً].`;
-      
-      const encodedMsg = encodeURIComponent(message);
-      window.open(`https://wa.me/${captainPhone}?text=${encodedMsg}`, '_blank');
+      const message = `🚨 طلب ${type} جديد - جيم نزاهة\n👤 الاسم: ${name} (${country})\n📱 الموبايل: ${phone}\n🎟️ الباقة: ${plan}\n📅 البدء: ${startDate} | الانتهاء: ${expiry}\n[اضغط قبول من لوحة تحكم الموقع للتحديث أوتوماتيكياً].`;
+      window.open(`https://wa.me/${captainPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    // إدارة الطلبات المعلقة محلياً
     function savePendingRequest(reqData) {
       let pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
       pending.push(reqData);
@@ -347,82 +267,51 @@
     function renderPendingRequests() {
       const container = document.getElementById('pendingRequestsList');
       const pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
-
-      if (pending.length === 0) {
-        container.innerHTML = `<p class="text-muted">لا توجد طلبات معلقة حالياً.</p>`;
-        return;
-      }
+      if (pending.length === 0) { container.innerHTML = `<p class="text-muted">لا توجد طلبات معلقة.</p>`; return; }
 
       let html = '';
       pending.forEach((req, index) => {
-        html += `
-          <div class="p-3 mb-3 border border-secondary rounded bg-black">
-            <p class="m-1"><b>النوع:</b> <span class="text-warning">${req.type}</span> | <b>الاسم:</b> ${req.name} | <b>البلد:</b> ${req.country}</p>
-            <p class="m-1"><b>الموبايل:</b> ${req.phone} | <b>الباقة:</b> ${req.plan}</p>
-            <p class="m-1"><b>الفترة:</b> من ${req.start_date} إلى ${req.expiry}</p>
-            <div class="mt-2">
-              <button class="btn btn-success btn-sm me-2" onclick="approveRequest(${index})">✅ قبول وتحديث الشيت أوتوماتيكياً</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectRequest(${index})">❌ رفض الطلب</button>
-            </div>
-          </div>
-        `;
+        html += `<div class="p-3 mb-3 border border-secondary rounded bg-black">
+          <p class="m-1"><b>${req.type}</b> | ${req.name} (${req.country}) - ${req.phone}</p>
+          <p class="m-1 text-warning">${req.plan} | من ${req.start_date} لـ ${req.expiry}</p>
+          <button class="btn btn-success btn-sm mt-2 me-2" onclick="approveRequest(${index})">✅ قبول وتحديث الشيت</button>
+          <button class="btn btn-danger btn-sm mt-2" onclick="rejectRequest(${index})">❌ رفض</button>
+        </div>`;
       });
       container.innerHTML = html;
     }
 
-    // قبول الطلب وفعلياً ترحيله لجوجل شيت أوتوماتيك
     async function approveRequest(index) {
       let pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
       const req = pending[index];
-
-      const payload = {
-        data: [{
-          name: req.name,
-          phone: req.phone,
-          country: req.country,
-          plan: req.plan,
-          start_date: req.start_date,
-          expiry: req.expiry
-        }]
-      };
+      const payload = { data: [{ name: req.name, phone: req.phone, country: req.country, plan: req.plan, start_date: req.start_date, expiry: req.expiry }] };
 
       try {
-        // لو تجديد، ممكن نحذف القديم أو نضيف الجديد حسب الرغبة، هنا بنضيفه مباشر للشيت
         const response = await fetch(SHEET_API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-
         if (response.ok) {
-          alert("تم قبول الطلب وترحيل البيانات بنجاح إلى جوجل شيت! 💪");
+          alert("تم قبول الطلب وترحيل البيانات لجوجل شيت بنجاح! 💪");
           pending.splice(index, 1);
           localStorage.setItem('gym_pending_requests', JSON.stringify(pending));
           renderPendingRequests();
         } else {
-          alert("حدث خطأ أثناء إرسال البيانات لجوجل شيت.");
+          alert("خطأ في رفع البيانات للشيت.");
         }
-      } catch (err) {
-        console.error(err);
-        alert("خطأ في الاتصال بالشبكة.");
-      }
+      } catch (err) { alert("مشكلة في الاتصال."); }
     }
 
-    // رفض الطلب مع إرسال السبب للعميل عبر الواتساب
     function rejectRequest(index) {
-      const reason = prompt("اكتب سبب الرفض لإرساله للعميل عبر الواتساب:", "صورة الإيصال غير واضحة أو غير مطابقة للمبلغ");
+      const reason = prompt("سبب الرفض:", "صورة الإيصال غير واضحة");
       if (reason === null) return;
-
       let pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
       const req = pending[index];
-
-      const clientMsg = `عذراً يا ${req.name}، تم رفض طلب اشتراكك في جيم نزاهة للأسباب الآتية: ${reason}. برجاء التواصل أو المحاولة مرة أخرى.`;
-      window.open(`https://wa.me/${req.phone}?text=${encodeURIComponent(clientMsg)}`, '_blank');
-
+      window.open(`https://wa.me/${req.phone}?text=${encodeURIComponent('عذراً، تم رفض طلبك: ' + reason)}`, '_blank');
       pending.splice(index, 1);
       localStorage.setItem('gym_pending_requests', JSON.stringify(pending));
       renderPendingRequests();
-      alert("تم رفض الطلب بنجاح.");
     }
 
     function showSuccessModal(title, body) {
