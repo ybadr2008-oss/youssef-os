@@ -490,8 +490,8 @@
       document.getElementById('newMemberForm').reset();
     }
 
-    // إرسال طلب التجديد للبوت
-    function handleRenewRegistration(event) {
+// إرسال طلب التجديد للبوت
+    async function handleRenewRegistration(event) {
       event.preventDefault();
       const phone = document.getElementById('sheetSearchPhone').value.trim();
       const startDate = document.getElementById('renewStartDate').value;
@@ -503,38 +503,46 @@
         return;
       }
 
-      const msg = `🏋️‍♂️ *طلب تجديد اشتراك معلق* - جيم نزاهة\n\n` +
-                  `📱 الموبايل: ${phone}\n` +
-                  `🎟️ باقة التجديد: ${selectedRenewPlan.name} (${selectedRenewPlan.price} جنيه)\n` +
-                  `📅 تاريخ البدء الجديد: ${startDate}\n` +
-                  `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
-                  `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
+      // قراءة الصورة وتحويلها لـ Base64 عشان توصل للبوت
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const base64Image = e.target.result;
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
-      fetch(scriptURL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              message: msg,
-              phone: phone
-          })
-      })
-      .then(() => {
-          console.log('تم إرسال طلب التجديد بنجاح');
-      })
-      .catch(error => {
+        // استخراج اسم المشترك الباقة لو متوفرين في الصفحة (أو جلبهم من النتيجة الظاهرة)
+        const nameElement = document.querySelector('#sheetResultArea strong'); // أو حسب الـ ID عندك للاسم
+        const userName = nameElement ? nameElement.innerText : "مشترك";
+        const planName = selectedRenewPlan ? selectedRenewPlan.name : "تجديد اشتراك";
+
+        const payloadData = {
+          name: userName,
+          phone: phone,
+          plan: planName + " (" + selectedRenewPlan.price + " جنيه)",
+          date: startDate,
+          image: base64Image
+        };
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyKaFPoMTk1AJdhYAX1u9N4UZLfIec3PWF1bkOquRg1KE5ZCmtFwm5nFPZe4n4ZClu-6g/exec';
+        
+        try {
+          const response = await fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(payloadData)
+          });
+          const result = await response.json();
+          console.log('تم إرسال طلب التجديد والصورة بنجاح', result);
+        } catch (error) {
           console.error('خطأ في إرسال التجديد:', error);
-      });
+        }
 
-      document.getElementById('successModal').style.display = 'flex';
-      document.getElementById('renewCard').style.display = 'none';
-      document.getElementById('sheetResultArea').style.display = 'none';
-      document.getElementById('renewMemberForm').reset();
-    }
+        document.getElementById('successModal').style.display = 'flex';
+        document.getElementById('renewCard').style.display = 'none';
+        document.getElementById('sheetResultArea').style.display = 'none';
+        document.getElementById('renewMemberForm').reset();
+      };
 
+      reader.readAsDataURL(receiptFile);
+    }  
+    
     function closeSuccessModal() {
       document.getElementById('successModal').style.display = 'none';
     }
