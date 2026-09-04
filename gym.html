@@ -468,9 +468,13 @@
                   `⏳ تاريخ الانتهاء المتوقع: ${expiryDate}\n` +
                   `📎 (يرجى مراجعة إيصال التحويل المرفق وتفعيل الحساب)`;
 
-      // إرسال البيانات للبوت عبر Google Apps Script
-      fetch("https://script.google.com/macros/s/AKfycbzqErurWW6W6gMkSHIGVQ24Ox6J4QSqNQ4hQI2NFdowuxka__BEEHBNHBBpf-Hw8S77xA/exec", {
+      // إرسال البيانات للبوت عبر Google Apps Script بدون مشاكل CORS
+            fetch("https://script.google.com/macros/s/AKfycbzBdu5oRXXrH741I94PJJ2saFJDW-v5qu6UOas5hSrvwX8mwyI-_BN4mGkJFmK5Oor7kw/exec", {
         method: "POST",
+              mode: "no-cors",
+              headers: {
+                "Content-Type": "application/json"
+              },
         body: JSON.stringify({
           name: name,
           phone: phone,
@@ -479,8 +483,10 @@
           startDate: startDate,
           expiryDate: expiryDate
         })
-      }).then(res => res.json()).then(data => {
-        console.log("تم الإرسال للبوت بنجاح");
+      }).then(() => {
+        console.log("تم إرسال الطلب للبوت بنجاح");
+      }).catch(err => {
+        console.log("خطأ:", err);
       });
 
       // إظهار رسالة النجاح وتصفير الفورم
@@ -508,12 +514,10 @@
                   `⏳ تاريخ الانتهاء الجديد: ${expiryDate}\n` +
                   `📎 (يرجى مراجعة إيصال التجديد وتحديث الجدول)`;
 
-      const whatsappUrl = `https://wa.me/201017995678?text=${encodeURIComponent(msg)}`;
-      window.open(whatsappUrl, '_blank');
-
-      document.getElementById('successModal').style.display = 'flex';
-      document.getElementById('renewCard').style.display = 'none';
-      document.getElementById('sheetResultArea').style.display = 'none';
+      
+          document.getElementById('successModal').style.display = 'flex';
+          document.getElementById('renewCard').style.display = 'none';
+          document.getElementById('sheetResultArea').style.display = 'none';
     }
 
     function closeSuccessModal() {
