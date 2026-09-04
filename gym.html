@@ -19,6 +19,7 @@
       --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
       --info-bg: #fafbfc;
       --result-bg: #edf2f7;
+      --primary-color: #ff7700;
     }
 
     [data-theme="dark"] {
@@ -41,20 +42,10 @@
       transition: opacity 0.8s ease, visibility 0.8s ease; color: var(--text-main); text-align: center; padding: 20px;
     }
     
-    .splash-title {
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 900; 
-      color: var(--text-main); 
-      margin-bottom: 15px;
-      border-right: 6px solid #ff7700; 
-      padding-right: 15px; 
-    }
-
     .nazaha-welcome-title {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
       text-align: center;
-      color: #fff;
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -68,8 +59,8 @@
       opacity: 0;
       transform: translateY(-50px);
       animation: fallAndShine 0.8s forwards;
-      color: #ff7700; /* لون برتقالي مميز يناسب هوية الجيم وفي نفس الوقت مريح وغير مزعج */
-      text-shadow: 0 0 10px rgba(255, 119, 0, 0.3);
+      color: var(--primary-color);
+      text-shadow: 0 0 15px rgba(255, 119, 0, 0.4);
     }
 
     .nazaha-welcome-title span:nth-child(1) { animation-delay: 0.1s; }
@@ -82,53 +73,52 @@
     .nazaha-welcome-title span:nth-child(8) { animation-delay: 0.8s; }
 
     @keyframes fallAndShine {
-      0% {
-        opacity: 0;
-        transform: translateY(-50px);
-        text-shadow: none;
-      }
-      70% {
-        opacity: 1;
-        transform: translateY(10px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-        text-shadow: 0 0 15px #00ffcc, 0 0 30px #ff007f;
-      }
+      0% { opacity: 0; transform: translateY(-50px); text-shadow: none; }
+      70% { opacity: 1; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 20px var(--primary-color); }
     }
 
-    .splash-sub { 
-      font-size: clamp(1.2rem, 3vw, 2rem); 
-      color: var(--text-sub); 
-      font-weight: 700; 
-      letter-spacing: 2px;
-    }
+    .splash-sub { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text-sub); font-weight: 700; letter-spacing: 2px; }
 
     body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
     
     .top-bar { max-width: 900px; width: 100%; display: flex; justify-content: flex-end; margin-bottom: 10px; }
     .theme-toggle { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); padding: 8px 16px; border-radius: 50px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: var(--box-shadow); }
-    .theme-toggle:hover { border-color: #ff7700; color: #ff7700; }
+    .theme-toggle:hover { border-color: var(--primary-color); color: var(--primary-color); }
 
     .container { max-width: 900px; width: 100%; margin: auto; }
-    header { text-align: center; margin-bottom: 35px; padding-top: 10px; }
+    header { text-align: center; margin-bottom: 30px; padding-top: 10px; }
     header h1 { color: var(--text-main); font-size: 3rem; font-weight: 900; letter-spacing: 1px; }
-    header h1 span { color: #ff7700; }
+    header h1 span { color: var(--primary-color); }
     header p { color: var(--text-sub); font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
+
+    /* تبويبات الاختيار الفخمة (جديد / تجديد) */
+    .portal-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+    .tab-btn { background: var(--card-bg); border: 2px solid var(--border-color); padding: 18px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: var(--box-shadow); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .tab-btn.active { border-color: var(--primary-color); background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--card-bg)); color: var(--primary-color); transform: translateY(-3px); }
+    .tab-btn i { font-size: 1.4rem; }
+
+    .portal-section { display: none; }
+    .portal-section.active { display: block; animation: fadeInSection 0.5s ease; }
+    @keyframes fadeInSection { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* صندوق الرسائل الترحيبية الاحترافية */
+    .hero-welcome-box { background: linear-gradient(135deg, rgba(255,119,0,0.15), var(--card-bg)); border: 2px solid var(--primary-color); padding: 25px; border-radius: 18px; text-align: center; margin-bottom: 25px; box-shadow: var(--box-shadow); }
+    .hero-welcome-box h2 { color: var(--primary-color); font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
+    .hero-welcome-box p { color: var(--text-main); font-size: 1.1rem; line-height: 1.8; font-weight: 700; }
 
     .card { background: var(--card-bg); border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 1px solid var(--border-color); box-shadow: var(--box-shadow); }
     .card h2 { color: var(--text-main); margin-bottom: 20px; font-size: 1.5rem; font-weight: 900; display: flex; align-items: center; gap: 10px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
-    .card h2 i { color: #ff7700; }
+    .card h2 i { color: var(--primary-color); }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
     .info-box { background: var(--info-bg); border: 1px solid var(--border-color); padding: 20px; border-radius: 14px; text-align: center; }
-    .info-box h3 { color: #ff7700; margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
+    .info-box h3 { color: var(--primary-color); margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
     .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
-    /* مربعات الأسعار القابلة للاختيار مع أنيميشن فاخر */
+    /* مربعات الأسعار */
     .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
     @media (max-width: 768px) { .prices-grid { grid-template-columns: 1fr; } }
     
@@ -137,76 +127,71 @@
       border-radius: 14px; text-align: center; cursor: pointer; position: relative; 
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     }
-    .price-card:hover { transform: translateY(-5px); border-color: #ff7700; }
-    
-    /* حالة الاختيار (Active) مع نبضة فخمة */
+    .price-card:hover { transform: translateY(-5px); border-color: var(--primary-color); }
     .price-card.active { 
-      border-color: #ff7700; 
+      border-color: var(--primary-color); 
       background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--info-bg)); 
       box-shadow: 0 10px 25px rgba(255, 119, 0, 0.25);
       transform: scale(1.03);
     }
     .price-card.active::after {
       content: '\f058'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
-      position: absolute; top: 10px; left: 10px; color: #ff7700; font-size: 1.2rem;
-      animation: popIn 0.3s ease;
+      position: absolute; top: 10px; left: 10px; color: var(--primary-color); font-size: 1.2rem;
     }
-    @keyframes popIn {
-      0% { transform: scale(0); }
-      80% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
     .price-card h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; color: var(--text-main); }
-    .price-tag { font-size: 1.8rem; font-weight: 900; color: #ff7700; margin-top: 5px; }
+    .price-tag { font-size: 1.8rem; font-weight: 900; color: var(--primary-color); margin-top: 5px; }
     .price-tag span { font-size: 0.95rem; color: var(--text-sub); font-weight: 700; }
 
-    .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
+    .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed var(--primary-color); text-align: center; padding: 25px; border-radius: 16px; margin-bottom: 20px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
-    
-    .pay-btn { 
-      display: inline-block; background: #dd6b20; color: #ffffff; padding: 14px 32px; 
-      border-radius: 50px; font-weight: 900; font-size: 1.15rem; text-decoration: none; 
-      margin-top: 15px; box-shadow: 0 5px 15px rgba(221, 107, 32, 0.35); 
-      transition: all 0.3s ease; 
-    }
-    .pay-btn:hover { background: #c05621; transform: scale(1.05); }
 
-    /* أنيميشن تغيير السعر بنعومة */
-    .price-animate {
-      display: inline-block;
-      animation: pricePulse 0.4s ease;
-    }
-    @keyframes pricePulse {
-      0% { transform: scale(0.8); opacity: 0; }
-      50% { transform: scale(1.1); color: #ff7700; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    /* نماذج الإدخال وتسجيل البيانات */
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 900; font-size: 1.05rem; color: var(--text-main); }
+    .form-control { width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
+    .form-control:focus { border-color: var(--primary-color); }
 
-    .tracker-box { display: flex; gap: 10px; margin-top: 15px; }
-    .tracker-box input { flex: 1; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
-    .tracker-box input:focus { border-color: #ff7700; }
-    .tracker-box button { padding: 14px 28px; background: #ff7700; border: none; border-radius: 12px; color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-    .tracker-box button:hover { background: #e06600; }
+    .action-btn { 
+      width: 100%; background: var(--primary-color); color: #ffffff; padding: 16px; 
+      border: none; border-radius: 14px; font-weight: 900; font-size: 1.2rem; cursor: pointer; 
+      box-shadow: 0 5px 20px rgba(255, 119, 0, 0.35); transition: all 0.3s ease; 
+    }
+    .action-btn:hover { background: #e06600; transform: translateY(-2px); }
 
     .result-area { margin-top: 15px; background: var(--result-bg); padding: 18px; border-radius: 12px; display: none; border: 1px solid var(--border-color); font-weight: 700; color: var(--text-main); font-size: 1.1rem; line-height: 1.8; }
     ul.rules-list { padding-right: 20px; line-height: 2.2; color: var(--text-main); font-weight: 700; font-size: 1.05rem; }
     ul.rules-list li { margin-bottom: 10px; }
     
     .store-teaser { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: var(--box-shadow); }
-    .store-teaser span { color: #ff7700; font-weight: 900; }
+    .store-teaser span { color: var(--primary-color); font-weight: 900; }
 
-    .whatsapp-float {
-      position: fixed; bottom: 25px; left: 25px; background: #25d366; color: #fff;
-      width: 60px; height: 60px; border-radius: 50px; display: flex; align-items: center;
-      justify-content: center; font-size: 30px; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-      z-index: 1000; text-decoration: none; transition: 0.3s;
+    /* النافذة المنبثقة للتهنئة والنجاح (Popup Modal) */
+    #successModal {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
     }
-    .whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
+    .modal-content {
+      background: var(--card-bg); width: 100%; max-width: 500px; padding: 30px; border-radius: 20px;
+      text-align: center; border: 2px solid var(--primary-color); box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popModal { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-content i { font-size: 4rem; color: #38a169; margin-bottom: 15px; }
+    .modal-content h3 { font-size: 1.8rem; font-weight: 900; color: var(--text-main); margin-bottom: 10px; }
+    .modal-content p { font-size: 1.1rem; color: var(--text-sub); line-height: 1.7; font-weight: 700; margin-bottom: 20px; }
+    .modal-close-btn { background: var(--primary-color); color: #fff; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; cursor: pointer; }
+
+    /* الأزرار العائمة */
+    .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+    .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: 0.3s; }
+    .float-btn:hover { transform: scale(1.1); }
+    .facebook-float { background-color: #1877F2; }
+    .whatsapp-float { background-color: #25d366; }
   </style>
 </head>
 <body>
 
+  <!-- شاشة الترحيب الساحقة -->
   <div id="splash-screen">
     <h1 class="nazaha-welcome-title">
       <span>كابتن</span> <span>نزاهة</span> <span>يرحب</span> <span>بكم،</span> <span>ويتمنى</span> <span>التفوق</span> <span>والنجاح</span> <span>لجميع</span> <span>أبطاله</span>
@@ -214,6 +199,7 @@
     <div class="splash-sub">Welcome to NAZAHA Gym</div>
   </div>
 
+  <!-- زر تغيير الوضع -->
   <div class="top-bar">
     <button class="theme-toggle" onclick="toggleTheme()">
       <i id="themeIcon" class="fas fa-moon"></i> <span id="themeText">الوضع الليلي</span>
@@ -226,12 +212,162 @@
       <p>قوتك والتزامك يبدؤون من هنا</p>
     </header>
 
-    <div class="card">
+    <!-- تبويبات الاختيار بين مشترك جديد أو تجديد اشتراك -->
+    <div class="portal-tabs">
+      <button class="tab-btn active" onclick="switchPortal('new')">
+        <i class="fas fa-user-plus"></i> مشترك جديد
+      </button>
+      <button class="tab-btn" onclick="switchPortal('renew')">
+        <i class="fas fa-sync-alt"></i> تجديد اشتراك (الحالي)
+      </button>
+    </div>
+
+    <!-- ================= القسم الأول: مشترك جديد ================= -->
+    <div id="newMemberPortal" class="portal-section active">
+      <div class="hero-welcome-box">
+        <h2>أهلاً بيك في عائلة أبطال نزاهة! 🔥</h2>
+        <p>خطوتك الأولى نحو بناء جسم قوي وصحي تبدأ من هنا. اختر باقتك، املأ بياناتك بكل حماس، وابدأ رحلة المجد والالتزام معنا!</p>
+      </div>
+
+      <!-- باقات الاشتراك -->
+      <div class="card">
+        <h2><i class="fas fa-ticket-alt"></i> اختر باقة الاشتراك</h2>
+        <div class="prices-grid">
+          <div class="price-card active" onclick="selectNewPlan(550, 'بدون مشاية', this)">
+            <h3>بدون مشاية</h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub);">أجهزة الحديد فقط</p>
+            <div class="price-tag">550 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectNewPlan(600, 'شامل المشاية', this)">
+            <h3>شامل المشاية</h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub);">الحديد + المشاية الكهربائية</p>
+            <div class="price-tag">600 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectNewPlan(800, 'تأهيل عسكري', this)">
+            <h3>تأهيل عسكري</h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub);">تدريب خاص ومكثف</p>
+            <div class="price-tag">800 <span>جنيه</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- الدفع وتسجيل البيانات -->
+      <div class="card">
+        <h2><i class="fas fa-file-invoice-dollar"></i> بيانات الدفع والاشتراك</h2>
+        
+        <div class="vodafone-section">
+          <p style="font-weight: 700;">حول المبلغ المطلوب عبر فودافون كاش على الرقم:</p>
+          <div class="vodafone-number">01017995678</div>
+          <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">المطلوب تحويله: <span id="newDisplayPrice">550</span> جنيه</p>
+        </div>
+
+        <form id="newMemberForm" onsubmit="handleNewRegistration(event)">
+          <div class="form-group">
+            <label><i class="fas fa-user"></i> الاسم الرباعي:</label>
+            <input type="text" id="newName" class="form-control" placeholder="اكتب اسمك رباعياً بدقة..." required>
+          </div>
+
+          <div class="form-group">
+            <label><i class="fas fa-phone"></i> رقم الموبايل:</label>
+            <input type="tel" id="newPhone" class="form-control" placeholder="رقم هاتفك المسجل أو واتساب..." maxlength="11" required>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label><i class="fas fa-calendar-alt"></i> تاريخ الدفع:</label>
+              <input type="date" id="newStartDate" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-image"></i> صورة إيصال التحويل (سكرين شوت):</label>
+              <input type="file" id="newReceipt" class="form-control" accept="image/*" required>
+            </div>
+          </div>
+
+          <button type="submit" class="action-btn"><i class="fas fa-paper-plane"></i> إرسال وتفعيل الاشتراك الآن</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= القسم الثاني: تجديد الاشتراك (المشترك الحالي) ================= -->
+    <div id="renewMemberPortal" class="portal-section">
+      <div class="hero-welcome-box" style="border-color: #38a169; background: linear-gradient(135deg, rgba(56,161,105,0.15), var(--card-bg));">
+        <h2 style="color: #38a169;">منور بيتك يا وحش! 💪🔥</h2>
+        <p>عظمة استمرارك والتزامك هي سر قوتنا. جدد اشتراكك بكل سهولة وتابع طريق البطولات معنا!</p>
+      </div>
+
+      <!-- خطوة التحقق برقم الموبايل -->
+      <div class="card" id="lookupCard">
+        <h2><i class="fas fa-search"></i> التحقق من حسابك الحالي</h2>
+        <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل لمعرفة حالتك وتجديد اشتراكك:</p>
+        <div class="tracker-box" style="display: flex; gap: 10px;">
+          <input type="tel" id="renewPhoneInput" class="form-control" placeholder="ادخل رقم الموبايل للتجديد..." maxlength="11">
+          <button type="button" onclick="lookupMember()" class="action-btn" style="width: auto; padding: 0 30px;">بحث</button>
+        </div>
+      </div>
+
+      <!-- تفاصيل المشترك بعد البحث وقبل إتمام التجديد -->
+      <div class="card" id="renewDetailsCard" style="display: none;">
+        <h2><i class="fas fa-user-check"></i> تأكيد بيانات العضو وتجديد الباقة</h2>
+        
+        <div id="memberFoundInfo" style="background: var(--info-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; line-height: 1.8;">
+          <!-- يتم تعبئتها تلقائياً -->
+        </div>
+
+        <!-- تعديل البيانات لو حابب -->
+        <div class="form-group">
+          <label><i class="fas fa-user-edit"></i> تعديل الاسم (اختياري):</label>
+          <input type="text" id="renewEditName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-phone-alt"></i> تعديل رقم الموبايل (اختياري):</label>
+          <input type="tel" id="renewEditPhone" class="form-control" maxlength="11">
+        </div>
+
+        <!-- اختيار الباقة للتجديد -->
+        <h3 style="font-size: 1.2rem; font-weight: 900; margin: 20px 0 10px 0;"><i class="fas fa-ticket-alt"></i> اختر باقة التجديد:</h3>
+        <div class="prices-grid">
+          <div class="price-card active" onclick="selectRenewPlan(550, 'بدون مشاية', this)">
+            <h3>بدون مشاية</h3>
+            <div class="price-tag">550 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectRenewPlan(600, 'شامل المشاية', this)">
+            <h3>شامل المشاية</h3>
+            <div class="price-tag">600 <span>جنيه</span></div>
+          </div>
+          <div class="price-card" onclick="selectRenewPlan(800, 'تأهيل عسكري', this)">
+            <h3>تأهيل عسكري</h3>
+            <div class="price-tag">800 <span>جنيه</span></div>
+          </div>
+        </div>
+
+        <div class="vodafone-section" style="margin-top: 20px;">
+          <p style="font-weight: 700;">حول المبلغ لفودافون كاش على:</p>
+          <div class="vodafone-number">01017995678</div>
+          <p style="font-size: 1.2rem; font-weight: 900; color: var(--primary-color);">مبلغ التجديد: <span id="renewDisplayPrice">550</span> جنيه</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label><i class="fas fa-calendar-alt"></i> تاريخ الدفع:</label>
+            <input type="date" id="renewStartDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-image"></i> صورة إيصال التجديد:</label>
+            <input type="file" id="renewReceipt" class="form-control" accept="image/*" required>
+          </div>
+        </div>
+
+        <button type="button" onclick="handleRenewalSubmit()" class="action-btn" style="background: #38a169;"><i class="fas fa-check-circle"></i> تأكيد تجديد الاشتراك</button>
+      </div>
+    </div>
+
+    <!-- جدول مواعيد العمل والتعليمات -->
+    <div class="card" style="margin-top: 30px;">
       <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية</h2>
       <div class="grid-2">
         <div class="info-box">
           <h3>مواعيد الرجال</h3>
-          <p>من <strong>12:00 ظهراً</strong> إلى <strong>4:00 عصراً</strong> ومن <strong>6:00 مساءً</strong> إلى <strong>9:00 صباحاً</strong><br>
+          <p>من <strong>12:00 ظهراً</strong> لـ <strong>4:00 عصراً</strong> ومن <strong>6:00 مساءً</strong> لـ <strong>9:00 صباحاً</strong><br>
           <span style="color:#38a169; font-size:0.95rem;">(الجمعة: طوال اليوم عدا فترة السيدات)</span></p>
         </div>
         <div class="info-box">
@@ -243,55 +379,9 @@
     </div>
 
     <div class="card">
-      <h2><i class="fas fa-ticket-alt"></i> اختر باقة الاشتراك (اضغط للاختيار)</h2>
-      <div class="prices-grid">
-        <div class="price-card active" onclick="selectPlan(550, 'اشتراك بدون مشاية', this)">
-          <h3>بدون مشاية</h3>
-          <p style="font-size: 0.85rem; color: var(--text-sub);">أجهزة الحديد فقط</p>
-          <div class="price-tag">550 <span>جنيه</span></div>
-        </div>
-        <div class="price-card" onclick="selectPlan(600, 'اشتراك شامل المشاية', this)">
-          <h3>شامل المشاية</h3>
-          <p style="font-size: 0.85rem; color: var(--text-sub);">الحديد + المشاية الكهربائية</p>
-          <div class="price-tag">600 <span>جنيه</span></div>
-        </div>
-        <div class="price-card" onclick="selectPlan(800, 'تدريب التأهيل العسكري', this)">
-          <h3>تأهيل عسكري</h3>
-          <p style="font-size: 0.85rem; color: var(--text-sub);">تدريب خاص ومكثف</p>
-          <div class="price-tag">800 <span>جنيه</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><i class="fas fa-wallet"></i> الاشتراك السريع (فودافون كاش)</h2>
-      <div class="vodafone-section">
-        <p style="font-weight: 700;" id="selectedPlanText">الباقة المختارة: <span style="color:#ff7700;">بدون مشاية</span></p>
-        <div class="vodafone-number">01017995678</div>
-        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 5px;">المبلغ المطلوب تحويله:</p>
-        <div style="font-size: 2.2rem; font-weight: 900; color: #ff7700; margin-bottom: 10px;">
-          <span id="displayPrice" class="price-animate">550</span> جنيه
-        </div>
-        <a id="vodafonePayBtn" href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع <span id="btnPriceText">550</span> جنيه الآن (*9*7...)</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2><i class="fas fa-search"></i> استعلام عن اشتراكك</h2>
-      <p style="font-size: 0.95rem; font-weight: 700;">اكتب رقم هاتفك لمعرفة الأيام المتبقية وموعد التجديد:</p>
-      <div class="tracker-box">
-        <input type="tel" id="phoneInput" placeholder="ادخل رقم الموبايل المسجل..." maxlength="11">
-        <button onclick="checkSubscription()">استعلام</button>
-      </div>
-      <div id="resultBox" class="result-area">
-        <p id="subResultText">جاري البحث في قاعدة البيانات...</p>
-      </div>
-    </div>
-
-    <div class="card">
       <h2><i class="fas fa-shield-alt"></i> تعليمات هامة للمشتركين</h2>
       <ul class="rules-list">
-        <li>🎒 ضرورة إحضار حقيبة خاصة تحتوي على الملابس الرياضية والفوطة الشخصية.</li>
+        <li>🎒 ضرورة إحضار حقيبة تحتوي على الملابس الرياضية والفوطة الشخصية.</li>
         <li>👟 ممنوع الدخول نهائياً إلا بارتداء حذاء رياضي (Sneakers) نظيف ومخصص للجيم فقط.</li>
         <li>🧼 المحافظة على النظافة العامة وإعادة الأوزان لمكانها بعد الانتهاء.</li>
       </ul>
@@ -302,61 +392,254 @@
     </div>
   </div>
 
-  <!-- حاوية الأزرار العائمة في ركن الشاشة -->
-  <div class="floating-buttons" style="position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;">
-    <!-- زرار الفيسبوك الجديد -->
-    <a href="https://www.facebook.com/share/1CtZqk8xjR/?mibextid=wwXIfr" target="_blank" class="facebook-float" title="تابعنا على فيسبوك" style="background-color: #1877F2; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none;">
+  <!-- النافذة المنبثقة للنجاح والشكر -->
+  <div id="successModal">
+    <div class="modal-content">
+      <i class="fas fa-check-circle"></i>
+      <h3 id="modalTitle">تم الاشتراك بنجاح!</h3>
+      <p id="modalMessage">تم تسجيل بياناتك وتحديث نظام الجيم. كابتن نزاهة تلقى إشعاراً بانضمامك، وخلال ثوانٍ ستظهر في قاعدة بيانات الجيم. عاش يا بطل!</p>
+      <button class="modal-close-btn" onclick="closeSuccessModal()">حسناً، عظّم اشتراكك</button>
+    </div>
+  </div>
+
+  <!-- الأزرار العائمة -->
+  <div class="floating-buttons">
+    <a href="https://www.facebook.com/share/1CtZqk8xjR/?mibextid=wwXIfr" target="_blank" class="float-btn facebook-float" title="تابعنا على فيسبوك">
       <i class="fab fa-facebook-f"></i>
     </a>
-
-    <!-- زرار الواتساب الحالي -->
-    <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب" style="background-color: #25D366; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none;">
+    <a href="https://wa.me/201017995678?text=مرحباً كابتن نزاهة، أستفسر عن اشتراك الجيم" target="_blank" class="float-btn whatsapp-float" title="تواصل معنا عبر واتساب">
       <i class="fab fa-whatsapp"></i>
     </a>
   </div>
 
   <script>
-    // اختيار الباقة وتحديث الأسعار بـ Animation فاخر
-    function selectPlan(price, planName, element) {
-      // إزالة الكلاس active من كل الكروت
-      document.querySelectorAll('.price-card').forEach(card => {
-        card.classList.remove('active');
-      });
+    const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
+    let selectedNewPriceVal = 550;
+    let selectedNewPlanName = 'بدون مشاية';
+    let selectedRenewPriceVal = 550;
+    let selectedRenewPlanName = 'بدون مشاية';
+    let currentFoundMember = null;
+
+    // ضبط تاريخ اليوم افتراضياً في حقول التواريخ
+    window.addEventListener('DOMContentLoaded', () => {
+      const todayStr = new Date().toISOString().split('T')[0];
+      document.getElementById('newStartDate').value = todayStr;
+      document.getElementById('renewStartDate').value = todayStr;
       
-      // إضافة الكلاس للكارت المحدد
-      element.classList.add('active');
+      const initialTheme = getPreferredTheme();
+      applyTheme(initialTheme);
+    });
 
-      // تحديث النصوص والروابط مع تطبيق أنيميشن النبضة
-      document.getElementById('selectedPlanText').innerHTML = `الباقة المختارة: <span style="color:#ff7700;">${planName}</span>`;
-      
-      const displayPrice = document.getElementById('displayPrice');
-      const btnPriceText = document.getElementById('btnPriceText');
-      const vodafonePayBtn = document.getElementById('vodafonePayBtn');
+    // إخفاء شاشة الترحيب بعد ثانيتين
+    setTimeout(() => {
+      const splash = document.getElementById('splash-screen');
+      splash.style.opacity = '0';
+      setTimeout(() => { splash.style.display = 'none'; }, 800);
+    }, 2000);
 
-      displayPrice.innerText = price;
-      btnPriceText.innerText = price;
-      vodafonePayBtn.href = `tel:*9*7*01017995678*${price}#`;
+    // تبديل البوابات (جديد / تجديد)
+    function switchPortal(type) {
+      document.querySelectorAll('.portal-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.portal-section').forEach(sec => sec.classList.remove('active'));
 
-      // إعادة تشغيل الأنيميشن
-      displayPrice.classList.remove('price-animate');
-      void displayPrice.offsetWidth; // Trigger reflow
-      displayPrice.classList.add('price-animate');
+      if (type === 'new') {
+        document.querySelectorAll('.portal-tabs .tab-btn')[0].classList.add('active');
+        document.getElementById('newMemberPortal').classList.add('active');
+      } else {
+        document.querySelectorAll('.portal-tabs .tab-btn')[1].classList.add('active');
+        document.getElementById('renewMemberPortal').classList.add('active');
+      }
     }
 
-    function getPreferredTheme() {
-      const savedTheme = localStorage.getItem('nazaha_theme');
-      if (savedTheme) return savedTheme;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
+    // اختيار باقة المشترك الجديد
+    function selectNewPlan(price, planName, element) {
+      document.querySelectorAll('#newMemberPortal .price-card').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+      selectedNewPriceVal = price;
+      selectedNewPlanName = planName;
+      document.getElementById('newDisplayPrice').innerText = price;
+    }
+
+    // اختيار باقة التجديد
+    function selectRenewPlan(price, planName, element) {
+      document.querySelectorAll('#renewDetailsCard .price-card').forEach(c => c.classList.remove('active'));
+      element.classList.add('active');
+      selectedRenewPriceVal = price;
+      selectedRenewPlanName = planName;
+      document.getElementById('renewDisplayPrice').innerText = price;
+    }
+
+    // معالجة تسجيل مشترك جديد
+    async function handleNewRegistration(event) {
+      event.preventDefault();
+      const name = document.getElementById('newName').value.trim();
+      const phone = document.getElementById('newPhone').value.trim();
+      const startDateVal = document.getElementById('newStartDate').value;
+      const receiptFile = document.getElementById('newReceipt').files[0];
+
+      if (!receiptFile) {
+        alert("برجاء رفع صورة إيصال التحويل للتأكد!");
+        return;
       }
-      return 'light';
+
+      // حساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
+      const startDate = new Date(startDateVal);
+      const expiryDate = new Date(startDate);
+      expiryDate.setDate(expiryDate.getDate() + 30);
+      const expiryStr = expiryDate.toISOString().split('T')[0];
+
+      const payload = {
+        data: [{
+          name: name,
+          phone: phone,
+          plan: selectedNewPlanName,
+          start_date: startDateVal,
+          expiry: expiryStr
+        }]
+      };
+
+      try {
+        const response = await fetch(SHEET_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          showSuccessModal("تم الاشتراك بنجاح يا بطل! 🔥", `أهلاً بك يا ${name} في جيم نزاهة.<br>تم تسجيل باقتك (${selectedNewPlanName}) وتفعيلها لمدة 30 يوماً.<br>سيتم إرسال إشعار فوري لكابتن نزاهة.`);
+          
+          // إرسال واتساب تلقائي لكابتن نزاهة والمشترك
+          triggerWhatsAppNotification(name, phone, selectedNewPlanName, 'اشتراك جديد');
+          document.getElementById('newMemberForm').reset();
+        } else {
+          alert("حدث خطأ أثناء حفظ البيانات في الجدول. حاول مرة أخرى.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("تعذر الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
+      }
+    }
+
+    // البحث عن المشترك الحالي للتجديد
+    async function lookupMember() {
+      const phoneInput = document.getElementById('renewPhoneInput').value.trim();
+      if (!phoneInput) {
+        alert("برجاء إدخال رقم الموبايل أولاً!");
+        return;
+      }
+
+      try {
+        const response = await fetch(SHEET_API_URL);
+        const data = await response.json();
+        const cleanInput = phoneInput.replace(/[^0-9]/g, '');
+
+        const member = data.find(m => {
+          const sheetPhone = String(m.phone || '').replace(/[^0-9]/g, '');
+          return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
+        });
+
+        if (member) {
+          currentFoundMember = member;
+          document.getElementById('memberFoundInfo').innerHTML = `
+            ✅ تم العثور على حسابك بنجاح!<br>
+            👤 الاسم المسجل: <b>${member.name}</b><br>
+            📱 رقم الموبايل: <b>${member.phone}</b><br>
+            🎟️ باقتك السابقة: <b>${member.plan || 'غير محدد'}</b><br>
+            📅 تاريخ انتهاء اشتراكك الحالي: <span style="color:#e53e3e;">${member.expiry || 'منتهي'}</span>
+          `;
+          document.getElementById('renewEditName').value = member.name;
+          document.getElementById('renewEditPhone').value = member.phone;
+          document.getElementById('renewDetailsCard').style.display = 'block';
+        } else {
+          alert("الرقم غير مسجل في قاعدة البيانات. برجاء التسجيل كـ (مشترك جديد).");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("حدث خطأ أثناء البحث.");
+      }
+    }
+
+    // معالجة تجديد الاشتراك
+    async function handleRenewalSubmit() {
+      if (!currentFoundMember) return;
+
+      const editName = document.getElementById('renewEditName').value.trim();
+      const editPhone = document.getElementById('renewEditPhone').value.trim();
+      const startDateVal = document.getElementById('renewStartDate').value;
+      const receiptFile = document.getElementById('renewReceipt').files[0];
+
+      if (!receiptFile) {
+        alert("برجاء رفع صورة إيصال التجديد!");
+        return;
+      }
+
+      // حساب تاريخ الانتهاء الجديد (30 يوم من تاريخ بدء التجديد)
+      const startDate = new Date(startDateVal);
+      const expiryDate = new Date(startDate);
+      expiryDate.setDate(expiryDate.getDate() + 30);
+      const expiryStr = expiryDate.toISOString().split('T')[0];
+
+      try {
+        // تحديث البيانات في SheetDB باستخدام الهاتف القديم كمعيار للبحث
+        const updateUrl = `${SHEET_API_URL}/phone/${currentFoundMember.phone}`;
+        const response = await fetch(updateUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            data: {
+              name: editName,
+              phone: editPhone,
+              plan: selectedRenewPlanName,
+              start_date: startDateVal,
+              expiry: expiryStr
+            }
+          })
+        });
+
+        if (response.ok) {
+          showSuccessModal("منور بيتك يا وحش! تم التجديد بنجاح 💪", `يا بطل <b>${editName}</b>، تم تمديد اشتراكك (${selectedRenewPlanName}) بنجاح لمدة 30 يوماً إضافية.<br>بياناتك أصبحت محدثة على الموقع فوراً.`);
+          triggerWhatsAppNotification(editName, editPhone, selectedRenewPlanName, 'تجديد اشتراك');
+          document.getElementById('renewDetailsCard').style.display = 'none';
+          document.getElementById('renewPhoneInput').value = '';
+        } else {
+          alert("حدث خطأ أثناء تحديث الاشتراك. حاول مرة أخرى.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("تعذر الاتصال بقاعدة البيانات.");
+      }
+    }
+
+    // فتح نافذة النجاح المنبثقة
+    function showSuccessModal(title, message) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMessage').innerHTML = message;
+      document.getElementById('successModal').style.display = 'flex';
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+
+    // إرسال إشعار واتساب تلقائي لكابتن نزاهة وللمشترك
+    function triggerWhatsAppNotification(name, phone, plan, type) {
+      const captainPhone = "201017995678";
+      const message = `🏋️‍♂️ إشعار رسمي من ${type} - جيم نزاهة\n\n👤 الاسم: ${name}\n📱 الموبايل: ${phone}\n🎟️ الباقة: ${plan}\n✅ الحالة: تمت العملية بنجاح وتم تحديث الجدول!`;
+      const encodedMsg = encodeURIComponent(message);
+      
+      // فتح واتساب في نافذة خفية أو جديدة لإرسال الإشعار
+      window.open(`https://wa.me/${captainPhone}?text=${encodedMsg}`, '_blank');
+    }
+
+    // إدارة الثيم (ليلي / نهاري)
+    function getPreferredTheme() {
+      return localStorage.getItem('nazaha_theme') || 'light';
     }
 
     function applyTheme(theme) {
       document.body.setAttribute('data-theme', theme);
       const themeIcon = document.getElementById('themeIcon');
       const themeText = document.getElementById('themeText');
-      
       if (theme === 'dark') {
         themeIcon.className = 'fas fa-sun';
         themeText.innerText = 'الوضع النهاري';
@@ -367,85 +650,10 @@
     }
 
     function toggleTheme() {
-      const currentTheme = document.body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      applyTheme(newTheme);
-      localStorage.setItem('nazaha_theme', newTheme);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const initialTheme = getPreferredTheme();
-      applyTheme(initialTheme);
-    });
-
-    setTimeout(() => {
-      const splash = document.getElementById('splash-screen');
-      splash.style.opacity = '0';
-      setTimeout(() => { splash.style.display = 'none'; }, 800);
-    }, 2000);
-
-    const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
-
-    async function checkSubscription() {
-      const phoneInput = document.getElementById('phoneInput').value.trim();
-      const resultBox = document.getElementById('resultBox');
-      const resultText = document.getElementById('subResultText');
-
-      if (!phoneInput) {
-        alert("برجاء إدخال رقم الهاتف أولاً");
-        return;
-      }
-
-      resultBox.style.display = "block";
-      resultText.innerHTML = "جاري التحقق من قاعدة البيانات...";
-
-      try {
-        const response = await fetch(SHEET_API_URL);
-        const data = await response.json();
-
-        const cleanInput = phoneInput.replace(/[^0-9]/g, '');
-
-        const member = data.find(m => {
-          const sheetPhone = String(m.phone || '').replace(/[^0-9]/g, '');
-          return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
-        });
-
-        if (member) {
-          const expiryRaw = member.expiry ? String(member.expiry).trim() : "";
-          
-          if (expiryRaw.toLowerCase() === "lifetime" || expiryRaw === "أبدي" || expiryRaw.startsWith("2099")) {
-            resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
-              🎉 نوع الاشتراك: <span style="color:#38a169; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
-              ✅ حالتك: مسموح لك بالدخول في أي وقت!`;
-          } else {
-            const expiryDate = new Date(expiryRaw);
-            const today = new Date();
-            
-            expiryDate.setHours(0, 0, 0, 0);
-            today.setHours(0, 0, 0, 0);
-
-            const timeDiff = expiryDate - today;
-            let daysLeft = Math.round(timeDiff / (1000 * 60 * 60 * 24));
-
-            if (isNaN(daysLeft)) {
-                daysLeft = 0;
-            }
-
-            if (daysLeft >= 0) {
-              resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
-                📅 موعد التجديد القادم: <span style="color:#e53e3e;">${member.expiry}</span><br>
-                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#38a169' : '#e53e3e'};">${daysLeft === 0 ? 'اليوم ينتهي اشتراكك!' : daysLeft + ' أيام'}</span>`;
-            } else {
-              resultText.innerHTML = `<span style="color:#e53e3e; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
-            }
-          }
-        } else {
-          resultText.innerHTML = `<span style="color:#e53e3e; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
-        }
-      } catch (error) {
-        console.error("Fetch Error:", error);
-        resultText.innerHTML = `<span style="color:#e53e3e;">حدث خطأ في الاتصال بقاعدة البيانات. تأكد من الإنترنت أو أعد المحاولة.</span>`;
-      }
+      const current = document.body.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem('nazaha_theme', next);
     }
   </script>
 
