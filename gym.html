@@ -80,8 +80,14 @@
     .info-box h3 { color: #ff7700; margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
     .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
-    .price-tag { font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-top: 8px; }
-    .price-tag span { font-size: 1.1rem; color: var(--text-sub); font-weight: 700; }
+    .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
+    @media (max-width: 768px) { .prices-grid { grid-template-columns: 1fr; } }
+    
+    .price-card { background: var(--info-bg); border: 1px solid var(--border-color); padding: 20px 15px; border-radius: 14px; text-align: center; }
+    .price-card.highlight { border: 2px solid #ff7700; background: linear-gradient(135deg, rgba(255,119,0,0.05), var(--info-bg)); }
+    .price-card h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; color: var(--text-main); }
+    .price-tag { font-size: 1.8rem; font-weight: 900; color: #ff7700; margin-top: 5px; }
+    .price-tag span { font-size: 0.95rem; color: var(--text-sub); font-weight: 700; }
 
     .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed #ff7700; text-align: center; padding: 25px; border-radius: 16px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
@@ -101,7 +107,6 @@
     .store-teaser { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: var(--box-shadow); }
     .store-teaser span { color: #ff7700; font-weight: 900; }
 
-    /* زرار الواتساب العائم الفخم */
     .whatsapp-float {
       position: fixed; bottom: 25px; left: 25px; background: #25d366; color: #fff;
       width: 60px; height: 60px; border-radius: 50px; display: flex; align-items: center;
@@ -111,7 +116,7 @@
     .whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
   </style>
 </head>
-<body data-theme="light">
+<body>
 
   <div id="splash-screen">
     <div class="splash-title">مرحباً بك في جيم نزاهة</div>
@@ -147,20 +152,33 @@
     </div>
 
     <div class="card">
-      <h2><i class="fas fa-ticket-alt"></i> تكلفة الاشتراك الشهري</h2>
-      <div style="text-align: center; padding: 10px;">
-        <p style="font-weight: 700;">باقة شهرية شاملة كامل الأجهزة</p>
-        <div class="price-tag">550 <span>جنيه / شهرياً</span></div>
+      <h2><i class="fas fa-ticket-alt"></i> باقات وأسعار الاشتراكات</h2>
+      <div class="prices-grid">
+        <div class="price-card">
+          <h3>بدون مشاية</h3>
+          <p style="font-size: 0.85rem; color: var(--text-sub);">أجهزة الحديد فقط</p>
+          <div class="price-tag">550 <span>جنيه</span></div>
+        </div>
+        <div class="price-card highlight">
+          <h3>شامل المشاية</h3>
+          <p style="font-size: 0.85rem; color: var(--text-sub);">الحديد + المشاية الكهربائية</p>
+          <div class="price-tag">600 <span>جنيه</span></div>
+        </div>
+        <div class="price-card">
+          <h3>تأهيل عسكري</h3>
+          <p style="font-size: 0.85rem; color: var(--text-sub);">تدريب خاص ومكثف</p>
+          <div class="price-tag">800 <span>جنيه</span></div>
+        </div>
       </div>
     </div>
 
     <div class="card">
       <h2><i class="fas fa-wallet"></i> الاشتراك السريع (فودافون كاش)</h2>
       <div class="vodafone-section">
-        <p style="font-weight: 700;">حول قيمة الاشتراك (550 جنيه) على الرقم الآتي:</p>
+        <p style="font-weight: 700;">حول قيمة الاشتراك على الرقم الآتي:</p>
         <div class="vodafone-number">01017995678</div>
-        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 10px;">للتحويل السريع (يعمل مباشرة من الموبايل):</p>
-        <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع الآن مباشر (*9*7...)</a>
+        <p style="font-size: 0.95rem; color: var(--text-sub); font-weight: 700; margin-bottom: 10px;">للتحويل السريع (بدون مشاية 550 جنيه):</p>
+        <a href="tel:*9*7*01017995678*550#" class="pay-btn"><i class="fas fa-bolt"></i> ادفع 550 جنيه (*9*7...)</a>
       </div>
     </div>
 
@@ -190,39 +208,44 @@
     </div>
   </div>
 
-  <!-- زرار واتساب عائم -->
-  <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب">
+  <a href="https://wa.me/201017995678?text=مرحباً، أستفسر عن اشتراك جيم نزاهة وتدريب التأهيل العسكري" target="_blank" class="whatsapp-float" title="تواصل معنا عبر واتساب">
     <i class="fab fa-whatsapp"></i>
   </a>
 
   <script>
-    // نظام الثيم (ليلي / نهاري)
-    function toggleTheme() {
-      const body = document.body;
+    function getPreferredTheme() {
+      const savedTheme = localStorage.getItem('nazaha_theme');
+      if (savedTheme) return savedTheme;
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+
+    function applyTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
       const themeIcon = document.getElementById('themeIcon');
       const themeText = document.getElementById('themeText');
       
-      if (body.getAttribute('data-theme') === 'light') {
-        body.setAttribute('data-theme', 'dark');
+      if (theme === 'dark') {
         themeIcon.className = 'fas fa-sun';
         themeText.innerText = 'الوضع النهاري';
-        localStorage.setItem('nazaha_theme', 'dark');
       } else {
-        body.setAttribute('data-theme', 'light');
         themeIcon.className = 'fas fa-moon';
         themeText.innerText = 'الوضع الليلي';
-        localStorage.setItem('nazaha_theme', 'light');
       }
     }
 
-    // استرجاع الثيم المفضل عند فتح الموقع
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('nazaha_theme', newTheme);
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
-      const savedTheme = localStorage.getItem('nazaha_theme') || 'light';
-      if (savedTheme === 'dark') {
-        document.body.setAttribute('data-theme', 'dark');
-        document.getElementById('themeIcon').className = 'fas fa-sun';
-        document.getElementById('themeText').innerText = 'الوضع النهاري';
-      }
+      const initialTheme = getPreferredTheme();
+      applyTheme(initialTheme);
     });
 
     setTimeout(() => {
