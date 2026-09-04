@@ -149,7 +149,8 @@
       setTimeout(() => { splash.style.display = 'none'; }, 800);
     }, 2500);
 
-    const SHEET_API_URL = "https://sheetdb.io/api/v1/8mdd58x2eulpy";
+    // رابط الـ API الصحيح الجديد
+    const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
 
     async function checkSubscription() {
       const phoneInput = document.getElementById('phoneInput').value.trim();
@@ -176,17 +177,16 @@
         });
 
         if (member) {
-          // تنظيف وقراءة التاريخ بشكل آمن وصحيح 100%
-          const expiryRaw = member.expiry;
+          const expiryRaw = member.expiry; 
           const expiryDate = new Date(expiryRaw);
           const today = new Date();
-          // تصفير الساعات عشان الحساب يكون دقيق بالأيام بالضبط
+          
           expiryDate.setHours(0, 0, 0, 0);
           today.setHours(0, 0, 0, 0);
+
           const timeDiff = expiryDate - today;
           let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-          // لو التاريخ باظ أو طلع مش رقم، نتفادى الـ NaN ونحسبه كـ 0
-          
+
           if (isNaN(daysLeft)) {
               daysLeft = 0;
           }
