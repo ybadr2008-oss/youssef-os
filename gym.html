@@ -469,6 +469,14 @@
       document.getElementById('renewDisplayPrice').innerText = price;
     }
 
+    // دالة مساعدة لحساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
+    function calculateExpiryDate(startDateStr) {
+      const date = new Date(startDateStr);
+      if (isNaN(date.getTime())) return '';
+      date.setDate(date.getDate() + 30);
+      return date.toISOString().split('T')[0];
+    }
+
     // معالجة تسجيل مشترك جديد
     async function handleNewRegistration(event) {
       event.preventDefault();
@@ -483,10 +491,7 @@
       }
 
       // حساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
-      const startDate = new Date(startDateVal);
-      const expiryDate = new Date(startDate);
-      expiryDate.setDate(expiryDate.getDate() + 30);
-      const expiryStr = expiryDate.toISOString().split('T')[0];
+      const expiryStr = calculateExpiryDate(startDateVal);
 
       const payload = {
         data: [{
@@ -553,7 +558,7 @@
           let memberExpiry = member.expiry || member.Expiry;
           const startDate = member.start_date || member.Start_date || member.startDate;
           
-          if (!memberExpiry && startDate) {
+          if ((!memberExpiry || memberExpiry.trim() === '') && startDate) {
             memberExpiry = calculateExpiryDate(startDate);
           }
           memberExpiry = memberExpiry || 'غير محدد';
@@ -600,18 +605,7 @@
       }
 
       // حساب تاريخ الانتهاء الجديد (30 يوم من تاريخ بدء التجديد)
-      const startDate = new Date(startDateVal);
-      const expiryDate = new Date(startDate);
-      expiryDate.setDate(expiryDate.getDate() + 30);
-      const expiryStr = expiryDate.toISOString().split('T')[0];
-
-      // دالة لحساب تاريخ الانتهاء (إضافة 30 يوم لتاريخ البدء)
-    function calculateExpiryDate(startDateStr) {
-      const date = new Date(startDateStr);
-      if (isNaN(date.getTime())) return 'غير محدد';
-      date.setDate(date.getDate() + 30);
-      return date.toISOString().split('T')[0];
-    }
+      const expiryStr = calculateExpiryDate(startDateVal);
 
       try {
         // تحديث البيانات في SheetDB باستخدام الهاتف القديم كمعيار للبحث
