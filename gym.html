@@ -477,52 +477,55 @@
       return date.toISOString().split('T')[0];
     }
 
-    // معالجة تسجيل مشترك جديد
+    // 1. تسجيل مشترك جديد (إرسال الطلب للمعلقين مع البلد)
     async function handleNewRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('newName').value.trim();
       const phone = document.getElementById('newPhone').value.trim();
+      const country = document.getElementById('newCountry').value.trim();
       const startDateVal = document.getElementById('newStartDate').value;
       const receiptFile = document.getElementById('newReceipt').files[0];
 
       if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التحويل للتأكد!");
+        alert("برجاء رفع صورة إيصال التحويل!");
         return;
       }
 
-      // حساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
       const expiryStr = calculateExpiryDate(startDateVal);
 
-      const payload = {
-        data: [{
-          name: name,
-          phone: phone,
-          plan: selectedNewPlanName,
-          start_date: startDateVal,
-          expiry: expiryStr
-        }]
-      };
+      savePendingRequest({
+        type: 'اشتراك جديد', name, phone, country,
+        plan: selectedNewPlanName,
+        startDate: startDateVal, expiry: expiryStr
+      });
 
-      try {
-        const response = await fetch(SHEET_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+      showSuccessModal(
+        "تم إرسال طلبك بنجاح يا بطل! ⏳",
+        `يا <b>${name}</b> (${country})، تم إرسال طلبك لكابتن نزاهة للمراجعة وتفعيل الباقة (${selectedNewPlanName}) فوراً.`
+      );
 
-        if (response.ok) {
-          showSuccessModal("تم الاشتراك بنجاح يا بطل! 🔥", `أهلاً بك يا ${name} في جيم نزاهة.<br>تم تسجيل باقتك (${selectedNewPlanName}) وتفعيلها لمدة 30 يوماً.<br>سيتم إرسال إشعار فوري لكابتن نزاهة.`);
-          
-          // إرسال واتساب تلقائي لكابتن نزاهة والمشترك
-          triggerWhatsAppNotification(name, phone, selectedNewPlanName, 'اشتراك جديد');
-          document.getElementById('newMemberForm').reset();
-        } else {
-          alert("حدث خطأ أثناء حفظ البيانات في الجدول. حاول مرة أخرى.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("تعذر الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
-      }
+      triggerApprovalWhatsApp(name, phone, country, selectedNewPlanName, 'اشتراك جديد', startDateVal, expiryStr);
+      document.getElementById('newMemberForm').reset();
+    }
+
+    // 2. إرسال تفاصيل المراجعة للواتساب مع البلد
+    function triggerApprovalWhatsApp(name, phone, country, plan, type, startDate, expiry) {
+      const captainPhone = "201017995678";
+      const message = `🚨 طلب ${type} جديد بحاجة للمراجعة - جيم نزاهة\n\n` +
+                      `👤 اسم العميل: ${name}\n` +
+                      `🌍 البلد: ${country}\n` +
+                      `📱 الموبايل: ${phone}\n` +
+                      `🎟️ الباقة: ${plan}\n` +
+                      `📅 البدء: ${startDate} | الانتهاء: ${expiry}\n\n` +
+                      `⚠️ [يرجى من الكابتن مراجعة الإيصال والضغط على قبول في لوحة التحكم لتحديث الجدول أوتوماتيكياً]`;
+      window.open(`https://wa.me/${captainPhone}?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // نظام تخزين الطلبات المعلقة مؤقتاً للمراجعة
+    function savePendingRequest(reqData) {
+      const pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
+      pending.push(reqData);
+      localStorage.setItem('gym_pending_requests', JSON.stringify(pending));
     }
 
     // البحث عن المشترك الحالي للتجديد مع الحساب التلقائي لتاريخ الانتهاء
