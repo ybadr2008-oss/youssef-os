@@ -6,13 +6,13 @@
   <title>NAZAHA Gym | جيم نزاهة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- استبدال الخط بـ Tajawal ليكون أشيك وأفخم -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
     
+    /* شاشة البداية المعدلة والمضبوطة تماماً */
     #splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: #ffffff; display: flex; flex-direction: column;
@@ -21,15 +21,20 @@
     }
     
     .splash-title {
-      font-size: 2.3rem; font-weight: 900; color: #000000; margin-bottom: 12px;
-      border-left: 4px solid #ff7700; padding-left: 8px; white-space: nowrap; overflow: hidden;
-      animation: typing 2.5s steps(30, end);
+      font-size: clamp(2rem, 5vw, 4rem); /* حجم متجاوب وكبير جداً وواضح */
+      font-weight: 900; 
+      color: #000000; 
+      margin-bottom: 15px;
+      border-right: 6px solid #ff7700; /* خط برتقالي فخم على اليمين للغة العربية */
+      padding-right: 15px; 
     }
 
-    .splash-sub { font-size: 1.3rem; color: #333333; font-weight: 700; opacity: 0; animation: fadeInSub 0.8s ease 2.2s forwards; }
-
-    @keyframes typing { from { width: 0; } to { width: 100%; } }
-    @keyframes fadeInSub { to { opacity: 1; } }
+    .splash-sub { 
+      font-size: clamp(1.2rem, 3vw, 2rem); 
+      color: #4a5568; 
+      font-weight: 700; 
+      letter-spacing: 2px;
+    }
 
     body { background-color: #f4f5f7; color: #111111; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
     .container { max-width: 900px; width: 100%; margin: auto; }
@@ -73,7 +78,7 @@
 <body>
 
   <div id="splash-screen">
-    <div class="splash-title" id="typing-text"></div>كابتن نزاهة يرحب بكم</div>
+    <div class="splash-title">مرحباً بك في جيم نزاهة</div>
     <div class="splash-sub">Welcome to NAZAHA Gym</div>
   </div>
 
@@ -148,7 +153,7 @@
       const splash = document.getElementById('splash-screen');
       splash.style.opacity = '0';
       setTimeout(() => { splash.style.display = 'none'; }, 800);
-    }, 2500);
+    }, 2000);
 
     const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
 
@@ -179,7 +184,6 @@
         if (member) {
           const expiryRaw = member.expiry ? String(member.expiry).trim() : "";
           
-          // دعم الاشتراك الأبدي
           if (expiryRaw.toLowerCase() === "lifetime" || expiryRaw === "أبدي" || expiryRaw.startsWith("2099")) {
             resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
               🎉 نوع الاشتراك: <span style="color:#276749; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
@@ -192,7 +196,7 @@
             today.setHours(0, 0, 0, 0);
 
             const timeDiff = expiryDate - today;
-            let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            let daysLeft = Math.round(timeDiff / (1000 * 60 * 60 * 24));
 
             if (isNaN(daysLeft)) {
                 daysLeft = 0;
@@ -201,7 +205,7 @@
             if (daysLeft >= 0) {
               resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
                 📅 موعد التجديد القادم: <span style="color:#c53030;">${member.expiry}</span><br>
-                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#276749' : '#c53030'};">${daysLeft} أيام</span>`;
+                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#276749' : '#c53030'};">${daysLeft === 0 ? 'اليوم ينتهي اشتراكك!' : daysLeft + ' أيام'}</span>`;
             } else {
               resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
             }
