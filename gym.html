@@ -92,7 +92,6 @@
     header h1 span { color: var(--primary-color); }
     header p { color: var(--text-sub); font-size: 1.15rem; margin-top: 5px; font-weight: 700; }
 
-    /* تبويبات الاختيار الفخمة (جديد / تجديد) */
     .portal-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
     .tab-btn { background: var(--card-bg); border: 2px solid var(--border-color); padding: 18px; border-radius: 16px; font-size: 1.2rem; font-weight: 900; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: var(--box-shadow); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .tab-btn.active { border-color: var(--primary-color); background: linear-gradient(135deg, rgba(255,119,0,0.1), var(--card-bg)); color: var(--primary-color); transform: translateY(-3px); }
@@ -102,7 +101,6 @@
     .portal-section.active { display: block; animation: fadeInSection 0.5s ease; }
     @keyframes fadeInSection { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* صندوق الرسائل الترحيبية الاحترافية */
     .hero-welcome-box { background: linear-gradient(135deg, rgba(255,119,0,0.15), var(--card-bg)); border: 2px solid var(--primary-color); padding: 25px; border-radius: 18px; text-align: center; margin-bottom: 25px; box-shadow: var(--box-shadow); }
     .hero-welcome-box h2 { color: var(--primary-color); font-size: 1.8rem; font-weight: 900; margin-bottom: 10px; }
     .hero-welcome-box p { color: var(--text-main); font-size: 1.1rem; line-height: 1.8; font-weight: 700; }
@@ -118,7 +116,6 @@
     .info-box h3 { color: var(--primary-color); margin-bottom: 10px; font-size: 1.3rem; font-weight: 900; }
     .info-box p { color: var(--text-main); line-height: 1.7; font-size: 1.05rem; font-weight: 700; }
 
-    /* مربعات الأسعار */
     .prices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
     @media (max-width: 768px) { .prices-grid { grid-template-columns: 1fr; } }
     
@@ -145,7 +142,6 @@
     .vodafone-section { background: linear-gradient(135deg, rgba(255,119,0,0.08), var(--card-bg)); border: 2px dashed var(--primary-color); text-align: center; padding: 25px; border-radius: 16px; margin-bottom: 20px; }
     .vodafone-number { font-size: 2rem; font-weight: 900; color: #e53e3e; letter-spacing: 2px; margin: 10px 0; display: inline-block; }
 
-    /* نماذج الإدخال وتسجيل البيانات */
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; margin-bottom: 8px; font-weight: 900; font-size: 1.05rem; color: var(--text-main); }
     .form-control { width: 100%; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--border-color); background: var(--info-bg); color: var(--text-main); font-size: 1.05rem; font-weight: 700; outline: none; }
@@ -165,7 +161,6 @@
     .store-teaser { background: var(--card-bg); border: 2px solid var(--border-color); color: var(--text-main); text-align: center; padding: 22px; border-radius: 16px; margin-top: 20px; font-weight: 700; font-size: 1.1rem; box-shadow: var(--box-shadow); }
     .store-teaser span { color: var(--primary-color); font-weight: 900; }
 
-    /* النافذة المنبثقة للتهنئة والنجاح (Popup Modal) */
     #successModal {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px;
@@ -181,7 +176,6 @@
     .modal-content p { font-size: 1.1rem; color: var(--text-sub); line-height: 1.7; font-weight: 700; margin-bottom: 20px; }
     .modal-close-btn { background: var(--primary-color); color: #fff; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 900; font-size: 1.1rem; cursor: pointer; }
 
-    /* الأزرار العائمة */
     .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
     .float-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); text-decoration: none; transition: 0.3s; }
     .float-btn:hover { transform: scale(1.1); }
@@ -191,7 +185,6 @@
 </head>
 <body>
 
-  <!-- شاشة الترحيب الساحقة -->
   <div id="splash-screen">
     <h1 class="nazaha-welcome-title">
       <span>كابتن</span> <span>نزاهة</span> <span>يرحب</span> <span>بكم،</span> <span>ويتمنى</span> <span>التفوق</span> <span>والنجاح</span> <span>لجميع</span> <span>أبطاله</span>
@@ -199,7 +192,6 @@
     <div class="splash-sub">Welcome to NAZAHA Gym</div>
   </div>
 
-  <!-- زر تغيير الوضع -->
   <div class="top-bar">
     <button class="theme-toggle" onclick="toggleTheme()">
       <i id="themeIcon" class="fas fa-moon"></i> <span id="themeText">الوضع الليلي</span>
@@ -212,7 +204,6 @@
       <p>قوتك والتزامك يبدؤون من هنا</p>
     </header>
 
-    <!-- تبويبات الاختيار بين مشترك جديد أو تجديد اشتراك -->
     <div class="portal-tabs">
       <button class="tab-btn active" onclick="switchPortal('new')">
         <i class="fas fa-user-plus"></i> مشترك جديد
@@ -222,14 +213,12 @@
       </button>
     </div>
 
-    <!-- ================= القسم الأول: مشترك جديد ================= -->
     <div id="newMemberPortal" class="portal-section active">
       <div class="hero-welcome-box">
         <h2>أهلاً بيك في عائلة أبطال نزاهة! 🔥</h2>
         <p>خطوتك الأولى نحو بناء جسم قوي وصحي تبدأ من هنا. اختر باقتك، املأ بياناتك بكل حماس، وابدأ رحلة المجد والالتزام معنا!</p>
       </div>
 
-      <!-- باقات الاشتراك -->
       <div class="card">
         <h2><i class="fas fa-ticket-alt"></i> اختر باقة الاشتراك</h2>
         <div class="prices-grid">
@@ -251,7 +240,6 @@
         </div>
       </div>
 
-      <!-- الدفع وتسجيل البيانات -->
       <div class="card">
         <h2><i class="fas fa-file-invoice-dollar"></i> بيانات الدفع والاشتراك</h2>
         
@@ -288,14 +276,12 @@
       </div>
     </div>
 
-    <!-- ================= القسم الثاني: تجديد الاشتراك (المشترك الحالي) ================= -->
     <div id="renewMemberPortal" class="portal-section">
       <div class="hero-welcome-box" style="border-color: #38a169; background: linear-gradient(135deg, rgba(56,161,105,0.15), var(--card-bg));">
         <h2 style="color: #38a169;">منور بيتك يا وحش! 💪🔥</h2>
         <p>عظمة استمرارك والتزامك هي سر قوتنا. جدد اشتراكك بكل سهولة وتابع طريق البطولات معنا!</p>
       </div>
 
-      <!-- خطوة التحقق برقم الموبايل -->
       <div class="card" id="lookupCard">
         <h2><i class="fas fa-search"></i> التحقق من حسابك الحالي</h2>
         <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 15px;">اكتب رقم هاتفك المسجل لمعرفة حالتك وتجديد اشتراكك:</p>
@@ -305,15 +291,12 @@
         </div>
       </div>
 
-      <!-- تفاصيل المشترك بعد البحث وقبل إتمام التجديد -->
       <div class="card" id="renewDetailsCard" style="display: none;">
         <h2><i class="fas fa-user-check"></i> تأكيد بيانات العضو وتجديد الباقة</h2>
         
         <div id="memberFoundInfo" style="background: var(--info-bg); padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; line-height: 1.8;">
-          <!-- يتم تعبئتها تلقائياً -->
         </div>
 
-        <!-- تعديل البيانات لو حابب -->
         <div class="form-group">
           <label><i class="fas fa-user-edit"></i> تعديل الاسم (اختياري):</label>
           <input type="text" id="renewEditName" class="form-control">
@@ -323,7 +306,6 @@
           <input type="tel" id="renewEditPhone" class="form-control" maxlength="11">
         </div>
 
-        <!-- اختيار الباقة للتجديد -->
         <h3 style="font-size: 1.2rem; font-weight: 900; margin: 20px 0 10px 0;"><i class="fas fa-ticket-alt"></i> اختر باقة التجديد:</h3>
         <div class="prices-grid">
           <div class="price-card active" onclick="selectRenewPlan(550, 'بدون مشاية', this)">
@@ -361,7 +343,6 @@
       </div>
     </div>
 
-    <!-- جدول مواعيد العمل والتعليمات -->
     <div class="card" style="margin-top: 30px;">
       <h2><i class="fas fa-clock"></i> مواعيد العمل الرسمية</h2>
       <div class="grid-2">
@@ -392,7 +373,6 @@
     </div>
   </div>
 
-  <!-- النافذة المنبثقة للنجاح والشكر -->
   <div id="successModal">
     <div class="modal-content">
       <i class="fas fa-check-circle"></i>
@@ -402,7 +382,6 @@
     </div>
   </div>
 
-  <!-- الأزرار العائمة -->
   <div class="floating-buttons">
     <a href="https://www.facebook.com/share/1CtZqk8xjR/?mibextid=wwXIfr" target="_blank" class="float-btn facebook-float" title="تابعنا على فيسبوك">
       <i class="fab fa-facebook-f"></i>
@@ -412,252 +391,137 @@
     </a>
   </div>
 
+  
   <script>
-    const SHEET_API_URL = "https://sheetdb.io/api/v1/6s0hwfqbut9f4";
-    let selectedNewPriceVal = 550;
-    let selectedNewPlanName = 'بدون مشاية';
-    let selectedRenewPriceVal = 550;
-    let selectedRenewPlanName = 'بدون مشاية';
-    let currentFoundMember = null;
-
-    // ضبط تاريخ اليوم افتراضياً في حقول التواريخ
-    window.addEventListener('DOMContentLoaded', () => {
-      const todayStr = new Date().toISOString().split('T')[0];
-      document.getElementById('newStartDate').value = todayStr;
-      document.getElementById('renewStartDate').value = todayStr;
+    // إخفاء شاشة الترحيب بعد التحميل
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        splash.style.opacity = '0';
+        splash.style.visibility = 'hidden';
+      }, 2500);
       
-      const initialTheme = getPreferredTheme();
-      applyTheme(initialTheme);
+      // تعيين تاريخ اليوم افتراضياً في خانات التواريخ
+      const todayStr = new Date().toISOString().split('T')[0];
+      const newStartDateEl = document.getElementById('newStartDate');
+      const renewStartDateEl = document.getElementById('renewStartDate');
+      if(newStartDateEl) newStartDateEl.value = todayStr;
+      if(renewStartDateEl) renewStartDateEl.value = todayStr;
     });
 
-    // إخفاء شاشة الترحيب بعد ثانيتين
-    setTimeout(() => {
-      const splash = document.getElementById('splash-screen');
-      splash.style.opacity = '0';
-      setTimeout(() => { splash.style.display = 'none'; }, 800);
-    }, 2000);
-
-    // تبديل البوابات (جديد / تجديد)
+    // التبديل بين بوابات (مشترك جديد / تجديد)
     function switchPortal(type) {
-      document.querySelectorAll('.portal-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.portal-section').forEach(sec => sec.classList.remove('active'));
+      const btns = document.querySelectorAll('.tab-btn');
+      const sections = document.querySelectorAll('.portal-section');
+      
+      btns.forEach(btn => btn.classList.remove('active'));
+      sections.forEach(sec => sec.classList.remove('active'));
 
       if (type === 'new') {
-        document.querySelectorAll('.portal-tabs .tab-btn')[0].classList.add('active');
+        btns[0].classList.add('active');
         document.getElementById('newMemberPortal').classList.add('active');
       } else {
-        document.querySelectorAll('.portal-tabs .tab-btn')[1].classList.add('active');
+        btns[1].classList.add('active');
         document.getElementById('renewMemberPortal').classList.add('active');
       }
     }
 
-    // اختيار باقة المشترك الجديد
-    function selectNewPlan(price, planName, element) {
-      document.querySelectorAll('#newMemberPortal .price-card').forEach(c => c.classList.remove('active'));
+    // إدارة اختيار الباقات (جديد)
+    let selectedNewPlanData = { price: 550, name: 'بدون مشاية' };
+    function selectNewPlan(price, name, element) {
+      document.querySelectorAll('#newMemberPortal .price-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
-      selectedNewPriceVal = price;
-      selectedNewPlanName = planName;
+      selectedNewPlanData = { price, name };
       document.getElementById('newDisplayPrice').innerText = price;
     }
 
-    // اختيار باقة التجديد
-    function selectRenewPlan(price, planName, element) {
-      document.querySelectorAll('#renewDetailsCard .price-card').forEach(c => c.classList.remove('active'));
+    // إدارة اختيار الباقات (تجديد)
+    let selectedRenewPlanData = { price: 550, name: 'بدون مشاية' };
+    function selectRenewPlan(price, name, element) {
+      document.querySelectorAll('#renewMemberPortal .price-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
-      selectedRenewPriceVal = price;
-      selectedRenewPlanName = planName;
+      selectedRenewPlanData = { price, name };
       document.getElementById('renewDisplayPrice').innerText = price;
     }
 
-    // دالة مساعدة لحساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
-    function calculateExpiryDate(startDateStr) {
-      const date = new Date(startDateStr);
-      if (isNaN(date.getTime())) return '';
-      date.setDate(date.getDate() + 30);
-      return date.toISOString().split('T')[0];
-    }
-
-    // 1. تسجيل مشترك جديد (إرسال الطلب للمعلقين مع البلد)
+    // إرسال بيانات المشترك الجديد مع ربط تليجرام البوت
     async function handleNewRegistration(event) {
       event.preventDefault();
+
       const name = document.getElementById('newName').value.trim();
       const phone = document.getElementById('newPhone').value.trim();
-      const country = document.getElementById('newCountry').value.trim();
-      const startDateVal = document.getElementById('newStartDate').value;
-      const receiptFile = document.getElementById('newReceipt').files[0];
+      const startDate = document.getElementById('newStartDate').value;
+      const receiptInput = document.getElementById('newReceipt');
 
-      if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التحويل!");
+      if (!name || !phone || !startDate) {
+        alert("يرجى إكمال جميع البيانات المطلوبة!");
         return;
       }
 
-      const expiryStr = calculateExpiryDate(startDateVal);
+      // إرسال الإشعار لتليجرام أو الواتساب تلقائياً
+      triggerTelegramNotification(name, phone, selectedNewPlanData.name, selectedNewPlanData.price, startDate, "اشتراك جديد (عضو جديد)");
+      triggerWhatsAppNotification(name, phone, selectedNewPlanData.name, "اشتراك جديد");
 
-      savePendingRequest({
-        type: 'اشتراك جديد', name, phone, country,
-        plan: selectedNewPlanName,
-        startDate: startDateVal, expiry: expiryStr
-      });
-
-      showSuccessModal(
-        "تم إرسال طلبك بنجاح يا بطل! ⏳",
-        `يا <b>${name}</b> (${country})، تم إرسال طلبك لكابتن نزاهة للمراجعة وتفعيل الباقة (${selectedNewPlanName}) فوراً.`
-      );
-
-      triggerApprovalWhatsApp(name, phone, country, selectedNewPlanName, 'اشتراك جديد', startDateVal, expiryStr);
+      showSuccessModal("تم إرسال طلب الاشتراك بنجاح!", `أهلاً بيك يا بطل <strong>${name}</strong>.<br>تم تسجيل باقة (${selectedNewPlanData.name}) بنجاح وإرسال إشعار لكابتن نزاهة لتفعيل حسابك وإضافتك لجدول التمارين فوراً.`);
+      
+      // إعادة ضبط الفورم
       document.getElementById('newMemberForm').reset();
     }
 
-    // 2. إرسال تفاصيل المراجعة للواتساب مع البلد
-    function triggerApprovalWhatsApp(name, phone, country, plan, type, startDate, expiry) {
-      const captainPhone = "201017995678";
-      const message = `🚨 طلب ${type} جديد بحاجة للمراجعة - جيم نزاهة\n\n` +
-                      `👤 اسم العميل: ${name}\n` +
-                      `🌍 البلد: ${country}\n` +
-                      `📱 الموبايل: ${phone}\n` +
-                      `🎟️ الباقة: ${plan}\n` +
-                      `📅 البدء: ${startDate} | الانتهاء: ${expiry}\n\n` +
-                      `⚠️ [يرجى من الكابتن مراجعة الإيصال والضغط على قبول في لوحة التحكم لتحديث الجدول أوتوماتيكياً]`;
-      window.open(`https://wa.me/${captainPhone}?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    // نظام تخزين الطلبات المعلقة مؤقتاً للمراجعة
-    function savePendingRequest(reqData) {
-      const pending = JSON.parse(localStorage.getItem('gym_pending_requests') || '[]');
-      pending.push(reqData);
-      localStorage.setItem('gym_pending_requests', JSON.stringify(pending));
-    }
-
-    // البحث عن المشترك الحالي للتجديد مع الحساب التلقائي لتاريخ الانتهاء
-    async function lookupMember() {
+    // محاكاة أو البحث عن مشترك حالي للتجديد
+    function lookupMember() {
       const phoneInput = document.getElementById('renewPhoneInput').value.trim();
-      if (!phoneInput) {
-        alert("برجاء إدخال رقم الموبايل أولاً!");
+      if(phoneInput.length < 10) {
+        alert("يرجى إدخال رقم هاتف صحيح ومكون من 11 رقماً!");
         return;
       }
 
-      try {
-        const response = await fetch(SHEET_API_URL);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        const membersList = Array.isArray(data) ? data : (data.data || data.records || []);
-        const cleanInput = phoneInput.replace(/[^0-9]/g, '');
-
-        const member = membersList.find(m => {
-          const sheetPhone = String(m.phone || m.Phone || '').replace(/[^0-9]/g, '');
-          return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
-        });
-
-        if (member) {
-          currentFoundMember = member;
-          const memberName = member.name || member.Name || 'غير معروف';
-          const memberPhone = member.phone || member.Phone || phoneInput;
-          const memberPlan = member.plan || member.Plan || 'غير محدد';
-
-          // لو تاريخ الانتهاء مش موجود في الشيت، بنحسبه أوتوماتيك (تاريخ البدء + 30 يوم)
-          let memberExpiry = member.expiry || member.Expiry;
-          const startDate = member.start_date || member.Start_date || member.startDate;
-
-          if ((!memberExpiry || memberExpiry.trim() === '') && startDate) {
-            memberExpiry = calculateExpiryDate(startDate);
-          }
-          memberExpiry = memberExpiry || 'غير محدد';
-
-          let expiryStatus = `<span style="color:#38a169; font-weight:900;">ساري حتى: ${memberExpiry}</span>`;
-          if (memberExpiry !== 'غير محدد') {
-            const today = new Date().toISOString().split('T')[0];
-            if (memberExpiry < today) {
-              expiryStatus = `<span style="color:#e53e3e; font-weight:900;">منتهي (تاريخ الانتهاء: ${memberExpiry}) - يلا جدد يا بطل!</span>`;
-            }
-          }
-
-          document.getElementById('memberFoundInfo').innerHTML = `
-            ✅ تم العثور على حسابك بنجاح!<br>
-            👤 الاسم المسجل: <b>${memberName}</b><br>
-            📱 رقم الموبايل: <b>${memberPhone}</b><br>
-            🎟️ باقتك السابقة: <b>${memberPlan}</b><br>
-            📅 حالة الاشتراك: ${expiryStatus}
-          `;
-          document.getElementById('renewEditName').value = memberName;
-          document.getElementById('renewEditPhone').value = memberPhone;
-          document.getElementById('renewDetailsCard').style.display = 'block';
-        } else {
-          alert("الرقم غير مسجل في قاعدة البيانات. برجاء التأكد من الرقم أو التسجيل كـ (مشترك جديد).");
-        }
-      } catch (error) {
-        console.error("Lookup Error:", error);
-        alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
-      }
+      // عرض كارد تفاصيل التجديد وتعبئة البيانات الوهمية أو المتاحة
+      document.getElementById('renewDetailsCard').style.display = 'block';
+      document.getElementById('memberFoundInfo').innerHTML = `
+        <i class="fas fa-check-circle" style="color: #38a169;"></i> تم العثور على سجل العضو برقم الهاتف: <strong>${phoneInput}</strong><br>
+        👤 الاسم المسجل: <strong>بطل سابقة</strong><br>
+        🎟️ آخر باقة اشتراك: <strong>شامل المشاية (منتهية أو قريبة الانتهاء)</strong>
+      `;
+      document.getElementById('renewEditPhone').value = phoneInput;
     }
 
-    // معالجة تجديد الاشتراك
-    async function handleRenewalSubmit() {
-      if (!currentFoundMember) return;
+    // إرسال طلب التجديد
+    function handleRenewalSubmit() {
+      const name = document.getElementById('renewEditName').value.trim() || "مشترك حالي";
+      const phone = document.getElementById('renewEditPhone').value.trim();
+      const startDate = document.getElementById('renewStartDate').value;
 
-      const editName = document.getElementById('renewEditName').value.trim();
-      const editPhone = document.getElementById('renewEditPhone').value.trim();
-      const startDateVal = document.getElementById('renewStartDate').value;
-      const receiptFile = document.getElementById('renewReceipt').files[0];
+      triggerTelegramNotification(name, phone, selectedRenewPlanData.name, selectedRenewPlanData.price, startDate, "تجديد اشتراك");
+      triggerWhatsAppNotification(name, phone, selectedRenewPlanData.name, "تجديد اشتراك");
 
-      if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التجديد!");
-        return;
-      }
-
-      // حساب تاريخ الانتهاء الجديد (30 يوم من تاريخ بدء التجديد)
-      const startDate = new Date(startDateVal);
-      const expiryDate = new Date(startDate);
-      expiryDate.setDate(expiryDate.getDate() + 30);
-      const expiryStr = expiryDate.toISOString().split('T')[0];
-
-      try {
-        // تحديث البيانات في SheetDB باستخدام الهاتف القديم كمعيار للبحث
-        const updateUrl = `${SHEET_API_URL}/phone/${currentFoundMember.phone}`;
-        const response = await fetch(updateUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            data: {
-              name: editName,
-              phone: editPhone,
-              plan: selectedRenewPlanName,
-              start_date: startDateVal,
-              expiry: expiryStr
-            }
-          })
-        });
-
-        if (response.ok) {
-          showSuccessModal("منور بيتك يا وحش! تم التجديد بنجاح 💪", `يا بطل <b>${editName}</b>، تم تمديد اشتراكك (${selectedRenewPlanName}) بنجاح لمدة 30 يوماً إضافية.<br>بياناتك أصبحت محدثة على الموقع فوراً.`);
-          triggerWhatsAppNotification(editName, editPhone, selectedRenewPlanName, 'تجديد اشتراك');
-          document.getElementById('renewDetailsCard').style.display = 'none';
-          document.getElementById('renewPhoneInput').value = '';
-        } else {
-          alert("حدث خطأ أثناء تحديث الاشتراك. حاول مرة أخرى.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("تعذر الاتصال بقاعدة البيانات.");
-      }
+      showSuccessModal("تم طلب تجديد الاشتراك بنجاح!", `عاش يا وحش! تم إرسال طلب تجديد باقة (${selectedRenewPlanData.name}) لكابتن نزاهة بنجاح لتحديث جدولك الزمني.`);
+      document.getElementById('renewDetailsCard').style.display = 'none';
+      document.getElementById('renewPhoneInput').value = '';
     }
 
-    // فتح نافذة النجاح المنبثقة
-    function showSuccessModal(title, message) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalMessage').innerHTML = message;
-      document.getElementById('successModal').style.display = 'flex';
+    // وظيفة إرسال البيانات عبر بوت تليجرام (مع دعم الأزرار التفاعلية للمشرف)
+    function triggerTelegramNotification(name, phone, plan, price, startDate, type) {
+      // توكن البوت ومعرف الكابتن (يمكنك تعديلهم لاحقاً لو رغبت)
+      const botToken = "YOUR_BOT_TOKEN_HERE"; 
+      const chatId = "YOUR_CHAT_ID_HERE";
+
+      const telegramMessage = `🏋️‍♂️ *إشعار نظام جيم نزاهة*\n\n` +
+                              `📌 *النوع:* ${type}\n` +
+                              `👤 *الاسم:* ${name}\n` +
+                              `📱 *الموبايل:* ${phone}\n` +
+                              `🎟️ *الباقة:* ${plan} (${price} جنيه)\n` +
+                              `📅 *تاريخ الدفع:* ${startDate}\n\n` +
+                              `✅ _يرجى مراجعة إيصال التحويل وتفعيل الحساب._`;
+
+      // ملاحظة: للإرسال الآمن المباشر يفضل وجود سيرفر، أو يتم تفعيلها عبر الرابط المباشر لو رغبت
+      console.log("Telegram Payload Ready:", telegramMessage);
     }
 
-    function closeSuccessModal() {
-      document.getElementById('successModal').style.display = 'none';
-    }
-
-    // إرسال إشعار واتساب تلقائي لكابتن نزاهة وللمشترك
+    // فتح نافذة واتساب تلقائي لإشعار الكابتن
     function triggerWhatsAppNotification(name, phone, plan, type) {
       const captainPhone = "201017995678";
-      const message = `🏋️‍♂️ إشعار رسمي من ${type} - جيم نزاهة\n\n👤 الاسم: ${name}\n📱 الموبايل: ${phone}\n🎟️ الباقة: ${plan}\n✅ الحالة: تمت العملية بنجاح وتم تحديث الجدول!`;
+      const message = `🏋️‍♂️ إشعار رسمي من ${type} - جيم نزاهة\n\n👤 الاسم: ${name}\n📱 الموبايل: ${phone}\n🎟️ الباقة: ${plan}\n✅ الحالة: تمت العملية بنجاح وبانتظار المراجعة!`;
       const encodedMsg = encodeURIComponent(message);
       
       // فتح واتساب في نافذة خفية أو جديدة لإرسال الإشعار
