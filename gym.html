@@ -177,26 +177,35 @@
         });
 
         if (member) {
-          const expiryRaw = member.expiry; 
-          const expiryDate = new Date(expiryRaw);
-          const today = new Date();
-          
-          expiryDate.setHours(0, 0, 0, 0);
-          today.setHours(0, 0, 0, 0);
+          const expiryRaw = member.expiry ? String(member.expiry).trim() : "";
 
-          const timeDiff = expiryDate - today;
-          let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-          if (isNaN(daysLeft)) {
-              daysLeft = 0;
-          }
-
-          if (daysLeft >= 0) {
+          // لو الاشتراك أبدي أو ممتد
+          if (expiryRaw.toLowerCase() === "lifetime" || expiryRaw === "أبدي" || expiryRaw.startsWith("2099")) {
             resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
-              📅 موعد التجديد القادم: <span style="color:#c53030;">${member.expiry}</span><br>
-              ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#276749' : '#c53030'};">${daysLeft} أيام</span>`;
+              🎉 نوع الاشتراك: <span style="color:#276749; font-weight:900;">اشتراك أبدي (مدى الحياة)</span><br>
+              ✅ حالتك: مسموح لك بالدخول في أي وقت!`;
           } else {
-            resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
+            // الحساب العادي لباقي الاشتراكات الشهرية
+            const expiryDate = new Date(expiryRaw);
+            const today = new Date();
+            
+            expiryDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+
+            const timeDiff = expiryDate - today;
+            let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            if (isNaN(daysLeft)) {
+                daysLeft = 0;
+            }
+
+            if (daysLeft >= 0) {
+              resultText.innerHTML = `أهلاً بك يا <b>${member.name}</b><br>
+                📅 موعد التجديد القادم: <span style="color:#c53030;">${member.expiry}</span><br>
+                ⏳ الأيام الباقية: <span style="color:${daysLeft > 3 ? '#276749' : '#c53030'};">${daysLeft} أيام</span>`;
+            } else {
+              resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">عذراً يا ${member.name}، اشتراكك منتهي منذ ${Math.abs(daysLeft)} أيام. برجاء التجديد.</span>`;
+            }
           }
         } else {
           resultText.innerHTML = `<span style="color:#c53030; font-weight:900;">الرقم غير مسجل في قاعدة بيانات الجيم. تواصل معنا للاشتراك.</span>`;
