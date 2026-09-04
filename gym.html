@@ -477,7 +477,7 @@
       return date.toISOString().split('T')[0];
     }
 
-    // معالجة تسجيل مشترك جديد
+    // معالجة تسجيل مشترك جديد (بانتظار موافقة الكابتن)
     async function handleNewRegistration(event) {
       event.preventDefault();
       const name = document.getElementById('newName').value.trim();
@@ -486,43 +486,18 @@
       const receiptFile = document.getElementById('newReceipt').files[0];
 
       if (!receiptFile) {
-        alert("برجاء رفع صورة إيصال التحويل للتأكد!");
+        alert("برجاء رفع صورة إيصال التحويل!");
         return;
       }
 
-      // حساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
       const expiryStr = calculateExpiryDate(startDateVal);
 
-      const payload = {
-        data: [{
-          name: name,
-          phone: phone,
-          plan: selectedNewPlanName,
-          start_date: startDateVal,
-          expiry: expiryStr
-        }]
-      };
-
-      try {
-        const response = await fetch(SHEET_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-          showSuccessModal("تم الاشتراك بنجاح يا بطل! 🔥", `أهلاً بك يا ${name} في جيم نزاهة.<br>تم تسجيل باقتك (${selectedNewPlanName}) وتفعيلها لمدة 30 يوماً.<br>سيتم إرسال إشعار فوري لكابتن نزاهة.`);
-          
-          // إرسال واتساب تلقائي لكابتن نزاهة والمشترك
-          triggerWhatsAppNotification(name, phone, selectedNewPlanName, 'اشتراك جديد');
-          document.getElementById('newMemberForm').reset();
-        } else {
-          alert("حدث خطأ أثناء حفظ البيانات في الجدول. حاول مرة أخرى.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("تعذر الاتصال بقاعدة البيانات. تأكد من الإنترنت.");
-      }
+      showSuccessModal(
+        "جاري إرسال طلبك لكابتن نزاهة! ⏳",
+        `يا بطل <b>${name}</b>، تم تجهيز طلب اشتراكك (${selectedNewPlanName}) وإرفاق بياناتك.<br>سيتم فتح الواتساب الآن لإرسال الإيصال لكابتن نزاهة للمراجعة والتفعيل الفوري فور التأكد من التحويل.`
+      );
+      triggerApprovalWhatsApp(name, phone, selectedNewPlanName, 'اشتراك جديد', startDateVal, expiryStr);
+      document.getElementById('newMemberForm').reset();
     }
 
     // البحث عن المشترك الحالي للتجديد مع الحساب التلقائي لتاريخ الانتهاء
@@ -590,7 +565,7 @@
       }
     }
 
-    // معالجة تجديد الاشتراك
+    // معالجة تجديد الاشتراك (بانتظار موافقة الكابتن)
     async function handleRenewalSubmit() {
       if (!currentFoundMember) return;
 
@@ -604,38 +579,30 @@
         return;
       }
 
-      // حساب تاريخ الانتهاء الجديد (30 يوم من تاريخ بدء التجديد)
       const expiryStr = calculateExpiryDate(startDateVal);
 
-      try {
-        // تحديث البيانات في SheetDB باستخدام الهاتف القديم كمعيار للبحث
-        const updateUrl = `${SHEET_API_URL}/phone/${currentFoundMember.phone}`;
-        const response = await fetch(updateUrl, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            data: {
-              name: editName,
-              phone: editPhone,
-              plan: selectedRenewPlanName,
-              start_date: startDateVal,
-              expiry: expiryStr
-            }
-          })
-        });
+      showSuccessModal(
+        "جاري إرسال طلب التجديد لكابتن نزاهة! ⏳",
+        `يا بطل <b>${editName}</b>، تم تجهيز طلب تجديد باقتك (${selectedRenewPlanName}).<br>سيتم فتح الواتساب الآن لإرسال الإيصال لكابتن نزاهة للمراجعة وتمديد اشتراكك فوراً.`
+      );
+      triggerApprovalWhatsApp(editName, editPhone, selectedRenewPlanName, 'تجديد اشتراك', startDateVal, expiryStr);
+      document.getElementById('renewDetailsCard').style.display = 'none';
+      document.getElementById('renewPhoneInput').value = '';
+    }
 
-        if (response.ok) {
-          showSuccessModal("منور بيتك يا وحش! تم التجديد بنجاح 💪", `يا بطل <b>${editName}</b>، تم تمديد اشتراكك (${selectedRenewPlanName}) بنجاح لمدة 30 يوماً إضافية.<br>بياناتك أصبحت محدثة على الموقع فوراً.`);
-          triggerWhatsAppNotification(editName, editPhone, selectedRenewPlanName, 'تجديد اشتراك');
-          document.getElementById('renewDetailsCard').style.display = 'none';
-          document.getElementById('renewPhoneInput').value = '';
-        } else {
-          alert("حدث خطأ أثناء تحديث الاشتراك. حاول مرة أخرى.");
-        }
-      } catch (err) {
-        console.error(err);
-        alert("تعذر الاتصال بقاعدة البيانات.");
-      }
+    // دالة إرسال رسالة الواتساب للمراجعة والقبول/الرفض لكابتن نزاهة
+    function triggerApprovalWhatsApp(name, phone, plan, type, startDate, expiry) {
+      const captainPhone = "201017995678";
+      const message = `🚨 طلب ${type} جديد بحاجة للمراجعة - جيم نزاهة\n\n` +
+                      `👤 اسم العميل: ${name}\n` +
+                      `📱 الموبايل: ${phone}\n` +
+                      `🎟️ الباقة المطلوبة: ${plan}\n` +
+                      `📅 تاريخ البدء: ${startDate}\n` +
+                      `📅 تاريخ الانتهاء المتوقع: ${expiry}\n\n` +
+                      `⚠️ [يرجى من الكابتن مراجعة صورة الإيصال المرفقة بالدردشة]\n\n` +
+                      `🔹 للقبول وتفعيل الاشتراك (قم بإضافة البيانات للجدول).\n` +
+                      `❌ للرفض، يرجى الرد بسبب الرفض (مثال: صورة التحويل خطأ / الرقم ناقص / مبلغ غير كافٍ).`;
+      window.open(`https://wa.me/${captainPhone}?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     // فتح نافذة النجاح المنبثقة
