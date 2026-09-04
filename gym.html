@@ -469,6 +469,14 @@
       document.getElementById('renewDisplayPrice').innerText = price;
     }
 
+    // دالة مساعدة لحساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
+    function calculateExpiryDate(startDateStr) {
+      const date = new Date(startDateStr);
+      if (isNaN(date.getTime())) return '';
+      date.setDate(date.getDate() + 30);
+      return date.toISOString().split('T')[0];
+    }
+
     // معالجة تسجيل مشترك جديد
     async function handleNewRegistration(event) {
       event.preventDefault();
@@ -483,10 +491,7 @@
       }
 
       // حساب تاريخ الانتهاء (تاريخ البدء + 30 يوم)
-      const startDate = new Date(startDateVal);
-      const expiryDate = new Date(startDate);
-      expiryDate.setDate(expiryDate.getDate() + 30);
-      const expiryStr = expiryDate.toISOString().split('T')[0];
+      const expiryStr = calculateExpiryDate(startDateVal);
 
       const payload = {
         data: [{
@@ -520,7 +525,7 @@
       }
     }
 
-    // البحث عن المشترك الحالي للتجديد
+    // البحث عن المشترك الحالي للتجديد مع الحساب التلقائي لتاريخ الانتهاء
     async function lookupMember() {
       const phoneInput = document.getElementById('renewPhoneInput').value.trim();
       if (!phoneInput) {
@@ -530,32 +535,57 @@
 
       try {
         const response = await fetch(SHEET_API_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
+        const membersList = Array.isArray(data) ? data : (data.data || data.records || []);
         const cleanInput = phoneInput.replace(/[^0-9]/g, '');
 
-        const member = data.find(m => {
-          const sheetPhone = String(m.phone || '').replace(/[^0-9]/g, '');
+        const member = membersList.find(m => {
+          const sheetPhone = String(m.phone || m.Phone || '').replace(/[^0-9]/g, '');
           return sheetPhone === cleanInput || sheetPhone.endsWith(cleanInput);
         });
 
         if (member) {
           currentFoundMember = member;
+          const memberName = member.name || member.Name || 'غير معروف';
+          const memberPhone = member.phone || member.Phone || phoneInput;
+          const memberPlan = member.plan || member.Plan || 'غير محدد';
+
+          // لو تاريخ الانتهاء مش موجود في الشيت، بنحسبه أوتوماتيك (تاريخ البدء + 30 يوم)
+          let memberExpiry = member.expiry || member.Expiry;
+          const startDate = member.start_date || member.Start_date || member.startDate;
+
+          if ((!memberExpiry || memberExpiry.trim() === '') && startDate) {
+            memberExpiry = calculateExpiryDate(startDate);
+          }
+          memberExpiry = memberExpiry || 'غير محدد';
+
+          let expiryStatus = `<span style="color:#38a169; font-weight:900;">ساري حتى: ${memberExpiry}</span>`;
+          if (memberExpiry !== 'غير محدد') {
+            const today = new Date().toISOString().split('T')[0];
+            if (memberExpiry < today) {
+              expiryStatus = `<span style="color:#e53e3e; font-weight:900;">منتهي (تاريخ الانتهاء: ${memberExpiry}) - يلا جدد يا بطل!</span>`;
+            }
+          }
+
           document.getElementById('memberFoundInfo').innerHTML = `
             ✅ تم العثور على حسابك بنجاح!<br>
-            👤 الاسم المسجل: <b>${member.name}</b><br>
-            📱 رقم الموبايل: <b>${member.phone}</b><br>
-            🎟️ باقتك السابقة: <b>${member.plan || 'غير محدد'}</b><br>
-            📅 تاريخ انتهاء اشتراكك الحالي: <span style="color:#e53e3e;">${member.expiry || 'منتهي'}</span>
+            👤 الاسم المسجل: <b>${memberName}</b><br>
+            📱 رقم الموبايل: <b>${memberPhone}</b><br>
+            🎟️ باقتك السابقة: <b>${memberPlan}</b><br>
+            📅 حالة الاشتراك: ${expiryStatus}
           `;
-          document.getElementById('renewEditName').value = member.name;
-          document.getElementById('renewEditPhone').value = member.phone;
+          document.getElementById('renewEditName').value = memberName;
+          document.getElementById('renewEditPhone').value = memberPhone;
           document.getElementById('renewDetailsCard').style.display = 'block';
         } else {
-          alert("الرقم غير مسجل في قاعدة البيانات. برجاء التسجيل كـ (مشترك جديد).");
+          alert("الرقم غير مسجل في قاعدة البيانات. برجاء التأكد من الرقم أو التسجيل كـ (مشترك جديد).");
         }
       } catch (error) {
-        console.error(error);
-        alert("حدث خطأ أثناء البحث.");
+        console.error("Lookup Error:", error);
+        alert("حدث خطأ أثناء الاتصال بقاعدة البيانات.");
       }
     }
 
